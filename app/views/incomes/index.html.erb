@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <%= link_to 'New', new_income_path, class: 'btn btn-success' %>
+</p>
+
+<table class="table table-inbox table-hover">
+  <tbody>
+    <% @incomes.each do |income| %>
+      <tr class="<%= income.paid? ? :info : :warning %>">
+        <td class="inbox-small-cells">
+          <td>
+            <%= link_to edit_income_path(income) do %>
+              <i class="fa fa-pencil-square-o"></i>
+            <% end %>
+          </td>
+        </td>
+        <td class="inbox-small-cells">
+          <% if income.paid? %>
+            <i class="fa fa-check-square-o"></i>
+          <% else %>
+            <i class="fa fa-square-o"></i>
+          <% end %>
+        </td>
+        <td class="view-message"><%= income.description %></td>
+        <td class="view-message dont-show"><%= income.value %></td>
+        <td class="view-message text-right">
+          <%= l income.created_at, format: :short %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
