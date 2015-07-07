@@ -7,6 +7,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'jquery-rails'
 gem 'responders'
 gem 'sass-rails', '~> 5.0'
+gem 'simple_form'
 gem 'sqlite3'
 gem 'uglifier', '>= 1.3.0'
 

@@ -1,37 +1,9 @@
-<%= form_for(@income) do |f| %>
-  <% if @income.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@income.errors.count, "error") %> prohibited this income from being saved:</h2>
+<%= simple_form_for @income  do |f| %>
+  <%= f.input :description %>
+  <%= f.input :paid_at, as: :string, input_html: { class: :date } %>
+  <%= f.input :expires_at, as: :string, input_html: { class: :date } %>
+  <%= f.input :value %>
+  <%= f.input :paid %>
 
-      <ul>
-        <% @income.errors.full_messages.each do |message| %>
-          <li><%= message.to_s %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :description %><br>
-    <%= f.text_field :description, autofocus: true %>
-  </div>
-  <div class="field">
-    <%= f.label :paid_at %><br>
-    <%= f.text_field :paid_at, class: :date %>
-  <div class="field">
-  </div>
-    <%= f.label :expires_at %><br>
-    <%= f.text_field :expires_at, class: :date %>
-  </div>
-  <div class="field">
-    <%= f.label :value %><br>
-    <%= f.text_field :value %>
-  </div>
-  <div class="field">
-    <%= f.label :paid %><br>
-    <%= f.check_box :paid %>
-  </div>
-  <div class="actions">
-    <%= f.submit class: 'btn btn-success' %>
-  </div>
+  <%= f.submit class: 'btn btn-success' %>
 <% end %>

@@ -8,7 +8,9 @@ class IncomesController < ApplicationController
   end
 
   def new
-    @income = Income.new
+    @income = Income.new do |income|
+      income.paid_at = Date.current
+    end
   end
 
   def create
