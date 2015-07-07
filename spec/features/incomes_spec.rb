@@ -23,11 +23,13 @@ describe 'Income', type: :feature do
 
     visit edit_income_path(income)
 
-    fill_in  'Description', with: 'Income#2'
+    fill_in 'Description', with: 'Income#2'
+    fill_in 'Paid at', with: '2014-12-31'
 
     click_on 'Atualizar'
 
     expect(page).to have_content 'Income atualizado com sucesso.'
     expect(page).to have_content 'Income#2'
+    expect(page).to have_content '31/12/2014'
   end
 end

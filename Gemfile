@@ -21,4 +21,6 @@ end
 source 'https://rails-assets.org' do
   gem 'rails-assets-font-awesome'
   gem 'rails-assets-bootstrap'
+  gem 'rails-assets-moment'
+  gem 'rails-assets-rome'
 end

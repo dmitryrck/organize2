@@ -6,6 +6,16 @@
 </p>
 
 <p>
+  <strong>Paid at:</strong>
+  <%= l @income.paid_at if @income.paid_at %>
+</p>
+
+<p>
+  <strong>Expires at:</strong>
+  <%= l @income.expires_at if @income.expires_at %>
+</p>
+
+<p>
   <strong>Value:</strong>
   <%= @income.value %>
 </p>
