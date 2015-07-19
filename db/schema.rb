@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150719233259) do
+ActiveRecord::Schema.define(version: 20150719233942) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "name"
@@ -31,6 +31,9 @@ ActiveRecord::Schema.define(version: 20150719233259) do
     t.date     "paid_at"
     t.date     "expires_at"
     t.string   "category"
+    t.integer  "account_id"
   end
+
+  add_index "movements", ["account_id"], name: "index_movements_on_account_id"
 
 end

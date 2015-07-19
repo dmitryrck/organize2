@@ -7,6 +7,10 @@ RSpec.describe Account, type: :model do
 
   it { is_expected.to be_valid }
 
+  it 'should return name as to_s' do
+    expect(subject.to_s).to eq 'Account#1'
+  end
+
   it 'should not be invalid with no name' do
     subject.name = nil
     expect(subject).to_not be_valid
