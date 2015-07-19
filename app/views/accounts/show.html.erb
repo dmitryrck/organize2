@@ -1,19 +1,8 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Name:</strong>
-  <%= @account.name %>
-</p>
-
-<p>
-  <strong>Start balance:</strong>
-  <%= @account.start_balance %>
-</p>
-
-<p>
-  <strong>Current balance:</strong>
-  <%= @account.current_balance %>
-</p>
+<%= show_for @account do |show| %>
+  <%= show.attribute :name %>
+  <%= show.attribute :start_balance %>
+  <%= show.attribute :current_balance %>
+<% end %>
 
 <%= link_to 'Edit', edit_account_path(@account) %> |
 <%= link_to 'Back', accounts_path %>

@@ -1,39 +1,12 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Description:</strong>
-  <%= @income.description %>
-</p>
-
-<p>
-  <strong>Paid at:</strong>
-  <%= l @income.paid_at if @income.paid_at %>
-</p>
-
-<p>
-  <strong>Expires at:</strong>
-  <%= l @income.expires_at if @income.expires_at %>
-</p>
-
-<p>
-  <strong>Value:</strong>
-  <%= @income.value %>
-</p>
-
-<p>
-  <strong>Category:</strong>
-  <%= @income.category %>
-</p>
-
-<p>
-  <strong>Account:</strong>
-  <%= @income.account %>
-</p>
-
-<p>
-  <strong>Paid:</strong>
-  <%= @income.paid %>
-</p>
+<%= show_for @income do |show| %>
+  <%= show.attribute :description %>
+  <%= show.attribute :paid_at %>
+  <%= show.attribute :expires_at %>
+  <%= show.attribute :value %>
+  <%= show.attribute :category %>
+  <%= show.attribute :account %>
+  <%= show.attribute :paid %>
+<% end %>
 
 <%= link_to 'Edit', edit_income_path(@income) %> |
 <%= link_to 'Back', incomes_path %>
