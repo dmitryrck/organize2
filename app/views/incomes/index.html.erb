@@ -15,8 +15,13 @@
             <i class="fa fa-square-o"></i>
           <% end %>
         </td>
-        <td class="view-message"><%= income.description %></td>
-        <td class="view-message dont-show"><%= income.value %></td>
+        <td class="view-message">
+          <%= income.description %>
+          <% if income.category.present? %>
+            <span class="label label-info"><%= income.category %></span>
+          <% end %>
+        </td>
+        <td class="view-message dont-show"><%= number_to_currency income.value %></td>
         <td class="view-message text-right">
           <%= l income.created_at, format: :short %>
         </td>

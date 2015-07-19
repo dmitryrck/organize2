@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150707145249) do
+ActiveRecord::Schema.define(version: 20150719230828) do
 
   create_table "movements", force: :cascade do |t|
     t.string   "description"
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 20150707145249) do
     t.string   "kind"
     t.date     "paid_at"
     t.date     "expires_at"
+    t.string   "category"
   end
 
 end

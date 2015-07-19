@@ -11,6 +11,7 @@ describe 'Income', type: :feature do
     click_on 'New'
 
     fill_in 'Description', with: 'Income#1'
+    fill_in 'Category', with: 'Food'
     expect(page).to have_field 'Paid at', with: Date.current.to_s
     fill_in 'Paid at', with: '2015-05-31'
     fill_in 'Value', with: '101'
@@ -20,6 +21,7 @@ describe 'Income', type: :feature do
     expect(page).to have_content 'Income criado com sucesso.'
 
     expect(page).to have_content 'Description: Income#1'
+    expect(page).to have_content 'Category: Food'
     expect(page).to have_content 'Paid at: 31/05/2015'
   end
 
