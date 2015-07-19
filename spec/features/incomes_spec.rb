@@ -18,14 +18,14 @@ describe 'Income', type: :feature do
     fill_in 'Value', with: '101'
     select 'Account#1', from: 'Account'
 
-    click_on 'Criar'
+    click_on 'Create'
 
-    expect(page).to have_content 'Income criado com sucesso.'
+    expect(page).to have_content 'Income was successfully created.'
 
     expect(page).to have_content 'Description: Income#1'
     expect(page).to have_content 'Account: Account#1'
     expect(page).to have_content 'Category: Food'
-    expect(page).to have_content 'Paid at: 31/05/2015'
+    expect(page).to have_content 'Paid at: 2015-05-31'
   end
 
   it 'update' do
@@ -39,10 +39,10 @@ describe 'Income', type: :feature do
     fill_in 'Description', with: 'Income#2'
     fill_in 'Paid at', with: '2014-12-31'
 
-    click_on 'Atualizar'
+    click_on 'Update'
 
-    expect(page).to have_content 'Income atualizado com sucesso.'
+    expect(page).to have_content 'Income was successfully updated.'
     expect(page).to have_content 'Description: Income#2'
-    expect(page).to have_content 'Paid at: 31/12/2014'
+    expect(page).to have_content 'Paid at: 2014-12-31'
   end
 end

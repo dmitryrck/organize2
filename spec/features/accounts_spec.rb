@@ -15,9 +15,9 @@ describe 'Account', type: :feature do
     fill_in 'Start balance', with: '10'
     expect(page).not_to have_field 'Current balance'
 
-    click_on 'Criar'
+    click_on 'Create'
 
-    expect(page).to have_content 'Account criado com sucesso.'
+    expect(page).to have_content 'Account was successfully created.'
 
     expect(page).to have_content 'Name: Account#1'
     expect(page).to have_content 'Start balance: 10'
@@ -34,9 +34,9 @@ describe 'Account', type: :feature do
     fill_in 'Name', with: 'Account#2'
     expect(page).not_to have_field 'Start balance'
 
-    click_on 'Atualizar'
+    click_on 'Update'
 
-    expect(page).to have_content 'Account atualizado com sucesso.'
+    expect(page).to have_content 'Account was successfully updated.'
     expect(page).to have_content 'Name: Account#2'
     expect(page).to have_content 'Start balance: 10'
   end
