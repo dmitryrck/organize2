@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe Income, type: :model do
+RSpec.describe Movement, type: :model do
   subject do
-    Income.new description: 'Income#1',
+    Movement.new description: 'Movement#1',
       value: 100,
       paid_at: Date.current,
       account: account
