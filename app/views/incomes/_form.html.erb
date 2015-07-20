@@ -1,7 +1,6 @@
 <%= simple_form_for @income  do |f| %>
   <%= f.input :description %>
   <%= f.input :paid_at, as: :string, input_html: { class: :date } %>
-  <%= f.input :expires_at, as: :string, input_html: { class: :date } %>
   <%= f.input :category %>
   <%= f.association :account %>
   <%= f.input :value %>
