@@ -1,5 +1,5 @@
 class AccountsController < ApplicationController
-  before_action :set_account, only: [:show, :edit, :update, :destroy]
+  before_action :set_account, only: [:show, :edit, :update]
 
   respond_to :html
 
@@ -30,11 +30,6 @@ class AccountsController < ApplicationController
 
   def update
     @account.update(account_params)
-    respond_with(@account)
-  end
-
-  def destroy
-    @account.destroy
     respond_with(@account)
   end
 

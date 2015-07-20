@@ -1,5 +1,5 @@
 class IncomesController < ApplicationController
-  before_action :set_income, only: [:show, :edit, :update, :destroy]
+  before_action :set_income, only: [:show, :edit, :update]
 
   respond_to :html
 

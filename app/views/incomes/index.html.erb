@@ -23,6 +23,9 @@
         </td>
         <td class="view-message dont-show"><%= number_to_currency income.value %></td>
         <td class="view-message text-right">
+          Account: <%= income.account %>
+        </td>
+        <td class="view-message text-right">
           <%= l income.created_at, format: :short %>
         </td>
         <td class="inbox-small-cells">
