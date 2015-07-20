@@ -1,0 +1,2 @@
+class Outgo < Movement
+end

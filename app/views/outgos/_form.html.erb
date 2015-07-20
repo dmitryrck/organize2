@@ -1,0 +1,10 @@
+<%= simple_form_for @outgo  do |f| %>
+  <%= f.input :description %>
+  <%= f.input :paid_at, as: :string, input_html: { class: :date } %>
+  <%= f.input :category %>
+  <%= f.association :account %>
+  <%= f.input :value %>
+  <%= f.input :paid %>
+
+  <%= f.submit class: 'btn btn-success' %>
+<% end %>

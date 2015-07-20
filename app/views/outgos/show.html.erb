@@ -1,0 +1,11 @@
+<%= show_for @outgo do |show| %>
+  <%= show.attribute :description %>
+  <%= show.attribute :paid_at %>
+  <%= show.attribute :value %>
+  <%= show.attribute :category %>
+  <%= show.attribute :account %>
+  <%= show.attribute :paid %>
+<% end %>
+
+<%= link_to 'Edit', edit_outgo_path(@outgo) %> |
+<%= link_to 'Back', outgos_path %>

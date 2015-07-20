@@ -1,0 +1,41 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <%= link_to 'New', new_outgo_path, class: 'btn btn-success' %>
+</p>
+
+<table class="table table-inbox table-hover">
+  <tbody>
+    <% @outgos.each do |outgo| %>
+      <tr class="<%= outgo.paid? ? :info : :warning %>">
+        <td class="inbox-small-cells">
+          <% if outgo.paid? %>
+            <i class="fa fa-check-square-o"></i>
+          <% else %>
+            <i class="fa fa-square-o"></i>
+          <% end %>
+        </td>
+        <td class="view-message">
+          <%= outgo.description %>
+          <% if outgo.category.present? %>
+            <span class="label label-info"><%= outgo.category %></span>
+          <% end %>
+        </td>
+        <td class="view-message dont-show"><%= number_to_currency outgo.value %></td>
+        <td class="view-message text-right">
+          Account: <%= outgo.account %>
+        </td>
+        <td class="view-message text-right">
+          <%= l outgo.created_at, format: :short %>
+        </td>
+        <td class="inbox-small-cells">
+          <td>
+            <%= link_to edit_outgo_path(outgo) do %>
+              <i class="fa fa-pencil-square-o"></i>
+            <% end %>
+          </td>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
