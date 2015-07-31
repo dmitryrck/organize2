@@ -2,10 +2,128 @@
 <html>
   <head>
     <title>Organize2</title>
-    <%= stylesheet_link_tag    'application', media: 'all' %>
+    <%= stylesheet_link_tag 'application', media: 'all' %>
     <%= csrf_meta_tags %>
   </head>
+  <body class="overflow-hidden">
+    <div id="wrapper" class="preload">
+      <div id="top-nav" class="fixed skin-6">
+        <a href="/" class="brand">
+          <span>Organize</span>
+        </a>
+        <button type="button" class="navbar-toggle pull-left" id="sidebarToggle">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <button type="button" class="navbar-toggle pull-left hide-menu" id="menuToggle">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div><!-- /top-nav-->
 
+      <aside class="fixed skin-6">
+        <div class="sidebar-inner scrollable-sidebar">
+          <div class="size-toggle">
+            <a class="btn btn-sm" id="sizeToggle">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </a>
+            <a class="btn btn-sm pull-right logoutConfirm_open"  href="#logoutConfirm">
+              <i class="fa fa-power-off"></i>
+            </a>
+          </div><!-- /size-toggle -->	
+          <div class="main-menu">
+            <ul>
+              <li class="<%= 'active' if controller_name == 'outgos' %>">
+                <%= link_to outgos_path do %>
+                  <span class="sr-only">(current)</span>
+
+                  <span class="menu-icon">
+                    <i class="fa fa-shopping-cart"></i>
+                  </span>
+
+                  <span class="text"> Outgos </span>
+                  <span class="badge badge-success"><%= Outgo.unpaid.count %></span>
+                  <span class="menu-hover"></span>
+                <% end %>
+              </li>
+
+              <li class="<%= 'active' if controller_name == 'incomes' %>">
+                <%= link_to incomes_path do %>
+                  <span class="sr-only">(current)</span>
+
+                  <span class="menu-icon">
+                    <i class="fa fa-trophy"></i>
+                  </span>
+
+                  <span class="text"> Incomes </span>
+                  <span class="badge badge-success"><%= Income.unpaid.count %></span>
+                  <span class="menu-hover"></span>
+                <% end %>
+              </li>
+
+              <li class="<%= 'active' if controller_name == 'accounts' %>">
+                <%= link_to accounts_path do %>
+                  <span class="sr-only">(current)</span>
+
+                  <span class="menu-icon">
+                    <i class="fa fa-money"></i>
+                  </span>
+
+                  <span class="text"> Accounts </span>
+                  <span class="menu-hover"></span>
+                <% end %>
+              </li>
+            </ul>
+          </div><!-- /main-menu -->
+        </div><!-- /sidebar-inner -->
+      </aside>
+
+      <div id="main-container">
+        <div class="main-header clearfix">
+          <div class="page-title">
+            <h3 class="no-margin"><%= controller_name.capitalize %></h3>
+          </div>
+        </div>
+
+        <% if notice %>
+          <div class="alert alert-warning alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+
+            <%= notice %>
+          </div>
+        <% end %>
+
+        <% if alert %>
+          <div class="alert alert-warning alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <%= alert %>
+          </div>
+        <% end %>
+
+        <%= yield %>
+    </div><!-- /wrapper -->
+
+    <a href="" id="scroll-to-top" class="hidden-print"><i class="fa fa-chevron-up"></i></a>
+
+    <!-- Logout confirmation -->
+    <div class="custom-popup width-100" id="logoutConfirm">
+      <div class="padding-md">
+        <h4 class="m-top-none"> Do you want to logout?</h4>
+      </div>
+
+      <div class="text-center">
+        <a class="btn btn-success m-right-sm" href="login.html">Logout</a>
+        <a class="btn btn-danger logoutConfirm_close">Cancel</a>
+      </div>
+    </div>
+    <%= javascript_include_tag 'application' %>
+  </body>
+
+  <!--
   <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container-fluid">
@@ -53,26 +171,11 @@
 
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header"><%= controller_name %></h1>
-
-          <% if notice %>
-            <div class="alert alert-warning alert-dismissable">
-              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-
-              <%= notice %>
-            </div>
-          <% end %>
-
-          <% if alert %>
-            <div class="alert alert-warning alert-dismissable">
-              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-              <%= alert %>
-            </div>
-          <% end %>
-
-          <%= yield %>
+          <%#= yield %>
         </div>
       </div>
     </div>
     <%= javascript_include_tag 'application' %>
   </body>
+  -->
 </html>

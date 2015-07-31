@@ -1,41 +1,46 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <%= link_to 'New', new_income_path, class: 'btn btn-success' %>
-</p>
+<div class="padding-md">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <%= link_to 'New', new_income_path, class: 'btn btn-success' %>
 
-<table class="table table-inbox table-hover">
-  <tbody>
-    <% @incomes.each do |income| %>
-      <tr class="<%= income.paid? ? :info : :warning %>">
-        <td class="inbox-small-cells">
-          <% if income.paid? %>
-            <i class="fa fa-check-square-o"></i>
-          <% else %>
-            <i class="fa fa-square-o"></i>
-          <% end %>
-        </td>
-        <td class="view-message">
-          <%= income.description %>
-          <% if income.category.present? %>
-            <span class="label label-info"><%= income.category %></span>
-          <% end %>
-        </td>
-        <td class="view-message dont-show"><%= number_to_currency income.value %></td>
-        <td class="view-message text-right">
-          Account: <%= income.account %>
-        </td>
-        <td class="view-message text-right">
-          <%= l income.created_at, format: :short %>
-        </td>
-        <td class="inbox-small-cells">
-          <td>
-            <%= link_to edit_income_path(income) do %>
-              <i class="fa fa-pencil-square-o"></i>
+          <span class="badge badge-info pull-right">	
+            4 left
+          </span>
+        </div>
+        <table class="table table-inbox table-hover">
+          <tbody>
+            <% @incomes.each do |income| %>
+              <tr class="<%= income.paid? ? :success : :warning %>">
+                <td class="view-message">
+                  <%= income.description %>
+                  <% if income.category.present? %>
+                    <span class="label label-info"><%= income.category %></span>
+                  <% end %>
+                </td>
+                <td class="view-message dont-show"><%= number_to_currency income.value %></td>
+                <td class="view-message text-right">
+                  <%= income.account %>
+                </td>
+                <td class="view-message text-right">
+                  <%= l income.paid_at, format: :long %>
+                </td>
+                <td class="inbox-small-cells">
+                  <td>
+                    <%= link_to edit_income_path(income) do %>
+                      <i class="fa fa-pencil-square-o"></i>
+                    <% end %>
+                  </td>
+                </td>
+              </tr>
             <% end %>
-          </td>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+          </tbody>
+        </table>
+      </div><!-- /panel -->
+    </div><!-- /.col -->
+  </div><!-- /.row -->
+</div><!-- /.padding-md -->
+</div><!-- /main-container -->

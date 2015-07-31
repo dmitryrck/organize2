@@ -12,7 +12,7 @@
  *
  *= require bootstrap
  *= require font-awesome/font-awesome
- *= require dashboard
  *= require rome
+ *= require endless/endless
  *= require_self
  */

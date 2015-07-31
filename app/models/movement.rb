@@ -4,4 +4,12 @@ class Movement < ActiveRecord::Base
   validates :description, :account, :value, :paid_at, presence: true
 
   belongs_to :account
+
+  scope :paid, -> {
+    where(paid: true)
+  }
+
+  scope :unpaid, -> {
+    where(paid: false)
+  }
 end
