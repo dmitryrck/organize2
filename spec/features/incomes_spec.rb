@@ -5,6 +5,24 @@ describe 'Income', type: :feature do
     visit '/'
   end
 
+  it 'paginate' do
+    Income.create description: 'Income#1',
+      value: 100,
+      paid_at: Date.current,
+      account: Account.create(name: 'Account#1')
+
+    Income.create description: 'Income#2',
+      value: 100,
+      paid_at: 1.month.ago,
+      account: Account.create(name: 'Account#1')
+
+    click_on 'Incomes'
+
+    expect(page).to have_content 'Income#1'
+    click_on 'Previous'
+    expect(page).to have_content 'Income#2'
+  end
+
   it 'create' do
     Account.create name: 'Account#1', start_balance: 10
     click_on 'Incomes'
@@ -54,6 +72,7 @@ describe 'Income', type: :feature do
       account: Account.create(name: 'Account#1', balance: 100)
 
     visit confirm_income_path(income)
+    visit edit_income_path(income)
     expect(page).to have_disabled_field 'Value'
 
     expect(income.account.reload.balance).to eq 110
@@ -67,6 +86,7 @@ describe 'Income', type: :feature do
       account: Account.create(name: 'Account#1', balance: 100)
 
     visit unconfirm_income_path(income)
+    visit edit_income_path(income)
     expect(page).to have_field 'Value'
 
     expect(income.account.reload.balance).to eq 90

@@ -4,7 +4,8 @@ class IncomesController < ApplicationController
   respond_to :html
 
   def index
-    @incomes = Income.ordered
+    @period = Period.new(params[:year] || Date.current.year, params[:month] || Date.current.month)
+    @incomes = Income.ordered.by_period(@period)
   end
 
   def new
@@ -32,7 +33,7 @@ class IncomesController < ApplicationController
       @income.update_column(:paid, true)
       account.update_column(:balance, account.balance + @income.value)
     end
-    redirect_to edit_income_path(@income)
+    redirect_to incomes_path(year: @income.year, month: @income.month)
   end
 
   def unconfirm
@@ -42,7 +43,7 @@ class IncomesController < ApplicationController
       @income.update_column(:paid, false)
       account.update_column(:balance, account.balance - @income.value)
     end
-    redirect_to edit_income_path(@income)
+    redirect_to incomes_path(year: @income.year, month: @income.month)
   end
 
   private

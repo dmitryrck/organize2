@@ -4,7 +4,8 @@ class OutgosController < ApplicationController
   respond_to :html
 
   def index
-    @outgos = Outgo.ordered
+    @period = Period.new(params[:year] || Date.current.year, params[:month] || Date.current.month)
+    @outgos = Outgo.ordered.by_period(@period)
   end
 
   def new
@@ -32,7 +33,7 @@ class OutgosController < ApplicationController
       @outgo.update_column(:paid, true)
       account.update_column(:balance, account.balance - @outgo.value)
     end
-    redirect_to edit_outgo_path(@outgo)
+    redirect_to outgos_path(year: @outgo.year, month: @outgo.month)
   end
 
   def unconfirm
@@ -42,7 +43,7 @@ class OutgosController < ApplicationController
       @outgo.update_column(:paid, false)
       account.update_column(:balance, account.balance + @outgo.value)
     end
-    redirect_to edit_outgo_path(@outgo)
+    redirect_to outgos_path(year: @outgo.year, month: @outgo.month)
   end
 
   private

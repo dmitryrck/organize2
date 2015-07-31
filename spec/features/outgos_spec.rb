@@ -5,6 +5,24 @@ describe 'Outgo', type: :feature do
     visit '/'
   end
 
+  it 'paginate' do
+    Outgo.create description: 'Outgo#1',
+      value: 100,
+      paid_at: Date.current,
+      account: Account.create(name: 'Account#1')
+
+    Outgo.create description: 'Outgo#2',
+      value: 100,
+      paid_at: 1.month.ago,
+      account: Account.create(name: 'Account#1')
+
+    click_on 'Outgos'
+
+    expect(page).to have_content 'Outgo#1'
+    click_on 'Previous'
+    expect(page).to have_content 'Outgo#2'
+  end
+
   it 'create' do
     Account.create name: 'Account#1', start_balance: 10
     click_on 'Outgos'
@@ -47,26 +65,28 @@ describe 'Outgo', type: :feature do
   end
 
   it 'can confirm payment' do
-    outgo = Outgo.create description: 'Income#1',
+    outgo = Outgo.create description: 'Outgo#1',
       value: 10,
       paid_at: Date.current,
       paid: false,
       account: Account.create(name: 'Account#1', balance: 100)
 
     visit confirm_outgo_path(outgo)
+    visit edit_outgo_path(outgo)
     expect(page).to have_disabled_field 'Value'
 
     expect(outgo.account.reload.balance).to eq 90
   end
 
   it 'can unconfirm payment' do
-    outgo = Outgo.create description: 'Income#1',
+    outgo = Outgo.create description: 'Outgo#1',
       value: 10,
       paid_at: Date.current,
       paid: true,
       account: Account.create(name: 'Account#1', balance: 100)
 
     visit unconfirm_outgo_path(outgo)
+    visit edit_outgo_path(outgo)
     expect(page).to have_field 'Value'
 
     expect(outgo.account.reload.balance).to eq 110
