@@ -1,5 +1,5 @@
-Account.destroy_all
 Movement.destroy_all
+Account.destroy_all
 
 3.times do
   Account.create name: FFaker::Company.name,
