@@ -47,23 +47,28 @@ describe 'Outgo', type: :feature do
   end
 
   it 'can confirm payment' do
-    outgo = Outgo.create description: 'Outgo#1',
-      value: 100,
+    outgo = Outgo.create description: 'Income#1',
+      value: 10,
       paid_at: Date.current,
-      account: Account.create(name: 'Account#1')
+      paid: false,
+      account: Account.create(name: 'Account#1', current_balance: 100)
 
     visit confirm_outgo_path(outgo)
     expect(page).to have_disabled_field 'Value'
+
+    expect(outgo.account.reload.current_balance).to eq 90
   end
 
   it 'can unconfirm payment' do
-    outgo = Outgo.create description: 'Outgo#1',
-      value: 100,
+    outgo = Outgo.create description: 'Income#1',
+      value: 10,
       paid_at: Date.current,
       paid: true,
-      account: Account.create(name: 'Account#1')
+      account: Account.create(name: 'Account#1', current_balance: 100)
 
     visit unconfirm_outgo_path(outgo)
     expect(page).to have_field 'Value'
+
+    expect(outgo.account.reload.current_balance).to eq 110
   end
 end

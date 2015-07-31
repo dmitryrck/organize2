@@ -26,12 +26,22 @@ class IncomesController < ApplicationController
   end
 
   def confirm
-    @income.update_column(:paid, true)
+    account = @income.account
+
+    @income.transaction do
+      @income.update_column(:paid, true)
+      account.update_column(:current_balance, account.current_balance + @income.value)
+    end
     redirect_to edit_income_path(@income)
   end
 
   def unconfirm
-    @income.update_column(:paid, false)
+    account = @income.account
+
+    @income.transaction do
+      @income.update_column(:paid, false)
+      account.update_column(:current_balance, account.current_balance - @income.value)
+    end
     redirect_to edit_income_path(@income)
   end
 
