@@ -1,5 +1,5 @@
 class Account < ActiveRecord::Base
-  validates :name, :start_balance, :current_balance, presence: true
+  validates :name, :start_balance, :balance, presence: true
 
   has_many :movements, dependent: :restrict_with_error
 

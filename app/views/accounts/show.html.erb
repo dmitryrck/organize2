@@ -1,7 +1,7 @@
 <%= show_for @account do |show| %>
   <%= show.attribute :name %>
   <%= show.attribute :start_balance %>
-  <%= show.attribute :current_balance %>
+  <%= show.attribute :balance %>
 <% end %>
 
 <%= link_to 'Edit', edit_account_path(@account) %> |

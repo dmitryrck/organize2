@@ -22,7 +22,7 @@ class AccountsController < ApplicationController
 
   def create
     @account = Account.new(account_params) do |account|
-      account.current_balance = account.start_balance
+      account.balance = account.start_balance
     end
     @account.save
     respond_with(@account)
@@ -42,6 +42,6 @@ class AccountsController < ApplicationController
   def account_params
     params
       .require(:account)
-      .permit(:name, :start_balance, :current_balance)
+      .permit(:name, :start_balance, :balance)
   end
 end

@@ -13,7 +13,7 @@ describe 'Account', type: :feature do
     fill_in 'Name', with: 'Account#1'
     expect(page).to have_field 'Start balance', with: '0.0'
     fill_in 'Start balance', with: '10'
-    expect(page).not_to have_field 'Current balance'
+    expect(page).not_to have_field 'Balance'
 
     click_on 'Create'
 
@@ -21,9 +21,9 @@ describe 'Account', type: :feature do
 
     expect(page).to have_content 'Name: Account#1'
     expect(page).to have_content 'Start balance: 10'
-    expect(page).to have_content 'Current balance: 10'
+    expect(page).to have_content 'Balance: 10'
 
-    expect(Account.last.current_balance).to eq 10.0
+    expect(Account.last.balance).to eq 10.0
   end
 
   it 'update' do

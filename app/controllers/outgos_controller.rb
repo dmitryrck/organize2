@@ -30,7 +30,7 @@ class OutgosController < ApplicationController
 
     @outgo.transaction do
       @outgo.update_column(:paid, true)
-      account.update_column(:current_balance, account.current_balance - @outgo.value)
+      account.update_column(:balance, account.balance - @outgo.value)
     end
     redirect_to edit_outgo_path(@outgo)
   end
@@ -40,7 +40,7 @@ class OutgosController < ApplicationController
 
     @outgo.transaction do
       @outgo.update_column(:paid, false)
-      account.update_column(:current_balance, account.current_balance + @outgo.value)
+      account.update_column(:balance, account.balance + @outgo.value)
     end
     redirect_to edit_outgo_path(@outgo)
   end

@@ -2,7 +2,8 @@ Account.destroy_all
 Movement.destroy_all
 
 3.times do
-  Account.create name: FFaker::Company.name
+  Account.create name: FFaker::Company.name,
+    balance: rand(100)
 end
 
 date_range = (-90..60).to_a

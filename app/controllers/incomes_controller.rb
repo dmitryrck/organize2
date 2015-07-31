@@ -30,7 +30,7 @@ class IncomesController < ApplicationController
 
     @income.transaction do
       @income.update_column(:paid, true)
-      account.update_column(:current_balance, account.current_balance + @income.value)
+      account.update_column(:balance, account.balance + @income.value)
     end
     redirect_to edit_income_path(@income)
   end
@@ -40,7 +40,7 @@ class IncomesController < ApplicationController
 
     @income.transaction do
       @income.update_column(:paid, false)
-      account.update_column(:current_balance, account.current_balance - @income.value)
+      account.update_column(:balance, account.balance - @income.value)
     end
     redirect_to edit_income_path(@income)
   end

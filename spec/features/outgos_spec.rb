@@ -51,12 +51,12 @@ describe 'Outgo', type: :feature do
       value: 10,
       paid_at: Date.current,
       paid: false,
-      account: Account.create(name: 'Account#1', current_balance: 100)
+      account: Account.create(name: 'Account#1', balance: 100)
 
     visit confirm_outgo_path(outgo)
     expect(page).to have_disabled_field 'Value'
 
-    expect(outgo.account.reload.current_balance).to eq 90
+    expect(outgo.account.reload.balance).to eq 90
   end
 
   it 'can unconfirm payment' do
@@ -64,11 +64,11 @@ describe 'Outgo', type: :feature do
       value: 10,
       paid_at: Date.current,
       paid: true,
-      account: Account.create(name: 'Account#1', current_balance: 100)
+      account: Account.create(name: 'Account#1', balance: 100)
 
     visit unconfirm_outgo_path(outgo)
     expect(page).to have_field 'Value'
 
-    expect(outgo.account.reload.current_balance).to eq 110
+    expect(outgo.account.reload.balance).to eq 110
   end
 end

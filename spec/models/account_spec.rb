@@ -21,8 +21,8 @@ RSpec.describe Account, type: :model do
     expect(subject).to_not be_valid
   end
 
-  it 'should not be invalid with no current_balance' do
-    subject.current_balance = nil
+  it 'should not be invalid with no balance' do
+    subject.balance = nil
     expect(subject).to_not be_valid
   end
 end
