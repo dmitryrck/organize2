@@ -5,6 +5,10 @@ class Movement < ActiveRecord::Base
 
   belongs_to :account
 
+  scope :ordered, -> {
+    order("paid_at desc")
+  }
+
   scope :paid, -> {
     where(paid: true)
   }

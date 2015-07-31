@@ -29,7 +29,7 @@ describe 'Outgo', type: :feature do
   end
 
   it 'update' do
-    outgo = Outgo.create description: 'Income#1',
+    outgo = Outgo.create description: 'Outgo#1',
       value: 100,
       paid_at: Date.current,
       account: Account.create(name: 'Account#1')
@@ -44,5 +44,26 @@ describe 'Outgo', type: :feature do
     expect(page).to have_content 'Outgo was successfully updated.'
     expect(page).to have_content 'Description: Outgo#2'
     expect(page).to have_content 'Paid at: 2014-12-31'
+  end
+
+  it 'can confirm payment' do
+    outgo = Outgo.create description: 'Outgo#1',
+      value: 100,
+      paid_at: Date.current,
+      account: Account.create(name: 'Account#1')
+
+    visit confirm_outgo_path(outgo)
+    expect(page).to have_disabled_field 'Value'
+  end
+
+  it 'can unconfirm payment' do
+    outgo = Outgo.create description: 'Outgo#1',
+      value: 100,
+      paid_at: Date.current,
+      paid: true,
+      account: Account.create(name: 'Account#1')
+
+    visit unconfirm_outgo_path(outgo)
+    expect(page).to have_field 'Value'
   end
 end

@@ -1,10 +1,10 @@
 class IncomesController < ApplicationController
-  before_action :set_income, only: [:show, :edit, :update]
+  before_action :set_income, only: [:show, :edit, :update, :confirm, :unconfirm]
 
   respond_to :html
 
   def index
-    @incomes = Income.all
+    @incomes = Income.ordered
   end
 
   def new
@@ -23,6 +23,16 @@ class IncomesController < ApplicationController
   def update
     @income.update(income_params)
     respond_with @income
+  end
+
+  def confirm
+    @income.update_column(:paid, true)
+    redirect_to edit_income_path(@income)
+  end
+
+  def unconfirm
+    @income.update_column(:paid, false)
+    redirect_to edit_income_path(@income)
   end
 
   private

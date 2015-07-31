@@ -45,4 +45,25 @@ describe 'Income', type: :feature do
     expect(page).to have_content 'Description: Income#2'
     expect(page).to have_content 'Paid at: 2014-12-31'
   end
+
+  it 'can confirm payment' do
+    income = Income.create description: 'Income#1',
+      value: 100,
+      paid_at: Date.current,
+      account: Account.create(name: 'Account#1')
+
+    visit confirm_income_path(income)
+    expect(page).to have_disabled_field 'Value'
+  end
+
+  it 'can unconfirm payment' do
+    income = Income.create description: 'Income#1',
+      value: 100,
+      paid_at: Date.current,
+      paid: true,
+      account: Account.create(name: 'Account#1')
+
+    visit unconfirm_income_path(income)
+    expect(page).to have_field 'Value'
+  end
 end

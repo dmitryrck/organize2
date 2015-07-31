@@ -29,11 +29,20 @@
                   <%= l income.paid_at, format: :long %>
                 </td>
                 <td class="inbox-small-cells">
-                  <td>
-                    <%= link_to edit_income_path(income) do %>
-                      <i class="fa fa-pencil-square-o"></i>
+                  <% if income.paid? %>
+                    <%= link_to unconfirm_income_path(income) do %>
+                      <i class="fa fa-times"></i>
                     <% end %>
-                  </td>
+                  <% else %>
+                    <%= link_to confirm_income_path(income) do %>
+                      <i class="fa fa-check"></i>
+                    <% end %>
+                  <% end %>
+                </td>
+                <td class="inbox-small-cells">
+                  <%= link_to edit_income_path(income) do %>
+                    <i class="fa fa-pencil-square-o"></i>
+                  <% end %>
                 </td>
               </tr>
             <% end %>
