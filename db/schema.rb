@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150731230358) do
+ActiveRecord::Schema.define(version: 20150731235328) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "name"
@@ -34,5 +34,7 @@ ActiveRecord::Schema.define(version: 20150731230358) do
   end
 
   add_index "movements", ["account_id"], name: "index_movements_on_account_id"
+  add_index "movements", ["paid"], name: "index_movements_on_paid"
+  add_index "movements", ["paid_at"], name: "index_movements_on_paid_at"
 
 end
