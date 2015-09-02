@@ -29,7 +29,11 @@ describe 'Account', type: :feature do
   it 'update' do
     account = Account.create name: 'Account#1', start_balance: 10
 
-    visit edit_account_path(account)
+    click_on 'Accounts'
+
+    click_on account.id
+
+    click_on 'Edit'
 
     fill_in 'Name', with: 'Account#2'
     expect(page).not_to have_field 'Start balance'

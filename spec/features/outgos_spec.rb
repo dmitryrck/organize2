@@ -52,7 +52,11 @@ describe 'Outgo', type: :feature do
       paid_at: Date.current,
       account: Account.create(name: 'Account#1')
 
-    visit edit_outgo_path(outgo)
+    click_on 'Outgos'
+
+    click_on outgo.id
+
+    click_on 'Edit'
 
     fill_in 'Description', with: 'Outgo#2'
     fill_in 'Paid at', with: '2014-12-31'

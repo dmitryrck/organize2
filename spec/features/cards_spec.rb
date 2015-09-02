@@ -28,7 +28,11 @@ describe 'Card', type: :feature do
       limit: 100,
       payment_day: 15
 
-    visit edit_card_path(card)
+    click_on 'Cards'
+
+    click_on card.id
+
+    click_on 'Edit'
 
     fill_in 'Name', with: 'Card#2'
     fill_in 'Payment day', with: '1'

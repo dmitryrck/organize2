@@ -26,6 +26,7 @@
           <tbody>
             <% @outgos.each do |outgo| %>
               <tr class="<%= outgo.paid? ? :success : :warning %>">
+                <td>#<%= link_to outgo.id, outgo %></td>
                 <td class="view-message">
                   <%= outgo.description %>
                   <% if outgo.category.present? %>

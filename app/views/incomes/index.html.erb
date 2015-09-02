@@ -26,6 +26,7 @@
           <tbody>
             <% @incomes.each do |income| %>
               <tr class="<%= income.paid? ? :success : :warning %>">
+                <td>#<%= link_to income.id, income %></td>
                 <td class="view-message">
                   <%= income.description %>
                   <% if income.category.present? %>

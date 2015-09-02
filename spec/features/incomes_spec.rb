@@ -52,7 +52,11 @@ describe 'Income', type: :feature do
       paid_at: Date.current,
       account: Account.create(name: 'Account#1')
 
-    visit edit_income_path(income)
+    click_on 'Incomes'
+
+    click_on income.id
+
+    click_on 'Edit'
 
     fill_in 'Description', with: 'Income#2'
     fill_in 'Paid at', with: '2014-12-31'
