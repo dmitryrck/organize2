@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150731235328) do
+ActiveRecord::Schema.define(version: 20150902231255) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "name"
@@ -19,6 +19,14 @@ ActiveRecord::Schema.define(version: 20150731235328) do
     t.decimal  "balance",       default: 0.0
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
+  end
+
+  create_table "cards", force: :cascade do |t|
+    t.string   "name"
+    t.decimal  "limit",       default: 0.0
+    t.integer  "payment_day"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "movements", force: :cascade do |t|

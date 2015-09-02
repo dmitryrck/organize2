@@ -77,6 +77,19 @@
                   <span class="menu-hover"></span>
                 <% end %>
               </li>
+
+              <li class="<%= 'active' if controller_name == 'cards' %>">
+                <%= link_to cards_path do %>
+                  <span class="sr-only">(current)</span>
+
+                  <span class="menu-icon">
+                    <i class="fa fa-shopping-cart"></i>
+                  </span>
+
+                  <span class="text"> Cards </span>
+                  <span class="menu-hover"></span>
+                <% end %>
+              </li>
             </ul>
           </div><!-- /main-menu -->
         </div><!-- /sidebar-inner -->
