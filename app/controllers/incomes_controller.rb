@@ -1,11 +1,11 @@
-class IncomesController < ApplicationController
+class IncomesController < MovementsController
   before_action :set_income, only: [:show, :edit, :update, :confirm, :unconfirm]
 
   respond_to :html
 
   def index
     @period = Period.new(params[:year] || Date.current.year, params[:month] || Date.current.month)
-    @incomes = Income.ordered.by_period(@period)
+    @movements = Income.ordered.by_period(@period)
   end
 
   def new

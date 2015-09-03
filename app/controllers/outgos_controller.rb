@@ -1,11 +1,11 @@
-class OutgosController < ApplicationController
+class OutgosController < MovementsController
   before_action :set_outgo, only: [:show, :edit, :update, :confirm, :unconfirm]
 
   respond_to :html
 
   def index
     @period = Period.new(params[:year] || Date.current.year, params[:month] || Date.current.month)
-    @outgos = Outgo.ordered.by_period(@period)
+    @movements = Outgo.ordered.by_period(@period)
   end
 
   def new

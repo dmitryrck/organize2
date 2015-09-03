@@ -1,21 +1,24 @@
-<div class="padding-md">
-  <div class="row">
-    <div class="col-lg-12">
-      <div class="panel panel-default">
-        <div class="panel-body">
-          <%= simple_form_for @outgo do |f| %>
-            <%= f.input :description %>
-            <%= f.input :paid_at, as: :string, input_html: { class: :date } %>
-            <%= f.input :category %>
-            <%= f.input :chargeable_type, collection: %w(Account Card) %>
-            <%= f.association :chargeable, collection: (@outgo.chargeable_type == 'Account' ? Account.ordered : Card.ordered), label: @outgo.chargeable_type %>
-            <%= f.input :value, disabled: @outgo.paid? %>
-
-            <%= f.submit class: 'btn btn-success' %>
-          <% end %>
-        </div>
+<div class="panel panel-default">
+  <div class="panel-body">
+    <%= simple_form_for @outgo do |f| %>
+      <div class="form-inputs">
+        <%= f.input :description, input_html: { autofocus: true } %>
+        <%= f.input :paid_at, as: :string, input_html: { class: :date } %>
+        <%= f.input :category %>
+        <%= f.input :chargeable_type, collection: %w(Account Card) %>
+        <%= f.association :chargeable, collection: (@outgo.chargeable_type == 'Account' ? Account.ordered : Card.ordered), label: @outgo.chargeable_type %>
+        <%= f.input :value, disabled: @outgo.paid? %>
       </div>
-    </div>
+
+      <div class="form-actions">
+        <%= f.submit class: 'btn btn-success' %>
+        <% if @outgo.persisted? %>
+          <%= link_to 'Back', outgos_path, class: 'btn btn-default' %>
+        <% else %>
+          <%= link_to 'Back', @outgo, class: 'btn btn-default' %>
+        <% end %>
+      </div>
+    <% end %>
   </div>
 </div>
 

@@ -13,6 +13,6 @@
  *= require bootstrap
  *= require font-awesome/font-awesome
  *= require rome
- *= require endless/endless
+ *= require sticky-footer-navbar
  *= require_self
  */
