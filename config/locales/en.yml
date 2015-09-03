@@ -21,3 +21,10 @@
 
 en:
   hello: "Hello world"
+  activerecord:
+    attributes:
+      income:
+        chargeable: 'Account'
+      outgo:
+        chargeable_type: 'Kind'
+        chargeable: 'Account/Card'

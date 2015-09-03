@@ -7,7 +7,8 @@
             <%= f.input :description %>
             <%= f.input :paid_at, as: :string, input_html: { class: :date } %>
             <%= f.input :category %>
-            <%= f.association :account %>
+            <%= f.input :chargeable_type, collection: %w(Account Card) %>
+            <%= f.association :chargeable, collection: (@outgo.chargeable_type == 'Account' ? Account.ordered : Card.ordered), label: @outgo.chargeable_type %>
             <%= f.input :value, disabled: @outgo.paid? %>
 
             <%= f.submit class: 'btn btn-success' %>
@@ -17,3 +18,8 @@
     </div>
   </div>
 </div>
+
+<%= javascript_tag do %>
+  window.accounts = <%= JSON.dump(Account.all.map { |a| { id: a.id, name: a.to_s } }).html_safe %>;
+  window.cards = <%= JSON.dump(Card.all.map { |a| { id: a.id, name: a.to_s } }).html_safe %>;
+<% end %>

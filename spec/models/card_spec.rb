@@ -12,4 +12,8 @@ describe Card do
 
     expect(subject).not_to be_valid
   end
+
+  it 'returns name as to_s' do
+    expect(subject.to_s).to eq 'Card#1'
+  end
 end

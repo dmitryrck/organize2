@@ -15,5 +15,5 @@ date_range = (-90..60).to_a
     category: FFaker::Color.name,
     paid_at: Date.current + date_range.to_a.sample,
     paid: FFaker::Boolean.maybe,
-    account: Account.all.to_a.sample
+    chargeable: Account.all.to_a.sample
 end

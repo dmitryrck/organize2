@@ -27,17 +27,24 @@ class IncomesController < ApplicationController
   end
 
   def confirm
-    account = @income.account
+    if @income.chargeable.is_a?(Account)
+      account = @income.chargeable
 
-    @income.transaction do
-      @income.update_column(:paid, true)
-      account.update_column(:balance, account.balance + @income.value)
+      @income.transaction do
+        @income.update_column(:paid, true)
+        account.update_column(:balance, account.balance + @income.value)
+      end
+
+      flash[:notice] = 'Successfully confirmed'
+    else
+      flash[:notice] = 'Wrong chargeable kind'
     end
+
     redirect_to incomes_path(year: @income.year, month: @income.month)
   end
 
   def unconfirm
-    account = @income.account
+    account = @income.chargeable
 
     @income.transaction do
       @income.update_column(:paid, false)
@@ -55,7 +62,7 @@ class IncomesController < ApplicationController
   def income_params
     params
       .require(:income)
-      .permit(:description, :account_id, :value, :paid, :paid_at,
+      .permit(:description, :chargeable_id, :chargeable_type, :value, :paid, :paid_at,
               :category)
   end
 end

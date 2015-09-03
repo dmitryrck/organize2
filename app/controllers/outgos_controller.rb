@@ -11,6 +11,7 @@ class OutgosController < ApplicationController
   def new
     @outgo = Outgo.new do |outgo|
       outgo.paid_at = Date.current
+      outgo.chargeable_type = 'Account'
     end
   end
 
@@ -27,17 +28,24 @@ class OutgosController < ApplicationController
   end
 
   def confirm
-    account = @outgo.account
+    if @outgo.chargeable.is_a?(Account)
+      account = @outgo.chargeable
 
-    @outgo.transaction do
-      @outgo.update_column(:paid, true)
-      account.update_column(:balance, account.balance - @outgo.value)
+      @outgo.transaction do
+        @outgo.update_column(:paid, true)
+        account.update_column(:balance, account.balance - @outgo.value)
+      end
+
+      flash[:notice] = 'Successfully confirmed'
+    else
+      flash[:notice] = 'Wrong chargeable kind'
     end
+
     redirect_to outgos_path(year: @outgo.year, month: @outgo.month)
   end
 
   def unconfirm
-    account = @outgo.account
+    account = @outgo.chargeable
 
     @outgo.transaction do
       @outgo.update_column(:paid, false)
@@ -55,7 +63,9 @@ class OutgosController < ApplicationController
   def outgo_params
     params
       .require(:outgo)
-      .permit(:description, :account_id, :value, :paid, :paid_at,
-              :category)
+      .permit(
+        :description, :chargeable_id, :chargeable_type, :value, :paid,
+        :paid_at, :category
+      )
   end
 end

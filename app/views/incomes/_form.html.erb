@@ -7,7 +7,8 @@
             <%= f.input :description %>
             <%= f.input :paid_at, as: :string, input_html: { class: :date } %>
             <%= f.input :category %>
-            <%= f.association :account %>
+            <%= f.input :chargeable_type, as: :hidden, input_html: { value: 'Account' } %>
+            <%= f.association :chargeable, collection: Account.ordered %>
             <%= f.input :value, disabled: @income.paid? %>
 
             <%= f.submit class: 'btn btn-success' %>

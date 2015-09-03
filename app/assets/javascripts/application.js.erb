@@ -1,0 +1,53 @@
+//= require jquery
+//= require bootstrap
+//= require jquery_ujs
+//= require moment
+//= require rome/rome.standalone
+//= require endless/uncompressed/pace
+//= require endless/jquery.popupoverlay.min
+//= require endless/jquery.slimscroll.min
+//= require endless/modernizr.min
+//= require endless/jquery.cookie.min
+//= require endless/endless/endless
+//= require_self
+
+$(function() {
+  <% unless Rails.env.test? %>
+  $.each($('.date'), function (idx, input) {
+    rome(input, {
+      time: false,
+      autoClose: false,
+      inputFormat: 'YYYY-MM-DD'
+    });
+  });
+  <% end %>
+
+  function json2options(json) {
+    var output = ''
+      , size = json.length
+    ;
+
+    for(var idx = 0; idx < size; ++idx) {
+      output += '<option value="' + json[idx].id + '">' + json[idx].name + '</option>'
+    }
+
+    return output;
+  }
+
+  $('#outgo_chargeable_type').on('change', function() {
+    var options = '<option value></option>'
+      , label = '<abbr title="required">*</abbr> '
+    ;
+
+    if($(this).val() == 'Account') {
+      options += json2options(window.accounts);
+      label += 'Account'
+    } else if($(this).val() == 'Card') {
+      options += json2options(window.cards);
+      label += 'Card'
+    }
+
+    $('#outgo_chargeable_id').html(options);
+    $("label[for=outgo_chargeable_id]").html(label)
+  });
+});

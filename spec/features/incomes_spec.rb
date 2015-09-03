@@ -9,12 +9,12 @@ describe 'Income', type: :feature do
     Income.create description: 'Income#1',
       value: 100,
       paid_at: Date.current,
-      account: Account.create(name: 'Account#1')
+      chargeable: Account.create(name: 'Account#1')
 
     Income.create description: 'Income#2',
       value: 100,
       paid_at: 1.month.ago,
-      account: Account.create(name: 'Account#1')
+      chargeable: Account.create(name: 'Account#1')
 
     click_on 'Incomes'
 
@@ -50,7 +50,7 @@ describe 'Income', type: :feature do
     income = Income.create description: 'Income#1',
       value: 100,
       paid_at: Date.current,
-      account: Account.create(name: 'Account#1')
+      chargeable: Account.create(name: 'Account#1')
 
     click_on 'Incomes'
 
@@ -73,13 +73,27 @@ describe 'Income', type: :feature do
       value: 10,
       paid_at: Date.current,
       paid: false,
-      account: Account.create(name: 'Account#1', balance: 100)
+      chargeable: Account.create(name: 'Account#1', balance: 100)
 
     visit confirm_income_path(income)
+    expect(page).to have_content 'Successfully confirmed'
+
     visit edit_income_path(income)
     expect(page).to have_disabled_field 'Value'
 
-    expect(income.account.reload.balance).to eq 110
+    expect(income.chargeable.reload.balance).to eq 110
+  end
+
+  it 'cannot confirm if payment is to a card' do
+    income = Income.create description: 'Income#1',
+      value: 10,
+      paid_at: Date.current,
+      paid: false,
+      chargeable: Card.create(name: 'Account#1')
+
+    visit confirm_income_path(income)
+
+    expect(page).to have_content 'Wrong chargeable kind'
   end
 
   it 'can unconfirm payment' do
@@ -87,12 +101,12 @@ describe 'Income', type: :feature do
       value: 10,
       paid_at: Date.current,
       paid: true,
-      account: Account.create(name: 'Account#1', balance: 100)
+      chargeable: Account.create(name: 'Account#1', balance: 100)
 
     visit unconfirm_income_path(income)
     visit edit_income_path(income)
     expect(page).to have_field 'Value'
 
-    expect(income.account.reload.balance).to eq 90
+    expect(income.chargeable.reload.balance).to eq 90
   end
 end

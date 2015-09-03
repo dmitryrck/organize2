@@ -5,7 +5,7 @@ RSpec.describe Movement, type: :model do
     Movement.new description: 'Movement#1',
       value: 100,
       paid_at: Date.current,
-      account: account
+      chargeable: account
   end
 
   let :account do
@@ -14,8 +14,8 @@ RSpec.describe Movement, type: :model do
 
   it { is_expected.to be_valid }
 
-  it 'should not be invalid with no account' do
-    subject.account = nil
+  it 'should not be invalid with no chargeable' do
+    subject.chargeable = nil
     expect(subject).to_not be_valid
   end
 
