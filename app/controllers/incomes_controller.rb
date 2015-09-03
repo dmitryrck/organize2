@@ -44,12 +44,18 @@ class IncomesController < MovementsController
   end
 
   def unconfirm
-    account = @income.chargeable
+    if @income.chargeable.is_a?(Account)
+      account = @income.chargeable
 
-    @income.transaction do
-      @income.update_column(:paid, false)
-      account.update_column(:balance, account.balance - @income.value)
+      @income.transaction do
+        @income.update_column(:paid, false)
+        account.update_column(:balance, account.balance - @income.value)
+      end
+      flash[:notice] = 'Successfully unconfirmed'
+    else
+      flash[:notice] = 'Wrong chargeable kind'
     end
+
     redirect_to incomes_path(year: @income.year, month: @income.month)
   end
 

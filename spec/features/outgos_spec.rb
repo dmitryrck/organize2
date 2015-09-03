@@ -115,45 +115,65 @@ describe 'Outgo', type: :feature do
     expect(page).to have_content 'Paid at: 2014-12-31'
   end
 
-  it 'can confirm payment' do
-    outgo = Outgo.create description: 'Outgo#1',
-      value: 10,
-      paid_at: Date.current,
-      paid: false,
-      chargeable: Account.create(name: 'Account#1', balance: 100)
+  context 'confirm' do
+    it 'can confirm' do
+      outgo = Outgo.create description: 'Outgo#1',
+        value: 10,
+        paid_at: Date.current,
+        paid: false,
+        chargeable: Account.create(name: 'Account#1', balance: 100)
 
-    visit confirm_outgo_path(outgo)
-    expect(page).to have_content 'Successfully confirmed'
+      click_on 'Outgos'
+      click_link 'Confirm'
+      expect(page).to have_content 'Successfully confirmed'
 
-    visit edit_outgo_path(outgo)
-    expect(page).to have_disabled_field 'Value'
+      visit edit_outgo_path(outgo)
+      expect(page).to have_disabled_field 'Value'
 
-    expect(outgo.chargeable.reload.balance).to eq 90
+      expect(outgo.chargeable.reload.balance).to eq 90.0
+    end
+
+    it 'cannot confirm if chargeable is a card' do
+      outgo = Outgo.create description: 'Outgo#1',
+        value: 10,
+        paid_at: Date.current,
+        paid: false,
+        chargeable: Card.create(name: 'Account#1')
+
+      click_on 'Outgos'
+      click_link 'Confirm'
+      expect(page).to have_content 'Wrong chargeable kind'
+    end
   end
 
-  it 'cannot confirm if payment is to a card' do
-    outgo = Outgo.create description: 'Income#1',
-      value: 10,
-      paid_at: Date.current,
-      paid: false,
-      chargeable: Card.create(name: 'Account#1')
+  context 'unconfirm' do
+    it 'can unconfirm payment' do
+      outgo = Outgo.create description: 'Outgo#1',
+        value: 10,
+        paid_at: Date.current,
+        paid: true,
+        chargeable: Account.create(name: 'Account#1', balance: 100.0)
 
-    visit confirm_outgo_path(outgo)
+      click_on 'Outgos'
+      click_link 'Unconfirm'
+      expect(page).to have_content 'Successfully unconfirmed'
 
-    expect(page).to have_content 'Wrong chargeable kind'
-  end
+      visit edit_outgo_path(outgo)
+      expect(page).to have_field 'Value'
 
-  it 'can unconfirm payment' do
-    outgo = Outgo.create description: 'Outgo#1',
-      value: 10,
-      paid_at: Date.current,
-      paid: true,
-      chargeable: Account.create(name: 'Account#1', balance: 100)
+      expect(outgo.chargeable.reload.balance).to eq 110.0
+    end
 
-    visit unconfirm_outgo_path(outgo)
-    visit edit_outgo_path(outgo)
-    expect(page).to have_field 'Value'
+    it 'cannot unconfirm if chargeable is a card' do
+      outgo = Outgo.create description: 'Outgo#1',
+        value: 10,
+        paid_at: Date.current,
+        paid: true,
+        chargeable: Card.create(name: 'Account#1')
 
-    expect(outgo.chargeable.reload.balance).to eq 110
+      click_on 'Outgos'
+      click_link 'Unconfirm'
+      expect(page).to have_content 'Wrong chargeable kind'
+    end
   end
 end

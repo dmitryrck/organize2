@@ -45,12 +45,19 @@ class OutgosController < MovementsController
   end
 
   def unconfirm
-    account = @outgo.chargeable
+    if @outgo.chargeable.is_a?(Account)
+      account = @outgo.chargeable
 
-    @outgo.transaction do
-      @outgo.update_column(:paid, false)
-      account.update_column(:balance, account.balance + @outgo.value)
+      @outgo.transaction do
+        @outgo.update_column(:paid, false)
+        account.update_column(:balance, account.balance + @outgo.value)
+      end
+
+      flash[:notice] = 'Successfully unconfirmed'
+    else
+      flash[:notice] = 'Wrong chargeable kind'
     end
+
     redirect_to outgos_path(year: @outgo.year, month: @outgo.month)
   end
 

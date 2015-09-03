@@ -46,11 +46,11 @@
           </td>
           <td class="inbox-small-cells">
             <% if movement.paid? %>
-              <%= link_to(action: :unconfirm, id: movement.id) do %>
+              <%= link_to({action: :unconfirm, id: movement.id}, title: 'Unconfirm') do %>
                 <i class="fa fa-times"></i>
               <% end %>
             <% else %>
-              <%= link_to(action: :confirm, id: movement.id) do %>
+              <%= link_to({action: :confirm, id: movement.id}, title: 'Confirm') do %>
                 <i class="fa fa-check"></i>
               <% end %>
             <% end %>
