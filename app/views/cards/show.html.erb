@@ -1,10 +1,14 @@
-<%= show_for @card do |show| %>
-  <%= show.attribute :name %>
-  <%= show.attribute :limit do %>
-    <%= number_to_currency @card.limit %>
-  <% end %>
-  <%= show.attribute :payment_day %>
-<% end %>
+<div class="panel panel-default">
+  <div class="panel-body">
+    <%= show_for @card do |show| %>
+      <%= show.attribute :name %>
+      <%= show.attribute :limit do %>
+        <%= number_to_currency @card.limit %>
+      <% end %>
+      <%= show.attribute :payment_day %>
+    <% end %>
 
-<%= link_to 'Edit', edit_card_path(@card) %> |
-<%= link_to 'Back', cards_path %>
+    <%= link_to 'Edit', edit_card_path(@card), class: 'btn btn-info' %>
+    <%= link_to 'Back', cards_path, class: 'btn btn-default' %>
+  </div>
+</div>

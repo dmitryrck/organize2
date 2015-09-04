@@ -1,8 +1,16 @@
-<%= show_for @account do |show| %>
-  <%= show.attribute :name %>
-  <%= show.attribute :start_balance %>
-  <%= show.attribute :balance %>
-<% end %>
+<div class="panel panel-default">
+  <div class="panel-body">
+    <%= show_for @account do |show| %>
+      <%= show.attribute :name %>
+      <%= show.attribute :start_balance do %>
+        <%= number_to_currency @account.start_balance %>
+      <% end %>
+      <%= show.attribute :balance do %>
+        <%= number_to_currency @account.balance %>
+      <% end %>
+    <% end %>
 
-<%= link_to 'Edit', edit_account_path(@account) %> |
-<%= link_to 'Back', accounts_path %>
+    <%= link_to 'Edit', edit_account_path(@account), class: 'btn btn-info' %>
+    <%= link_to 'Back', accounts_path, class: 'btn btn-default' %>
+  </div>
+</div>

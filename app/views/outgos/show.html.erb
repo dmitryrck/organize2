@@ -1,12 +1,18 @@
-<%= show_for @outgo do |show| %>
-  <%= show.attribute :description %>
-  <%= show.attribute :paid_at %>
-  <%= show.attribute :value %>
-  <%= show.attribute :category %>
-  <%= show.attribute :chargeable_type %>
-  <%= show.attribute :chargeable %>
-  <%= show.attribute :paid %>
-<% end %>
+<div class="panel panel-default">
+  <div class="panel-body">
+    <%= show_for @outgo do |show| %>
+      <%= show.attribute :description %>
+      <%= show.attribute :paid_at %>
+      <%= show.attribute :value do %>
+        <%= number_to_currency @outgo.value %>
+      <% end %>
+      <%= show.attribute :category %>
+      <%= show.attribute :chargeable_type %>
+      <%= show.attribute :chargeable %>
+      <%= show.attribute :paid %>
+    <% end %>
 
-<%= link_to 'Edit', edit_outgo_path(@outgo) %> |
-<%= link_to 'Back', outgos_path %>
+    <%= link_to 'Edit', edit_outgo_path(@outgo), class: 'btn btn-info' %>
+    <%= link_to 'Back', outgos_path, class: 'btn btn-default' %>
+  </div>
+</div>

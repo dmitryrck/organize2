@@ -20,8 +20,8 @@ describe 'Account', type: :feature do
     expect(page).to have_content 'Account was successfully created.'
 
     expect(page).to have_content 'Name: Account#1'
-    expect(page).to have_content 'Start balance: 10'
-    expect(page).to have_content 'Balance: 10'
+    expect(page).to have_content 'Start balance: $10.00'
+    expect(page).to have_content 'Balance: $10.00'
 
     expect(Account.last.balance).to eq 10.0
   end
@@ -42,6 +42,6 @@ describe 'Account', type: :feature do
 
     expect(page).to have_content 'Account was successfully updated.'
     expect(page).to have_content 'Name: Account#2'
-    expect(page).to have_content 'Start balance: 10'
+    expect(page).to have_content 'Start balance: $10.00'
   end
 end

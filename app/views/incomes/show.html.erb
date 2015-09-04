@@ -1,11 +1,15 @@
-<%= show_for @income do |show| %>
-  <%= show.attribute :description %>
-  <%= show.attribute :paid_at %>
-  <%= show.attribute :value %>
-  <%= show.attribute :category %>
-  <%= show.attribute :chargeable %>
-  <%= show.attribute :paid %>
-<% end %>
+<div class="panel panel-default">
+  <div class="panel-body">
+    <%= show_for @income do |show| %>
+      <%= show.attribute :description %>
+      <%= show.attribute :paid_at %>
+      <%= show.attribute :value %>
+      <%= show.attribute :category %>
+      <%= show.attribute :chargeable %>
+      <%= show.attribute :paid %>
+    <% end %>
 
-<%= link_to 'Edit', edit_income_path(@income) %> |
-<%= link_to 'Back', incomes_path %>
+    <%= link_to 'Edit', edit_income_path(@income), class: 'btn btn-info' %>
+    <%= link_to 'Back', incomes_path, class: 'btn btn-default' %>
+  </div>
+</div>
