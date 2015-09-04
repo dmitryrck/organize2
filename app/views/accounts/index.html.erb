@@ -28,11 +28,9 @@
           <td><%= account.name %></td>
           <td><%= account.balance %></td>
           <td>
-            <td>
-              <%= link_to edit_account_path(account) do %>
-                <i class="fa fa-pencil-square-o"></i>
-              <% end %>
-            </td>
+            <%= link_to edit_account_path(account) do %>
+              <i class="fa fa-pencil-square-o"></i>
+            <% end %>
           </td>
         </tr>
       <% end %>
