@@ -28,7 +28,7 @@
 
     <tbody>
       <% @transfers.each do |transfer| %>
-        <tr>
+        <tr class="<%= transfer.transfered? ? :success : :warning %>">
           <td>
             <%= link_to transfer do %>
               #<%= transfer.id %>
