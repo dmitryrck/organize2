@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150902233852) do
+ActiveRecord::Schema.define(version: 20150903044104) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "name"
@@ -45,5 +45,15 @@ ActiveRecord::Schema.define(version: 20150902233852) do
   add_index "movements", ["chargeable_id"], name: "index_movements_on_chargeable_id"
   add_index "movements", ["paid"], name: "index_movements_on_paid"
   add_index "movements", ["paid_at"], name: "index_movements_on_paid_at"
+
+  create_table "transfers", force: :cascade do |t|
+    t.integer  "source_id"
+    t.integer  "destination_id"
+    t.decimal  "value"
+    t.boolean  "transfered",     default: false
+    t.date     "transfered_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end

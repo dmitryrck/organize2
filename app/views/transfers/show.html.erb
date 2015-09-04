@@ -1,0 +1,11 @@
+<%= show_for @transfer do |show| %>
+  <%= show.attribute :source %>
+  <%= show.attribute :destination %>
+  <%= show.attribute :transfered_at %>
+  <%= show.attribute :value do %>
+    <%= number_to_currency @transfer.value %>
+  <% end %>
+<% end %>
+
+<%= link_to 'Edit', edit_transfer_path(@transfer) %> |
+<%= link_to 'Back', transfers_path %>

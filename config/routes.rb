@@ -17,5 +17,12 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :transfers do
+    member do
+      get :confirm
+      get :unconfirm
+    end
+  end
+
   root to: 'outgos#index'
 end
