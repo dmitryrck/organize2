@@ -35,20 +35,20 @@
               #<%= movement.id %>
             <% end %>
           </td>
-          <td class="view-message">
+          <td>
             <%= movement.description %>
             <% if movement.category.present? %>
               <span class="label label-info"><%= movement.category %></span>
             <% end %>
           </td>
-          <td class="view-message dont-show"><%= number_to_currency movement.value %></td>
-          <td class="view-message text-right">
+          <td><%= number_to_currency movement.value %></td>
+          <td>
             <%= movement.chargeable %>
           </td>
-          <td class="view-message text-right">
+          <td>
             <%= l movement.paid_at, format: :long %>
           </td>
-          <td class="inbox-small-cells">
+          <td>
             <% if movement.paid? %>
               <%= link_to({action: :unconfirm, id: movement.id}, title: 'Unconfirm') do %>
                 <i class="fa fa-times"></i>
@@ -59,7 +59,7 @@
               <% end %>
             <% end %>
           </td>
-          <td class="inbox-small-cells">
+          <td>
             <%= link_to(action: :edit, id: movement.id) do %>
               <i class="fa fa-pencil-square-o"></i>
             <% end %>

@@ -26,10 +26,10 @@
               #<%= card.id %>
             <% end %>
           </td>
-          <td class="view-message"><%= card.name %></td>
-          <td class="view-message dont-show"><%= number_to_currency card.limit %></td>
-          <td class="view-message text-right"><%= card.payment_day %></td>
-          <td class="inbox-small-cells">
+          <td><%= card.name %></td>
+          <td><%= number_to_currency card.limit %></td>
+          <td><%= card.payment_day %></td>
+          <td>
             <%= link_to edit_card_path(card) do %>
               <i class="fa fa-pencil-square-o"></i>
             <% end %>
