@@ -29,7 +29,11 @@
     <tbody>
       <% @transfers.each do |transfer| %>
         <tr>
-          <td>#<%= link_to transfer.id, transfer %></td>
+          <td>
+            <%= link_to transfer do %>
+              #<%= transfer.id %>
+            <% end %>
+          </td>
           <td><%= transfer.source %></td>
           <td><%= transfer.destination %></td>
           <td><%= number_to_currency transfer.value %></td>

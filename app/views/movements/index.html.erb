@@ -30,7 +30,11 @@
     <tbody>
       <% @movements.each do |movement| %>
         <tr class="<%= movement.paid? ? :success : :warning %>">
-          <td>#<%= link_to movement.id, movement %></td>
+          <td>
+            <%= link_to movement do %>
+              #<%= movement.id %>
+            <% end %>
+          </td>
           <td class="view-message">
             <%= movement.description %>
             <% if movement.category.present? %>

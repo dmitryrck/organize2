@@ -20,7 +20,11 @@
     <tbody>
       <% @accounts.each do |account| %>
         <tr>
-          <td>#<%= link_to account.id, account %></td>
+          <td>
+            <%= link_to account do %>
+              #<%= account.id %>
+            <% end %>
+          </td>
           <td><%= account.name %></td>
           <td><%= account.balance %></td>
           <td class="inbox-small-cells">
