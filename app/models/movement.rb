@@ -4,6 +4,8 @@ class Movement < ActiveRecord::Base
   validates :description, :chargeable, :value, :paid_at, presence: true
 
   belongs_to :chargeable, polymorphic: true
+  belongs_to :parent, class_name: 'Movement'
+  has_many :outgos, foreign_key: :parent_id
 
   scope :ordered, -> {
     order("paid_at desc")

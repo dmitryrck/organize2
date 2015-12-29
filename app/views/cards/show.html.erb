@@ -9,6 +9,7 @@
     <% end %>
 
     <div class="form-actions">
+      <%= link_to 'Create payment', new_outgo_path(outgo: { card_id: @card.id }), class: 'btn btn-info' %>
       <%= link_to 'Edit', edit_card_path(@card), class: 'btn btn-info' %>
       <%= link_to 'Back', cards_path, class: 'btn btn-default' %>
     </div>

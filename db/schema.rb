@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150903044104) do
+ActiveRecord::Schema.define(version: 20151229121634) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "name"
@@ -40,11 +40,15 @@ ActiveRecord::Schema.define(version: 20150903044104) do
     t.string   "category"
     t.integer  "chargeable_id"
     t.string   "chargeable_type"
+    t.integer  "parent_id"
+    t.integer  "card_id"
   end
 
+  add_index "movements", ["card_id"], name: "index_movements_on_card_id"
   add_index "movements", ["chargeable_id"], name: "index_movements_on_chargeable_id"
   add_index "movements", ["paid"], name: "index_movements_on_paid"
   add_index "movements", ["paid_at"], name: "index_movements_on_paid_at"
+  add_index "movements", ["parent_id"], name: "index_movements_on_parent_id"
 
   create_table "transfers", force: :cascade do |t|
     t.integer  "source_id"

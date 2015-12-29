@@ -44,4 +44,16 @@ $(function() {
     $('#outgo_chargeable_id').html(options);
     $("label[for=outgo_chargeable_id]").html(label)
   });
+
+  $(".outgo-checkboxes").find("[type=checkbox]").on("change", function() {
+    var value = 0.0;
+
+    $.each($(".outgo-checkboxes").find("span"), function(idx, outgoSpan) {
+      if($(outgoSpan).find("[type=checkbox]").is(":checked")) {
+        value += Number($(outgoSpan).find("label").html().split(" - ")[1]);
+      }
+    });
+
+    $("#outgo_value, #outgo_total").val(value);
+  }).change();
 });

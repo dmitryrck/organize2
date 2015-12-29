@@ -2,12 +2,24 @@
   <div class="panel-body">
     <%= simple_form_for @outgo do |f| %>
       <div class="form-inputs">
+        <% if f.object.card.present? %>
+          <%= f.input :card_id, as: :hidden %>
+          <%= f.input :card, disabled: true %>
+        <% end %>
         <%= f.input :description, input_html: { autofocus: true } %>
         <%= f.input :paid_at, as: :string, input_html: { class: :date } %>
         <%= f.input :category %>
         <%= f.input :chargeable_type, collection: %w(Account Card) %>
         <%= f.association :chargeable, collection: (@outgo.chargeable_type == 'Account' ? Account.ordered : Card.ordered), label: @outgo.chargeable_type %>
-        <%= f.input :value, disabled: @outgo.paid? %>
+        <% if f.object.card.blank? %>
+          <%= f.input :value, disabled: @outgo.paid? %>
+        <% else %>
+          <%= f.input :total, disabled: true, value: f.object.value, required: true, label: "Value" %>
+          <%= f.input :value, as: :hidden %>
+          <div class="outgo-checkboxes">
+            <%= f.association :outgos, as: :check_boxes, collection: (f.object.card.movements.unpaid + f.object.outgos).uniq %>
+          </div>
+        <% end %>
       </div>
 
       <div class="form-actions">

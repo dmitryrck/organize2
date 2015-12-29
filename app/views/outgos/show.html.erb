@@ -10,6 +10,7 @@
       <%= show.attribute :chargeable_type %>
       <%= show.attribute :chargeable %>
       <%= show.attribute :paid %>
+      <%= show.association :outgos %>
     <% end %>
 
     <%= link_to 'Edit', edit_outgo_path(@outgo), class: 'btn btn-info' %>
