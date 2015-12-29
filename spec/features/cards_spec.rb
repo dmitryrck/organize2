@@ -83,6 +83,34 @@ describe 'Card', type: :feature do
     expect(page).to have_field 'Paid at', with: Date.current.to_s
   end
 
+  it 'show only unpaid movements' do
+    card = Card.create name: 'Card#1',
+      limit: 100,
+      payment_day: 15
+
+    Outgo.create(
+      description: 'Food#1',
+      chargeable: card,
+      value: 25,
+      paid_at: Date.current
+    )
+
+    Outgo.create(
+      description: 'Food#2',
+      chargeable: card,
+      value: 25,
+      paid: true,
+      paid_at: Date.current
+    )
+
+    click_on 'Cards'
+
+    click_on card.id
+
+    expect(page).to have_content 'Food#1'
+    expect(page).not_to have_content 'Food#2'
+  end
+
   context 'when make a payment' do
     let!(:card) do
       Card.create(

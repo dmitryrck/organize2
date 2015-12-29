@@ -25,7 +25,7 @@ class CardsController < ApplicationController
 
   def show
     @period = Period.new(params[:year] || Date.current.year, params[:month] || Date.current.month)
-    @movements = Movement.where(chargeable: @card).by_period(@period).ordered
+    @movements = @card.movements.unpaid
   end
 
   private
