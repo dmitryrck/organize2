@@ -158,6 +158,8 @@ describe 'Card', type: :feature do
     end
 
     before do
+      Account.create name: 'Account#1', start_balance: 10
+
       click_on 'Cards'
       click_on "##{card.id}"
       click_on 'Create payment'
@@ -179,18 +181,16 @@ describe 'Card', type: :feature do
     end
 
     it 'creates outgo with selected outgos', js: true do
-      pending
       find(:css, "#outgo_outgo_ids_#{outgo1.id}").set(true)
       find(:css, "#outgo_outgo_ids_#{outgo2.id}").set(true)
       find(:css, "#outgo_outgo_ids_#{outgo3.id}").set(false)
 
-      # TODO
-      #
-      # Must be set by page javascript.
-      page.execute_script %Q[$("#outgo_total").val("75");]
-      click_on 'Create Outgo'
+      select 'Account', from: 'Kind'
+      select 'Account#1', from: 'Account'
 
-      expect(page).to have_content 'Value: $75'
+      fill_in 'Description', with: 'Outgo#1'
+
+      click_on 'Create Outgo'
 
       expect(page).to have_content 'Food#1'
       expect(page).to have_content 'Food#2'
