@@ -12,16 +12,24 @@ gem 'responders'
 gem 'sass-rails', '~> 5.0'
 gem 'show_for'
 gem 'simple_form'
-gem 'sqlite3'
 gem 'uglifier', '>= 1.3.0'
 
+group :development do
+  gem 'sqlite3'
+end
+
 group :development, :test do
-  gem 'rspec-rails', '~> 3.0'
   gem 'ffaker'
+  gem 'rspec-rails', '~> 3.0'
 end
 
 group :test do
   gem 'poltergeist'
+end
+
+group :production do
+  gem 'pg'
+  gem 'rails_12factor'
 end
 
 source 'https://rails-assets.org' do
