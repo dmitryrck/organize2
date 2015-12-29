@@ -23,6 +23,11 @@ class CardsController < ApplicationController
     respond_with @card
   end
 
+  def show
+    @period = Period.new(params[:year] || Date.current.year, params[:month] || Date.current.month)
+    @movements = Movement.where(chargeable: @card).by_period(@period).ordered
+  end
+
   private
 
   def set_card

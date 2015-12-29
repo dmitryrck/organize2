@@ -9,10 +9,16 @@ class OutgosController < MovementsController
   end
 
   def new
-    @outgo = Outgo.new do |outgo|
-      outgo.paid_at = Date.current
-      outgo.chargeable_type = 'Account'
-    end
+    @outgo =
+      if params[:outgo].present?
+        Outgo.new(outgo_params)
+      else
+        Outgo.new do |outgo|
+          outgo.chargeable_type = 'Account'
+        end
+      end
+
+    @outgo.paid_at = Date.current
   end
 
   def create
