@@ -68,7 +68,9 @@ class IncomesController < MovementsController
   def income_params
     params
       .fetch(:income, {})
-      .permit(:description, :chargeable_id, :chargeable_type, :value, :paid, :paid_at,
-              :category)
+      .permit(
+        :description, :chargeable_id, :chargeable_type, :value, :paid_at,
+        :category
+      )
   end
 end
