@@ -13,6 +13,7 @@
       <%= show.association :outgos %>
     <% end %>
 
+    <%= link_to 'Duplicate', new_outgo_path(outgo: @outgo.duplicable_attributes), class: 'btn btn-info' %>
     <%= link_to 'Edit', edit_outgo_path(@outgo), class: 'btn btn-info' %>
     <%= link_to 'Back', outgos_path, class: 'btn btn-default' %>
   </div>

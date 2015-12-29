@@ -68,6 +68,28 @@ describe 'Income', type: :feature do
     expect(page).to have_content 'Paid at: 2014-12-31'
   end
 
+  it 'duplicate' do
+    income = Income.create description: 'Income#1',
+      value: 25,
+      paid_at: 7.days.ago,
+      category: 'Category#1',
+      chargeable: Account.create(name: 'Account#1')
+
+    click_on 'Incomes'
+
+    click_on income.id
+
+    click_on 'Duplicate'
+
+    expect(page).to have_field 'Description', with: 'Income#1'
+    expect(page).to have_field 'Paid at', with: Date.current.to_s
+    expect(page).to have_field 'Category', with: 'Category#1'
+    expect(page).to have_select 'Account', selected: 'Account#1'
+    expect(page).to have_field 'Value', with: '25.0'
+
+    expect(page).to have_button 'Create Income'
+  end
+
   context 'confirm' do
     it 'can confirm' do
       income = Income.create description: 'Income#1',

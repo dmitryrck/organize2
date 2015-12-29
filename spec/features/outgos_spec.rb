@@ -93,6 +93,29 @@ describe 'Outgo', type: :feature do
     expect(page).to have_select '* Card', selected: 'Card#1'
   end
 
+  it 'duplicate' do
+    outgo = Outgo.create description: 'Outgo#1',
+      value: 25,
+      paid_at: 7.days.ago,
+      category: 'Category#1',
+      chargeable: Account.create(name: 'Account#1')
+
+    click_on 'Outgos'
+
+    click_on outgo.id
+
+    click_on 'Duplicate'
+
+    expect(page).to have_field 'Description', with: 'Outgo#1'
+    expect(page).to have_field 'Paid at', with: Date.current.to_s
+    expect(page).to have_field 'Category', with: 'Category#1'
+    expect(page).to have_select 'Kind', selected: 'Account'
+    expect(page).to have_select 'Account', selected: 'Account#1'
+    expect(page).to have_field 'Value', with: '25.0'
+
+    expect(page).to have_button 'Create Outgo'
+  end
+
   it 'update' do
     outgo = Outgo.create description: 'Outgo#1',
       value: 100,

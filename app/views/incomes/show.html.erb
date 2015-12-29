@@ -9,6 +9,7 @@
       <%= show.attribute :paid %>
     <% end %>
 
+    <%= link_to 'Duplicate', new_income_path(income: @income.duplicable_attributes), class: 'btn btn-info' %>
     <%= link_to 'Edit', edit_income_path(@income), class: 'btn btn-info' %>
     <%= link_to 'Back', incomes_path, class: 'btn btn-default' %>
   </div>

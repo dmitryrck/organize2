@@ -9,7 +9,7 @@ class IncomesController < MovementsController
   end
 
   def new
-    @income = Income.new do |income|
+    @income = Income.new(income_params) do |income|
       income.paid_at = Date.current
     end
   end
@@ -67,7 +67,7 @@ class IncomesController < MovementsController
 
   def income_params
     params
-      .require(:income)
+      .fetch(:income, {})
       .permit(:description, :chargeable_id, :chargeable_type, :value, :paid, :paid_at,
               :category)
   end

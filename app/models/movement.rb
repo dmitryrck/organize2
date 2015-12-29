@@ -32,4 +32,22 @@ class Movement < ActiveRecord::Base
   def month
     paid_at.month
   end
+
+  def duplicable_attributes
+    hash = {}
+
+    [
+      :description,
+      :value,
+      :paid,
+      :kind,
+      :category,
+      :chargeable_id,
+      :chargeable_type,
+    ].each do |att|
+      hash[att] = send(att)
+    end
+
+    hash
+  end
 end
