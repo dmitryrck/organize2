@@ -6,6 +6,7 @@ gem 'rails', '4.2.3'
 
 gem 'jbuilder', '~> 2.0'
 gem 'jquery-rails'
+gem 'oj'
 gem 'puma'
 gem 'responders'
 gem 'sass-rails', '~> 5.0'
