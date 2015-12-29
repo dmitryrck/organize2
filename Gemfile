@@ -7,16 +7,13 @@ gem 'rails', '4.2.3'
 gem 'jbuilder', '~> 2.0'
 gem 'jquery-rails'
 gem 'oj'
+gem 'pg'
 gem 'puma'
 gem 'responders'
 gem 'sass-rails', '~> 5.0'
 gem 'show_for'
 gem 'simple_form'
 gem 'uglifier', '>= 1.3.0'
-
-group :development do
-  gem 'sqlite3'
-end
 
 group :development, :test do
   gem 'ffaker'
@@ -28,7 +25,6 @@ group :test do
 end
 
 group :production do
-  gem 'pg'
   gem 'rails_12factor'
 end
 

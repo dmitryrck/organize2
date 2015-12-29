@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20151229121634) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "accounts", force: :cascade do |t|
     t.string   "name"
     t.decimal  "start_balance", default: 0.0
@@ -44,11 +47,11 @@ ActiveRecord::Schema.define(version: 20151229121634) do
     t.integer  "card_id"
   end
 
-  add_index "movements", ["card_id"], name: "index_movements_on_card_id"
-  add_index "movements", ["chargeable_id"], name: "index_movements_on_chargeable_id"
-  add_index "movements", ["paid"], name: "index_movements_on_paid"
-  add_index "movements", ["paid_at"], name: "index_movements_on_paid_at"
-  add_index "movements", ["parent_id"], name: "index_movements_on_parent_id"
+  add_index "movements", ["card_id"], name: "index_movements_on_card_id", using: :btree
+  add_index "movements", ["chargeable_id"], name: "index_movements_on_chargeable_id", using: :btree
+  add_index "movements", ["paid"], name: "index_movements_on_paid", using: :btree
+  add_index "movements", ["paid_at"], name: "index_movements_on_paid_at", using: :btree
+  add_index "movements", ["parent_id"], name: "index_movements_on_parent_id", using: :btree
 
   create_table "transfers", force: :cascade do |t|
     t.integer  "source_id"
@@ -60,4 +63,7 @@ ActiveRecord::Schema.define(version: 20151229121634) do
     t.datetime "updated_at"
   end
 
+  add_foreign_key "movements", "accounts", column: "chargeable_id"
+  add_foreign_key "movements", "cards"
+  add_foreign_key "movements", "movements", column: "parent_id"
 end
