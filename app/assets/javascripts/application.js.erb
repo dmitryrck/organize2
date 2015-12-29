@@ -50,7 +50,9 @@ $(function() {
 
     $.each($(".outgo-checkboxes").find("span"), function(idx, outgoSpan) {
       if($(outgoSpan).find("[type=checkbox]").is(":checked")) {
-        value += Number($(outgoSpan).find("label").html().split(" - ")[1]);
+        arr = $(outgoSpan).find("label").html().split(" - ");
+
+        value += Number(arr[arr.length-1]);
       }
     });
 
