@@ -42,6 +42,33 @@ describe 'Outgo', type: :feature do
     expect(page).to have_content 'Outgo was successfully created.'
 
     expect(page).to have_content 'Description: Outgo#1'
+    expect(page).to have_content 'Value: $101'
+    expect(page).to have_content 'Kind: Account'
+    expect(page).to have_content 'Account/Card: Account#1'
+    expect(page).to have_content 'Category: Food'
+    expect(page).to have_content 'Paid at: 2015-05-31'
+  end
+
+  it 'create with negative value' do
+    Account.create name: 'Account#1', start_balance: 10
+    click_on 'Outgos'
+
+    click_on 'New'
+
+    fill_in 'Description', with: 'Outgo#1'
+    fill_in 'Category', with: 'Food'
+    expect(page).to have_field 'Paid at', with: Date.current.to_s
+    fill_in 'Paid at', with: '2015-05-31'
+    fill_in 'Value', with: '-101'
+    expect(page).to have_select 'Kind', selected: 'Account'
+    select 'Account#1', from: '* Account'
+
+    click_on 'Create'
+
+    expect(page).to have_content 'Outgo was successfully created.'
+
+    expect(page).to have_content 'Description: Outgo#1'
+    expect(page).to have_content 'Value: -$101'
     expect(page).to have_content 'Kind: Account'
     expect(page).to have_content 'Account/Card: Account#1'
     expect(page).to have_content 'Category: Food'
