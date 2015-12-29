@@ -1,8 +1,5 @@
 require 'csv'
 
-#
-# rake import:json
-#
 namespace :import do
   task csv: :environment do
     Movement.transaction do
@@ -14,7 +11,7 @@ namespace :import do
         Outgo.create!(
           paid_at: Date.strptime(row[0], '%d/%m/%Y'),
           paid: row[1] == 'Sim',
-          value: row[2].gsub('R$ ', '').to_f,
+          value: row[2].gsub('R$ ', '').gsub(',', '').to_f,
           description: row[3],
           category: row[4],
           chargeable: account,
@@ -29,7 +26,7 @@ namespace :import do
         Income.create!(
           paid_at: Date.strptime(row[0], '%d/%m/%Y'),
           paid: row[1] == 'Sim',
-          value: row[2].gsub('R$ ', '').to_f,
+          value: row[2].gsub('R$ ', '').gsub(',', '').to_f,
           description: row[3],
           category: row[4],
           chargeable: account,
