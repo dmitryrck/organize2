@@ -74,49 +74,104 @@ describe 'Transfer', type: :feature do
     expect(page).to have_content 'Value: $200.00'
   end
 
-  it 'can confirm', js: true do
-    account1 = Account.create(name: 'Account#1', balance: 10, start_balance: 0)
-    account2 = Account.create(name: 'Account#2', balance: 0, start_balance: 0)
+  context 'can confirm' do
+    let(:account1) do
+      Account.create(name: 'Account#1', balance: 10, start_balance: 0)
+    end
 
-    transfer = Transfer.create(
-      source: account1,
-      destination: account2,
-      value: 10,
-      transfered_at: Date.current
-    )
+    let(:account2) do
+      Account.create(name: 'Account#2', balance: 0, start_balance: 0)
+    end
 
-    click_on 'Transfers'
+    let!(:transfer) do
+      Transfer.create(
+        source: account1,
+        destination: account2,
+        value: 10,
+        transfered_at: Date.current
+      )
+    end
 
-    click_link 'Confirm'
-    expect(page).to have_content 'Successfully transfered'
+    it 'from index', js: true do
+      click_on 'Transfers'
 
-    click_link 'Edit'
-    expect(page).to have_disabled_field 'Value'
+      click_link 'Confirm'
+      expect(page).to have_content 'Successfully transfered'
+      expect(page).to have_link 'Previous Month'
+    end
 
-    expect(account1.reload.balance).to eq 0
-    expect(account2.reload.balance).to eq 10
+    it 'from show', js: true do
+      click_on 'Transfers'
+      click_on transfer.id
+
+      click_link 'Confirm'
+      expect(page).to have_content 'Successfully transfered'
+
+      expect(page).to have_content 'Source: Account#1'
+      expect(page).to have_content 'Value: $10.00'
+    end
+
+    it 'transfer funds' do
+      visit confirm_transfer_path(transfer)
+
+      expect(account1.reload.balance).to eq 0
+      expect(account2.reload.balance).to eq 10
+    end
+
+    it 'should disable value field' do
+      visit confirm_transfer_path(transfer)
+
+      click_link 'Edit'
+      expect(page).to have_disabled_field 'Value'
+    end
   end
 
-  it 'can unconfirm' do
-    account1 = Account.create(name: 'Account#1', balance: 0, start_balance: 0)
-    account2 = Account.create(name: 'Account#2', balance: 10, start_balance: 0)
+  context 'can unconfirm' do
+    let(:account1) do
+      Account.create(name: 'Account#1', balance: 0, start_balance: 0)
+    end
 
-    transfer = Transfer.create(
-      source: account1,
-      destination: account2,
-      value: 10,
-      transfered: true,
-      transfered_at: Date.current
-    )
+    let(:account2) do
+      Account.create(name: 'Account#2', balance: 10, start_balance: 0)
+    end
 
-    click_on 'Transfers'
-    click_link 'Unconfirm'
-    expect(page).to have_content 'Successfully unconfirmed'
+    let!(:transfer) do
+      Transfer.create(
+        source: account1,
+        destination: account2,
+        value: 10,
+        transfered: true,
+        transfered_at: Date.current
+      )
+    end
 
-    click_link 'Edit'
-    expect(page).not_to have_disabled_field 'Value'
+    it 'from index' do
+      click_on 'Transfers'
+      click_link 'Unconfirm'
+      expect(page).to have_content 'Successfully unconfirmed'
+      expect(page).to have_link 'Previous Month'
+    end
 
-    expect(account1.reload.balance).to eq 10
-    expect(account2.reload.balance).to eq 0
+    it 'from show' do
+      click_on 'Transfers'
+      click_on transfer.id
+      click_link 'Unconfirm'
+      expect(page).to have_content 'Successfully unconfirmed'
+      expect(page).to have_content 'Source: Account#1'
+    end
+
+    it 'should disable value field' do
+      visit unconfirm_transfer_path(transfer)
+
+      click_link 'Edit'
+      expect(page).not_to have_disabled_field 'Value'
+    end
+
+    it 'transfer the refunds back' do
+      visit unconfirm_transfer_path(transfer)
+
+      expect(account1.reload.balance).to eq 10
+      expect(account2.reload.balance).to eq 0
+    end
   end
 end

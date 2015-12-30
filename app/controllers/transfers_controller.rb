@@ -46,7 +46,11 @@ class TransfersController < ApplicationController
 
     flash[:notice] = 'Successfully transfered'
 
-    redirect_to transfers_path(year: @transfer.year, month: @transfer.month)
+    if params[:back] == 'show'
+      redirect_to @transfer
+    else
+      redirect_to transfers_path(year: @transfer.year, month: @transfer.month)
+    end
   end
 
   def unconfirm
@@ -61,7 +65,11 @@ class TransfersController < ApplicationController
 
     flash[:notice] = 'Successfully unconfirmed'
 
-    redirect_to transfers_path(year: @transfer.year, month: @transfer.month)
+    if params[:back] == 'show'
+      redirect_to @transfer
+    else
+      redirect_to transfers_path(year: @transfer.year, month: @transfer.month)
+    end
   end
 
   private

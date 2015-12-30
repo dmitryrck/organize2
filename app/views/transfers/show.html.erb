@@ -10,9 +10,9 @@
     <% end %>
 
     <% if @transfer.transfered? %>
-      <%= link_to 'Unconfirm', {action: :unconfirm, id: @transfer.id}, title: 'Unconfirm', class: 'btn btn-info' %>
+      <%= link_to 'Unconfirm', {action: :unconfirm, id: @transfer.id, back: :show}, title: 'Unconfirm', class: 'btn btn-warning' %>
     <% else %>
-      <%= link_to 'Confirm', {action: :confirm, id: @transfer.id}, title: 'Confirm', class: 'btn btn-info' %>
+      <%= link_to 'Confirm', {action: :confirm, id: @transfer.id, back: :show}, title: 'Confirm', class: 'btn btn-success' %>
     <% end %>
     <%= link_to 'Edit', edit_transfer_path(@transfer), class: 'btn btn-info' %>
     <%= link_to 'Back', transfers_path, class: 'btn btn-default' %>
