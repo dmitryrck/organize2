@@ -47,7 +47,11 @@ class OutgosController < MovementsController
       flash[:notice] = 'Wrong chargeable kind'
     end
 
-    redirect_to outgos_path(year: @outgo.year, month: @outgo.month)
+    if params[:back] == 'show'
+      redirect_to @outgo
+    else
+      redirect_to outgos_path(year: @outgo.year, month: @outgo.month)
+    end
   end
 
   def unconfirm
@@ -64,7 +68,11 @@ class OutgosController < MovementsController
       flash[:notice] = 'Wrong chargeable kind'
     end
 
-    redirect_to outgos_path(year: @outgo.year, month: @outgo.month)
+    if params[:back] == 'show'
+      redirect_to @outgo
+    else
+      redirect_to outgos_path(year: @outgo.year, month: @outgo.month)
+    end
   end
 
   private

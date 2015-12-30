@@ -14,6 +14,11 @@
     <% end %>
 
     <%= link_to 'Duplicate', new_outgo_path(outgo: @outgo.duplicable_attributes), class: 'btn btn-info' %>
+    <% if @outgo.paid? %>
+      <%= link_to 'Confirm', {action: :unconfirm, id: @outgo.id, back: :show}, title: 'Unconfirm', class: 'btn btn-success' %>
+    <% else %>
+      <%= link_to 'Unconfirm', {action: :confirm, id: @outgo.id, back: :show}, title: 'Confirm', class: 'btn btn-warning' %>
+    <% end %>
     <%= link_to 'Edit', edit_outgo_path(@outgo), class: 'btn btn-info' %>
     <%= link_to 'Back', outgos_path, class: 'btn btn-default' %>
   </div>

@@ -165,60 +165,88 @@ describe 'Outgo', type: :feature do
   end
 
   context 'confirm' do
-    it 'can confirm' do
-      outgo = Outgo.create description: 'Outgo#1',
+    let!(:outgo) do
+      Outgo.create description: 'Outgo#1',
         value: 10,
         paid_at: Date.current,
         paid: false,
         chargeable: Account.create(name: 'Account#1', balance: 100)
+    end
 
+    it 'from index' do
       click_on 'Outgos'
       click_link 'Confirm'
       expect(page).to have_content 'Successfully confirmed'
+      expect(page).to have_link 'Previous Month'
+    end
 
-      visit edit_outgo_path(outgo)
-      expect(page).to have_disabled_field 'Value'
+    it 'from show' do
+      click_on 'Outgos'
+      click_on outgo.id
+      click_link 'Confirm'
+      expect(page).to have_content 'Successfully confirmed'
+      expect(page).to have_content 'Description: Outgo#1'
+    end
 
+    it 'remove funds' do
+      visit confirm_outgo_path(outgo)
       expect(outgo.chargeable.reload.balance).to eq 90.0
     end
 
-    it 'cannot confirm if chargeable is a card' do
-      outgo = Outgo.create description: 'Outgo#1',
-        value: 10,
-        paid_at: Date.current,
-        paid: false,
-        chargeable: Card.create(name: 'Account#1')
+    it 'should disable value field' do
+      visit confirm_outgo_path(outgo)
+      visit edit_outgo_path(outgo)
+      expect(page).to have_disabled_field 'Value'
+    end
 
-      click_on 'Outgos'
-      click_link 'Confirm'
+    it 'cannot confirm if chargeable is a card' do
+      outgo.update(chargeable: Card.create(name: 'Card#1'))
+
+      visit confirm_outgo_path(outgo)
       expect(page).to have_content 'Wrong chargeable kind'
     end
   end
 
-  context 'unconfirm' do
-    it 'can unconfirm payment' do
-      outgo = Outgo.create description: 'Outgo#1',
+  context 'can unconfirm' do
+    let!(:outgo) do
+      Outgo.create(
+        description: 'Outgo#1',
         value: 10,
         paid_at: Date.current,
         paid: true,
         chargeable: Account.create(name: 'Account#1', balance: 100.0)
+      )
+    end
 
+    it 'from index' do
       click_on 'Outgos'
       click_link 'Unconfirm'
       expect(page).to have_content 'Successfully unconfirmed'
+      expect(page).to have_link 'Previous Month'
+    end
 
+    it 'from show' do
+      click_on 'Outgos'
+      click_on outgo.id
+      click_link 'Unconfirm'
+      expect(page).to have_content 'Successfully unconfirmed'
+      expect(page).to have_content 'Description: Outgo#1'
+    end
+
+    it 'should disable value field' do
+      visit unconfirm_outgo_path(outgo)
       visit edit_outgo_path(outgo)
       expect(page).to have_field 'Value'
+    end
+
+    it 'should update account balance' do
+      visit unconfirm_outgo_path(outgo)
 
       expect(outgo.chargeable.reload.balance).to eq 110.0
     end
 
     it 'cannot unconfirm if chargeable is a card' do
-      outgo = Outgo.create description: 'Outgo#1',
-        value: 10,
-        paid_at: Date.current,
-        paid: true,
-        chargeable: Card.create(name: 'Account#1')
+      outgo.update(chargeable: Card.create(name: 'Account#1'))
 
       click_on 'Outgos'
       click_link 'Unconfirm'
