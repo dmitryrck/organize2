@@ -86,7 +86,7 @@ describe 'Transfer', type: :feature do
     )
 
     click_on 'Transfers'
-    page.driver.render '/tmp/page.png', full: true
+
     click_link 'Confirm'
     expect(page).to have_content 'Successfully transfered'
 

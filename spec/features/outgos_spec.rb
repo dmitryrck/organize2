@@ -90,7 +90,6 @@ describe 'Outgo', type: :feature do
     select 'Card', from: 'Kind'
     select 'Card#1', from: 'Card'
     fill_in 'Paid at', with: '2015-01-31'
-    page.driver.render '/tmp/page.png', full: true
 
     click_on 'Create'
 
