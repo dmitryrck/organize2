@@ -91,63 +91,91 @@ describe 'Income', type: :feature do
   end
 
   context 'confirm' do
-    it 'can confirm' do
-      income = Income.create description: 'Income#1',
+    let!(:income) do
+      Income.create(
+        description: 'Income#1',
         value: 10,
         paid_at: Date.current,
         paid: false,
         chargeable: Account.create(name: 'Account#1', balance: 100)
+      )
+    end
 
+    it 'from index' do
       click_on 'Incomes'
       click_link 'Confirm'
       expect(page).to have_content 'Successfully confirmed'
+      expect(page).to have_link 'Previous Month'
+    end
+
+    it 'from show' do
+      click_on 'Incomes'
+      click_on income.id
+      click_link 'Confirm'
+      expect(page).to have_content 'Successfully confirmed'
+      expect(page).to have_content 'Description: Income#1'
+    end
+
+    it 'should disable value field' do
+      visit confirm_income_path(income)
 
       visit edit_income_path(income)
       expect(page).to have_disabled_field 'Value'
+    end
+
+    it "should update account's balance" do
+      visit confirm_income_path(income)
 
       expect(income.chargeable.reload.balance).to eq 110
     end
 
     it 'cannot confirm if chargeable is a card' do
-      income = Income.create description: 'Income#1',
-        value: 10,
-        paid_at: Date.current,
-        paid: false,
-        chargeable: Card.create(name: 'Account#1')
-
-      click_on 'Incomes'
-      click_link 'Confirm'
+      income.update(chargeable: Card.create(name: 'Account#1'))
+      visit confirm_income_path(income)
       expect(page).to have_content 'Wrong chargeable kind'
     end
   end
 
   context 'unconfirm' do
-    it 'can unconfirm payment' do
-      income = Income.create description: 'Income#1',
+    let!(:income) do
+      Income.create(
+        description: 'Income#1',
         value: 10,
         paid_at: Date.current,
         paid: true,
         chargeable: Account.create(name: 'Account#1', balance: 100)
+      )
+    end
 
+    it 'from index' do
       click_on 'Incomes'
       click_link 'Unconfirm'
       expect(page).to have_content 'Successfully unconfirmed'
+      expect(page).to have_link 'Previous Month'
+    end
 
+    it 'can unconfirm payment' do
+      click_on 'Incomes'
+      click_on income.id
+      click_link 'Unconfirm'
+      expect(page).to have_content 'Successfully unconfirmed'
+      expect(page).to have_content 'Description: Income#1'
+    end
+
+    it 'should disable value field' do
+      visit unconfirm_income_path(income)
       visit edit_income_path(income)
       expect(page).to have_field 'Value'
+    end
 
+    it "update account's balance" do
+      visit unconfirm_income_path(income)
       expect(income.chargeable.reload.balance).to eq 90
     end
 
     it 'cannot unconfirm if chargeable is a card' do
-      income = Income.create description: 'Income#1',
-        value: 10,
-        paid_at: Date.current,
-        paid: true,
-        chargeable: Card.create(name: 'Account#1')
-
-      click_on 'Incomes'
-      click_link 'Unconfirm'
+      income.update(chargeable: Card.create(name: 'Account#1'))
+      visit unconfirm_income_path(income)
       expect(page).to have_content 'Wrong chargeable kind'
     end
   end

@@ -40,7 +40,11 @@ class IncomesController < MovementsController
       flash[:notice] = 'Wrong chargeable kind'
     end
 
-    redirect_to incomes_path(year: @income.year, month: @income.month)
+    if params[:back] == 'show'
+      redirect_to @income
+    else
+      redirect_to incomes_path(year: @income.year, month: @income.month)
+    end
   end
 
   def unconfirm
@@ -56,7 +60,11 @@ class IncomesController < MovementsController
       flash[:notice] = 'Wrong chargeable kind'
     end
 
-    redirect_to incomes_path(year: @income.year, month: @income.month)
+    if params[:back] == 'show'
+      redirect_to @income
+    else
+      redirect_to incomes_path(year: @income.year, month: @income.month)
+    end
   end
 
   private
