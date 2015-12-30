@@ -248,8 +248,7 @@ describe 'Outgo', type: :feature do
     it 'cannot unconfirm if chargeable is a card' do
       outgo.update(chargeable: Card.create(name: 'Account#1'))
 
-      click_on 'Outgos'
-      click_link 'Unconfirm'
+      visit unconfirm_outgo_path(outgo)
       expect(page).to have_content 'Wrong chargeable kind'
     end
   end

@@ -29,7 +29,7 @@
 
     <tbody>
       <% @movements.each do |movement| %>
-        <tr class="<%= movement.paid? ? :success : :warning %>">
+        <tr class="<%= table_color movement %>">
           <td>
             <%= link_to movement do %>
               #<%= movement.id %>
@@ -49,13 +49,17 @@
             <%= l movement.paid_at, format: :long %>
           </td>
           <td>
-            <% if movement.paid? %>
-              <%= link_to({action: :unconfirm, id: movement.id}, title: 'Unconfirm') do %>
-                <i class="fa fa-times"></i>
-              <% end %>
+            <% if movement.chargeable_type == 'Card' %>
+              <i class="fa fa-credit-card"></i>
             <% else %>
-              <%= link_to({action: :confirm, id: movement.id}, title: 'Confirm') do %>
-                <i class="fa fa-check"></i>
+              <% if movement.paid? %>
+                <%= link_to({action: :unconfirm, id: movement.id}, title: 'Unconfirm') do %>
+                  <i class="fa fa-times"></i>
+                <% end %>
+              <% else %>
+                <%= link_to({action: :confirm, id: movement.id}, title: 'Confirm') do %>
+                  <i class="fa fa-check"></i>
+                <% end %>
               <% end %>
             <% end %>
           </td>
