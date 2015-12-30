@@ -11,9 +11,9 @@
 
     <%= link_to 'Duplicate', new_income_path(income: @income.duplicable_attributes), class: 'btn btn-info' %>
     <% if @income.paid? %>
-      <%= link_to 'Confirm', {action: :unconfirm, id: @income.id, back: :show}, title: 'Unconfirm', class: 'btn btn-success' %>
+      <%= link_to 'Unconfirm', {action: :unconfirm, id: @income.id, back: :show}, title: 'Unconfirm', class: 'btn btn-warning' %>
     <% else %>
-      <%= link_to 'Unconfirm', {action: :confirm, id: @income.id, back: :show}, title: 'Confirm', class: 'btn btn-warning' %>
+      <%= link_to 'Confirm', {action: :confirm, id: @income.id, back: :show}, title: 'Confirm', class: 'btn btn-success' %>
     <% end %>
     <%= link_to 'Edit', edit_income_path(@income), class: 'btn btn-info' %>
     <%= link_to 'Back', incomes_path, class: 'btn btn-default' %>
