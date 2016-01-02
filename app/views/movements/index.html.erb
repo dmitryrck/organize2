@@ -4,8 +4,8 @@
     <%= @period.to_s %>
 
     <span class="badge badge-info pull-right">
-      <%= @movements.reject(&:paid?).count %> items left<br>
-      <%= number_to_currency @movements.reject(&:paid?).sum(&:value) %> left
+      <%= @movements.select(&:summarize?).count %> items left<br>
+      <%= number_to_currency @movements.select(&:summarize?).sum(&:value) %> left
     </span>
   </div>
 

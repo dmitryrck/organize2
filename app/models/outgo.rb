@@ -8,4 +8,8 @@ class Outgo < Movement
   def total
     value
   end
+
+  def summarize?
+    chargeable_type != 'Card' && !paid?
+  end
 end

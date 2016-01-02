@@ -33,6 +33,10 @@ class Movement < ActiveRecord::Base
     paid_at.month
   end
 
+  def summarize?
+    true
+  end
+
   def duplicable_attributes
     hash = {}
 
