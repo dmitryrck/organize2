@@ -1,4 +1,8 @@
 <div class="panel panel-default">
+  <div class="panel-heading">
+    <%= link_to 'New', { action: :new }, class: 'btn btn-success' %>
+  </div>
+
   <div class="panel-body">
     <%= show_for @outgo do |show| %>
       <%= show.attribute :description %>
