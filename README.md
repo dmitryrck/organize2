@@ -1,26 +1,18 @@
-# README
+# Running
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+    % bundle install
+    % foreman
 
-Things you may want to cover:
+# Backup from Heroku
 
-* Ruby version
-* System dependencies
-* Configuration
-* Database creation
-* Database initialization
-* How to run the test suite
-* Services (job queues, cache servers, search engines, etc.)
-* Deployment instructions
-* …
+Create a backup:
 
+    % heroku pg:backups capture
 
-Please feel free to use a different markup language if you do not plan to run
-`rake doc:app`.
+Download backup:
 
-# Restore heroku backup
+    % curl -o latest.dump `heroku pg:backups public-url`
 
 And to restore:
 
-    % pg_restore -O -d organize2_development b001.dump
+    % pg_restore -O -d organize2_development latest.dump
