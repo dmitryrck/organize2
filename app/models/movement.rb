@@ -33,6 +33,10 @@ class Movement < ActiveRecord::Base
     paid_at.month
   end
 
+  def unpaid?
+    !paid?
+  end
+
   def summarize?
     true
   end

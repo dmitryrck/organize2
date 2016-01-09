@@ -33,4 +33,20 @@ RSpec.describe Movement, type: :model do
     subject.value = nil
     expect(subject).to_not be_valid
   end
+
+  context 'when it is paid' do
+    before do
+      subject.paid = true
+    end
+
+    it { is_expected.not_to be_unpaid }
+  end
+
+  context 'when it is unpaid' do
+    before do
+      subject.paid = false
+    end
+
+    it { is_expected.to be_unpaid }
+  end
 end

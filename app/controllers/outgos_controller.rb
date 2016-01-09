@@ -1,5 +1,5 @@
 class OutgosController < MovementsController
-  before_action :set_outgo, only: [:show, :edit, :update, :confirm, :unconfirm]
+  before_action :set_outgo, only: [:show, :edit, :update, :destroy, :confirm, :unconfirm]
 
   respond_to :html
 
@@ -42,9 +42,9 @@ class OutgosController < MovementsController
         account.update_column(:balance, account.balance - @outgo.value)
       end
 
-      flash[:notice] = 'Successfully confirmed'
+      flash[:notice] = 'Outgo was successfully confirmed'
     else
-      flash[:notice] = 'Wrong chargeable kind'
+      flash[:notice] = 'Outgo has wrong chargeable kind'
     end
 
     if params[:back] == 'show'
@@ -63,15 +63,26 @@ class OutgosController < MovementsController
         account.update_column(:balance, account.balance + @outgo.value)
       end
 
-      flash[:notice] = 'Successfully unconfirmed'
+      flash[:notice] = 'Outgo was successfully unconfirmed'
     else
-      flash[:notice] = 'Wrong chargeable kind'
+      flash[:notice] = 'Outgo has wrong chargeable kind'
     end
 
     if params[:back] == 'show'
       redirect_to @outgo
     else
       redirect_to outgos_path(year: @outgo.year, month: @outgo.month)
+    end
+  end
+
+  def destroy
+    if @outgo.unpaid?
+      year, month = @outgo.year, @outgo.month
+
+      @outgo.destroy
+      redirect_to outgos_path(year: year, month: month), notice: 'Outgo was successfully destroyed'
+    else
+      redirect_to @outgo, notice: "Outgo can't be destroyed"
     end
   end
 

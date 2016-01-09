@@ -16,6 +16,7 @@
       <%= link_to 'Confirm', {action: :confirm, id: @income.id, back: :show}, title: 'Confirm', class: 'btn btn-success' %>
     <% end %>
     <%= link_to 'Edit', edit_income_path(@income), class: 'btn btn-info' %>
+    <%= link_to 'Delete', @income, method: :delete, confirm: 'Are you sure?', class: 'btn btn-danger' %>
     <%= link_to 'Back', incomes_path, class: 'btn btn-default' %>
   </div>
 </div>

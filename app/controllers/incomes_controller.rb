@@ -1,5 +1,5 @@
 class IncomesController < MovementsController
-  before_action :set_income, only: [:show, :edit, :update, :confirm, :unconfirm]
+  before_action :set_income, only: [:show, :edit, :update, :destroy, :confirm, :unconfirm]
 
   respond_to :html
 
@@ -27,18 +27,14 @@ class IncomesController < MovementsController
   end
 
   def confirm
-    if @income.chargeable.is_a?(Account)
-      account = @income.chargeable
+    account = @income.chargeable
 
-      @income.transaction do
-        @income.update_column(:paid, true)
-        account.update_column(:balance, account.balance + @income.value)
-      end
-
-      flash[:notice] = 'Successfully confirmed'
-    else
-      flash[:notice] = 'Wrong chargeable kind'
+    @income.transaction do
+      @income.update_column(:paid, true)
+      account.update_column(:balance, account.balance + @income.value)
     end
+
+    flash[:notice] = 'Income was successfully confirmed'
 
     if params[:back] == 'show'
       redirect_to @income
@@ -48,22 +44,30 @@ class IncomesController < MovementsController
   end
 
   def unconfirm
-    if @income.chargeable.is_a?(Account)
-      account = @income.chargeable
+    account = @income.chargeable
 
-      @income.transaction do
-        @income.update_column(:paid, false)
-        account.update_column(:balance, account.balance - @income.value)
-      end
-      flash[:notice] = 'Successfully unconfirmed'
-    else
-      flash[:notice] = 'Wrong chargeable kind'
+    @income.transaction do
+      @income.update_column(:paid, false)
+      account.update_column(:balance, account.balance - @income.value)
     end
+
+    flash[:notice] = 'Income was successfully unconfirmed'
 
     if params[:back] == 'show'
       redirect_to @income
     else
       redirect_to incomes_path(year: @income.year, month: @income.month)
+    end
+  end
+
+  def destroy
+    if @income.unpaid?
+      year, month = @income.year, @income.month
+
+      @income.destroy
+      redirect_to incomes_path(year: year, month: month), notice: 'Income was successfully destroyed'
+    else
+      redirect_to @income, notice: "Income can't be destroyed"
     end
   end
 

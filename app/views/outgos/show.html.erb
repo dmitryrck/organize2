@@ -27,6 +27,7 @@
       <%= link_to 'Confirm', {action: :confirm, id: @outgo.id, back: :show}, title: 'Confirm', class: 'btn btn-success' %>
     <% end %>
     <%= link_to 'Edit', edit_outgo_path(@outgo), class: 'btn btn-info' %>
+    <%= link_to 'Delete', @outgo, method: :delete, confirm: 'Are you sure?', class: 'btn btn-danger' %>
     <%= link_to 'Back', outgos_path, class: 'btn btn-default' %>
   </div>
 </div>

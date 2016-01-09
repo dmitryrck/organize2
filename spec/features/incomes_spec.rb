@@ -104,7 +104,7 @@ describe 'Income', type: :feature do
     it 'from index' do
       click_on 'Incomes'
       click_link 'Confirm'
-      expect(page).to have_content 'Successfully confirmed'
+      expect(page).to have_content 'Income was successfully confirmed'
       expect(page).to have_link 'Previous Month'
     end
 
@@ -112,7 +112,7 @@ describe 'Income', type: :feature do
       click_on 'Incomes'
       click_on income.id
       click_link 'Confirm'
-      expect(page).to have_content 'Successfully confirmed'
+      expect(page).to have_content 'Income was successfully confirmed'
       expect(page).to have_content 'Description: Income#1'
     end
 
@@ -127,12 +127,6 @@ describe 'Income', type: :feature do
       visit confirm_income_path(income)
 
       expect(income.chargeable.reload.balance).to eq 110
-    end
-
-    it 'cannot confirm if chargeable is a card' do
-      income.update(chargeable: Card.create(name: 'Account#1'))
-      visit confirm_income_path(income)
-      expect(page).to have_content 'Wrong chargeable kind'
     end
   end
 
@@ -150,7 +144,7 @@ describe 'Income', type: :feature do
     it 'from index' do
       click_on 'Incomes'
       click_link 'Unconfirm'
-      expect(page).to have_content 'Successfully unconfirmed'
+      expect(page).to have_content 'Income was successfully unconfirmed'
       expect(page).to have_link 'Previous Month'
     end
 
@@ -158,7 +152,7 @@ describe 'Income', type: :feature do
       click_on 'Incomes'
       click_on income.id
       click_link 'Unconfirm'
-      expect(page).to have_content 'Successfully unconfirmed'
+      expect(page).to have_content 'Income was successfully unconfirmed'
       expect(page).to have_content 'Description: Income#1'
     end
 
@@ -172,11 +166,38 @@ describe 'Income', type: :feature do
       visit unconfirm_income_path(income)
       expect(income.chargeable.reload.balance).to eq 90
     end
+  end
 
-    it 'cannot unconfirm if chargeable is a card' do
-      income.update(chargeable: Card.create(name: 'Account#1'))
-      visit unconfirm_income_path(income)
-      expect(page).to have_content 'Wrong chargeable kind'
+  context 'delete' do
+    it 'unpaid' do
+      income = Income.create description: 'Income#1',
+        value: 100,
+        paid_at: Date.new(2015, 1, 1),
+        chargeable: Account.create(name: 'Account#1')
+
+      visit incomes_path(month: 1, year: 2015)
+      click_on income.id
+      click_on 'Delete'
+
+      expect(page).to have_content 'Income was successfully destroyed'
+
+      expect(page).to have_content '2015-01'
+    end
+
+    it 'paid' do
+      income = Income.create description: 'Income#1',
+        value: 100,
+        paid_at: Date.new(2015, 1, 1),
+        paid: true,
+        chargeable: Account.create(name: 'Account#1')
+
+      visit incomes_path(month: 1, year: 2015)
+      click_on income.id
+      click_on 'Delete'
+
+      expect(page).to have_content "Income can't be destroyed"
+
+      expect(page).to have_link 'Edit'
     end
   end
 end

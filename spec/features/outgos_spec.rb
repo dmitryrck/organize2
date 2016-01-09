@@ -179,7 +179,7 @@ describe 'Outgo', type: :feature do
     it 'from index' do
       click_on 'Outgos'
       click_link 'Confirm'
-      expect(page).to have_content 'Successfully confirmed'
+      expect(page).to have_content 'Outgo was successfully confirmed'
       expect(page).to have_link 'Previous Month'
     end
 
@@ -187,7 +187,7 @@ describe 'Outgo', type: :feature do
       click_on 'Outgos'
       click_on outgo.id
       click_link 'Confirm'
-      expect(page).to have_content 'Successfully confirmed'
+      expect(page).to have_content 'Outgo was successfully confirmed'
       expect(page).to have_content 'Description: Outgo#1'
     end
 
@@ -206,7 +206,7 @@ describe 'Outgo', type: :feature do
       outgo.update(chargeable: Card.create(name: 'Card#1'))
 
       visit confirm_outgo_path(outgo)
-      expect(page).to have_content 'Wrong chargeable kind'
+      expect(page).to have_content 'Outgo has wrong chargeable kind'
     end
   end
 
@@ -224,7 +224,7 @@ describe 'Outgo', type: :feature do
     it 'from index' do
       click_on 'Outgos'
       click_link 'Unconfirm'
-      expect(page).to have_content 'Successfully unconfirmed'
+      expect(page).to have_content 'Outgo was successfully unconfirmed'
       expect(page).to have_link 'Previous Month'
     end
 
@@ -232,7 +232,7 @@ describe 'Outgo', type: :feature do
       click_on 'Outgos'
       click_on outgo.id
       click_link 'Unconfirm'
-      expect(page).to have_content 'Successfully unconfirmed'
+      expect(page).to have_content 'Outgo was successfully unconfirmed'
       expect(page).to have_content 'Description: Outgo#1'
     end
 
@@ -252,7 +252,40 @@ describe 'Outgo', type: :feature do
       outgo.update(chargeable: Card.create(name: 'Account#1'))
 
       visit unconfirm_outgo_path(outgo)
-      expect(page).to have_content 'Wrong chargeable kind'
+      expect(page).to have_content 'Outgo has wrong chargeable kind'
+    end
+  end
+
+  context 'delete' do
+    it 'unpaid' do
+      outgo = Outgo.create description: 'Outgo#1',
+        value: 100,
+        paid_at: Date.new(2015, 1, 1),
+        chargeable: Account.create(name: 'Account#1')
+
+      visit outgos_path(month: 1, year: 2015)
+      click_on outgo.id
+      click_on 'Delete'
+
+      expect(page).to have_content 'Outgo was successfully destroyed'
+
+      expect(page).to have_content '2015-01'
+    end
+
+    it 'paid' do
+      outgo = Outgo.create description: 'Outgo#1',
+        value: 100,
+        paid_at: Date.new(2015, 1, 1),
+        paid: true,
+        chargeable: Account.create(name: 'Account#1')
+
+      visit outgos_path(month: 1, year: 2015)
+      click_on outgo.id
+      click_on 'Delete'
+
+      expect(page).to have_content "Outgo can't be destroyed"
+
+      expect(page).to have_link 'Edit'
     end
   end
 end
