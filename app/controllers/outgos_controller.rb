@@ -34,17 +34,21 @@ class OutgosController < MovementsController
   end
 
   def confirm
-    if @outgo.chargeable.is_a?(Account)
-      account = @outgo.chargeable
-
-      @outgo.transaction do
-        @outgo.update_column(:paid, true)
-        account.update_column(:balance, account.balance - @outgo.total)
-      end
-
-      flash[:notice] = 'Outgo was successfully confirmed'
+    if @outgo.paid?
+      flash[:notice] = 'Outgo is already confirmed'
     else
-      flash[:notice] = 'Outgo has wrong chargeable kind'
+      if @outgo.chargeable.is_a?(Account)
+        account = @outgo.chargeable
+
+        @outgo.transaction do
+          @outgo.update_column(:paid, true)
+          account.update_column(:balance, account.balance - @outgo.total)
+        end
+
+        flash[:notice] = 'Outgo was successfully confirmed'
+      else
+        flash[:notice] = 'Outgo has wrong chargeable kind'
+      end
     end
 
     if params[:back] == 'show'

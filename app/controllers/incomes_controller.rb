@@ -27,14 +27,17 @@ class IncomesController < MovementsController
   end
 
   def confirm
-    account = @income.chargeable
+    if @income.paid?
+      flash[:notice] = 'Income is already confirmed'
+    else
+      flash[:notice] = 'Income was successfully confirmed'
+      account = @income.chargeable
 
-    @income.transaction do
-      @income.update_column(:paid, true)
-      account.update_column(:balance, account.balance + @income.value)
+      @income.transaction do
+        @income.update_column(:paid, true)
+        account.update_column(:balance, account.balance + @income.value)
+      end
     end
-
-    flash[:notice] = 'Income was successfully confirmed'
 
     if params[:back] == 'show'
       redirect_to @income

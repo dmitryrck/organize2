@@ -128,6 +128,14 @@ describe 'Income', type: :feature do
 
       expect(income.chargeable.reload.balance).to eq 110
     end
+
+    it 'cannot confirm if it is already confirmed' do
+      income.update(paid: true)
+
+      visit confirm_income_path(income)
+      expect(page).to have_content 'Income is already confirmed'
+      expect(income.chargeable.reload.balance).to eq 100.0
+    end
   end
 
   context 'unconfirm' do

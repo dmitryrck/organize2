@@ -214,6 +214,14 @@ describe 'Outgo', type: :feature do
       visit confirm_outgo_path(outgo)
       expect(page).to have_content 'Outgo has wrong chargeable kind'
     end
+
+    it 'cannot confirm if it is already confirmed' do
+      outgo.update(paid: true)
+
+      visit confirm_outgo_path(outgo)
+      expect(page).to have_content 'Outgo is already confirmed'
+      expect(outgo.chargeable.reload.balance).to eq 100.0
+    end
   end
 
   context 'can unconfirm' do
