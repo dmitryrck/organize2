@@ -46,6 +46,7 @@ GEM
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
     cliver (0.3.2)
+    database_cleaner (1.5.1)
     diff-lcs (1.2.5)
     enumerate_it (1.2.8)
       activesupport (>= 3.0.0)
@@ -177,6 +178,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  database_cleaner
   enumerate_it
   ffaker
   jbuilder (~> 2.0)
