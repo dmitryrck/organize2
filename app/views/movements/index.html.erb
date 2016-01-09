@@ -5,7 +5,7 @@
 
     <span class="badge badge-info pull-right">
       <%= @movements.select(&:summarize?).count %> items left<br>
-      <%= number_to_currency @movements.select(&:summarize?).sum(&:value) %> left
+      <%= number_to_currency @movements.select(&:summarize?).sum(&:total) %> left
     </span>
   </div>
 
@@ -41,7 +41,7 @@
               <span class="label label-info"><%= movement.category %></span>
             <% end %>
           </td>
-          <td><%= number_to_currency movement.value %></td>
+          <td><%= total movement %></td>
           <td>
             <%= movement.chargeable %>
           </td>

@@ -12,6 +12,8 @@
         <%= f.input :chargeable_type, collection: %w(Account Card) %>
         <%= f.association :chargeable, collection: (@outgo.chargeable_type == 'Account' ? Account.ordered : Card.ordered), label: @outgo.chargeable_type %>
         <%= f.input :value, disabled: @outgo.paid? %>
+        <%= f.input :fee, disabled: @outgo.paid? %>
+        <%= f.input :fee_kind, collection: FeeKind %>
         <% if f.object.card.present? %>
           <div class="outgo-checkboxes">
             <%= f.association :outgos, as: :check_boxes, collection: (f.object.card.movements.unpaid + f.object.outgos).uniq %>

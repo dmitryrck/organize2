@@ -1,0 +1,6 @@
+en:
+  enumerations:
+    fee_kind:
+      iof: "IOF"
+      network: "Network"
+      bank_transfer: "Bank transfer"

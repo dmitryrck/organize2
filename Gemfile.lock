@@ -47,6 +47,8 @@ GEM
       xpath (~> 2.0)
     cliver (0.3.2)
     diff-lcs (1.2.5)
+    enumerate_it (1.2.8)
+      activesupport (>= 3.0.0)
     erubis (2.7.0)
     execjs (2.5.2)
     ffaker (2.0.0)
@@ -175,6 +177,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  enumerate_it
   ffaker
   jbuilder (~> 2.0)
   jquery-rails

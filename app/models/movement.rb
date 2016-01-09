@@ -54,4 +54,8 @@ class Movement < ActiveRecord::Base
 
     hash
   end
+
+  def total
+    value
+  end
 end

@@ -4,6 +4,7 @@ ruby '2.3.0'
 
 gem 'rails', '4.2.3'
 
+gem 'enumerate_it'
 gem 'jbuilder', '~> 2.0'
 gem 'jquery-rails'
 gem 'oj'

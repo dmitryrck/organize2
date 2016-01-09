@@ -5,15 +5,18 @@
 
   <div class="panel-body">
     <%= show_for @outgo do |show| %>
+      <%= show.attribute :paid %>
       <%= show.attribute :description %>
       <%= show.attribute :paid_at %>
-      <%= show.attribute :value do %>
-        <%= number_to_currency @outgo.value %>
-      <% end %>
       <%= show.attribute :category %>
       <%= show.attribute :chargeable_type %>
       <%= show.attribute :chargeable %>
-      <%= show.attribute :paid %>
+      <%= show.attribute :value do %>
+        <%= number_to_currency @outgo.value %>
+      <% end %>
+      <%= show.attribute :fee do %>
+        <%= number_to_currency @outgo.fee, precision: 8 %> (<%= @outgo.fee_kind_humanize %>)
+      <% end %>
       <%= show.association :outgos %>
     <% end %>
 

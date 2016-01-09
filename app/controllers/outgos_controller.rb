@@ -85,8 +85,17 @@ class OutgosController < MovementsController
     params
       .require(:outgo)
       .permit(
-        :description, :chargeable_id, :chargeable_type, :value, :paid_at,
-        :category, :parent_id, :card_id, outgo_ids: []
+        :card_id,
+        :category,
+        :chargeable_id,
+        :chargeable_type,
+        :description,
+        :fee,
+        :fee_kind,
+        :paid_at,
+        :parent_id,
+        :value,
+        outgo_ids: [],
       )
   end
 end

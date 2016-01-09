@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151230154042) do
+ActiveRecord::Schema.define(version: 20160109093632) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,9 +35,9 @@ ActiveRecord::Schema.define(version: 20151230154042) do
   create_table "movements", force: :cascade do |t|
     t.string   "description"
     t.decimal  "value"
-    t.boolean  "paid",            default: false
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+    t.boolean  "paid",                                      default: false
+    t.datetime "created_at",                                                null: false
+    t.datetime "updated_at",                                                null: false
     t.string   "kind"
     t.date     "paid_at"
     t.string   "category"
@@ -45,6 +45,8 @@ ActiveRecord::Schema.define(version: 20151230154042) do
     t.string   "chargeable_type"
     t.integer  "parent_id"
     t.integer  "card_id"
+    t.decimal  "fee",             precision: 15, scale: 10, default: 0.0
+    t.string   "fee_kind"
   end
 
   add_index "movements", ["card_id"], name: "index_movements_on_card_id", using: :btree

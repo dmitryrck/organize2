@@ -32,21 +32,24 @@ describe 'Outgo', type: :feature do
     fill_in 'Description', with: 'Outgo#1'
     fill_in 'Category', with: 'Food'
     expect(page).to have_field 'Paid at', with: Date.current.to_s
-    fill_in 'Paid at', with: '2015-05-31'
-    fill_in 'Value', with: '101'
+    fill_in 'Paid at', with: Date.current.to_s
+    fill_in 'Value', with: '120.22'
     expect(page).to have_select 'Kind', selected: 'Account'
     select 'Account#1', from: '* Account'
+    fill_in 'Fee', with: '4.17'
+    select 'IOF', from: 'Fee kind'
 
     click_on 'Create'
 
     expect(page).to have_content 'Outgo was successfully created.'
 
     expect(page).to have_content 'Description: Outgo#1'
-    expect(page).to have_content 'Value: $101'
+    expect(page).to have_content 'Value: $120.22'
     expect(page).to have_content 'Kind: Account'
     expect(page).to have_content 'Account/Card: Account#1'
     expect(page).to have_content 'Category: Food'
-    expect(page).to have_content 'Paid at: 2015-05-31'
+    expect(page).to have_content "Paid at: #{Date.current}"
+    expect(page).to have_content 'Fee: $4.17000000 (IOF)'
   end
 
   it 'create with negative value' do

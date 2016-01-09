@@ -1,12 +1,16 @@
 class Outgo < Movement
+  extend EnumerateIt
+
   belongs_to :card
+
+  has_enumeration_for :fee_kind
 
   def to_s
     "#{description} - #{value}"
   end
 
   def total
-    value
+    value + fee
   end
 
   def summarize?
