@@ -196,6 +196,12 @@ describe 'Outgo', type: :feature do
       expect(outgo.chargeable.reload.balance).to eq 90.0
     end
 
+    it 'remove funds when outgo has fee' do
+      outgo.update(fee: 1)
+      visit confirm_outgo_path(outgo)
+      expect(outgo.chargeable.reload.balance).to eq 89.0
+    end
+
     it 'should disable value field' do
       visit confirm_outgo_path(outgo)
       visit edit_outgo_path(outgo)

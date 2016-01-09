@@ -39,7 +39,7 @@ class OutgosController < MovementsController
 
       @outgo.transaction do
         @outgo.update_column(:paid, true)
-        account.update_column(:balance, account.balance - @outgo.value)
+        account.update_column(:balance, account.balance - @outgo.total)
       end
 
       flash[:notice] = 'Outgo was successfully confirmed'
@@ -60,7 +60,7 @@ class OutgosController < MovementsController
 
       @outgo.transaction do
         @outgo.update_column(:paid, false)
-        account.update_column(:balance, account.balance + @outgo.value)
+        account.update_column(:balance, account.balance + @outgo.total)
       end
 
       flash[:notice] = 'Outgo was successfully unconfirmed'
