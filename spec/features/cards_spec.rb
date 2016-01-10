@@ -47,7 +47,7 @@ describe 'Card', type: :feature do
     expect(page).to have_content 'Active: No'
   end
 
-  it 'paginate card movements' do
+  it 'show only unpaid outgos' do
     card = Card.create name: 'Card#1',
       limit: 100,
       payment_day: 15
@@ -55,18 +55,19 @@ describe 'Card', type: :feature do
     Outgo.create description: 'Outgo#1',
       value: 100,
       paid_at: Date.current,
+      paid: true,
       chargeable: card
 
     Outgo.create description: 'Outgo#2',
       value: 100,
+      paid: false,
       paid_at: 1.month.ago,
       chargeable: card
 
-    click_on 'Card'
+    click_on 'Cards'
     click_on "##{card.id}"
 
-    expect(page).to have_content 'Outgo#1'
-    click_on 'Previous'
+    expect(page).not_to have_content 'Outgo#1'
     expect(page).to have_content 'Outgo#2'
   end
 
