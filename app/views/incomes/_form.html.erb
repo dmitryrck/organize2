@@ -5,9 +5,15 @@
         <%= f.input :description, input_html: { autofocus: true } %>
         <%= f.input :paid_at, as: :string, input_html: { class: :date } %>
         <%= f.input :category %>
-        <%= f.input :chargeable_type, as: :hidden, input_html: { value: 'Account' } %>
-        <%= f.association :chargeable, collection: Account.ordered %>
-        <%= f.input :value, disabled: @income.paid? %>
+        <% unless @income.chargeable_inactive? %>
+          <%= f.input :chargeable_type, as: :hidden, input_html: { value: 'Account' } %>
+        <% end %>
+        <% if @income.paid? || @income.chargeable_inactive? %>
+          <%= f.association :chargeable, collection: [@income.chargeable], label: @income.chargeable_type, disabled: true %>
+        <% else %>
+          <%= f.association :chargeable, collection: Account.active.ordered, label: 'Account' %>
+        <% end %>
+        <%= f.input :value, disabled: (@income.paid? || @income.chargeable_inactive?) %>
       </div>
 
       <div class="form-actions">

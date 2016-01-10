@@ -37,6 +37,6 @@ class CardsController < ApplicationController
   def card_params
     params
       .require(:card)
-      .permit(:name, :limit, :payment_day)
+      .permit(:active, :name, :limit, :payment_day)
   end
 end

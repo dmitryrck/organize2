@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160109093632) do
+ActiveRecord::Schema.define(version: 20160110111801) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,8 +20,9 @@ ActiveRecord::Schema.define(version: 20160109093632) do
     t.string   "name"
     t.decimal  "start_balance", default: 0.0
     t.decimal  "balance",       default: 0.0
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.boolean  "active",        default: true
   end
 
   create_table "cards", force: :cascade do |t|
@@ -30,6 +31,7 @@ ActiveRecord::Schema.define(version: 20160109093632) do
     t.integer  "payment_day"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "active",      default: true
   end
 
   create_table "movements", force: :cascade do |t|

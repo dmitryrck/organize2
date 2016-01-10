@@ -4,7 +4,13 @@ module Organize2
 
     matcher :have_disabled_field do |name, options|
       match do |page|
-        selector = XPath.descendant(:input)[XPath.attr(:id).equals(XPath.anywhere(:label)[XPath.string.n.contains(name)].attr(:for))]
+        kind = if options && options.fetch(:select, false)
+                 :select
+               else
+                 :input
+               end
+
+        selector = XPath.descendant(kind)[XPath.attr(:id).equals(XPath.anywhere(:label)[XPath.string.n.contains(name)].attr(:for))]
 
         field = page.find(:xpath, selector)
 

@@ -2,6 +2,7 @@
   <div class="panel-body">
     <%= simple_form_for @card do |f| %>
       <div class="form-inputs">
+        <%= f.input :active if @card.persisted? %>
         <%= f.input :name, input_html: { autofocus: true } %>
         <%= f.input :limit %>
         <%= f.input :payment_day %>

@@ -25,4 +25,22 @@ RSpec.describe Account, type: :model do
     subject.balance = nil
     expect(subject).to_not be_valid
   end
+
+  context 'inactive?' do
+    context 'when it is active' do
+      before do
+        subject.active = true
+      end
+
+      it { is_expected.not_to be_inactive }
+    end
+
+    context 'when it is inactive' do
+      before do
+        subject.active = false
+      end
+
+      it { is_expected.to be_inactive }
+    end
+  end
 end

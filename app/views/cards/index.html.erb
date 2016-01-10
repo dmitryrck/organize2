@@ -20,7 +20,7 @@
 
     <tbody>
       <% @cards.each do |card| %>
-        <tr>
+        <tr class="<%= card.active? ? :success : :warning %>">
           <td>
             <%= link_to card do %>
               #<%= card.id %>

@@ -4,9 +4,7 @@ class Transfer < ActiveRecord::Base
 
   validates :value, :source, :destination, :transfered_at, presence: true
 
-  scope :ordered, -> {
-    order("transfered_at desc")
-  }
+  scope :ordered, -> { order('transfered_at desc') }
 
   scope :by_period, lambda { |period|
     date = Date.new(period.year.to_i, period.month.to_i, 1)

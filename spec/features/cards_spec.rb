@@ -10,6 +10,7 @@ describe 'Card', type: :feature do
 
     click_on 'New'
 
+    expect(page).not_to have_field 'Active'
     fill_in 'Name', with: 'Card#1'
     fill_in 'Limit', with: '1000'
     fill_in 'Payment day', with: '15'
@@ -34,6 +35,7 @@ describe 'Card', type: :feature do
 
     click_on 'Edit'
 
+    uncheck 'Active'
     fill_in 'Name', with: 'Card#2'
     fill_in 'Payment day', with: '1'
 
@@ -42,6 +44,7 @@ describe 'Card', type: :feature do
     expect(page).to have_content 'Card was successfully updated.'
     expect(page).to have_content 'Name: Card#2'
     expect(page).to have_content 'Payment day: 1'
+    expect(page).to have_content 'Active: No'
   end
 
   it 'paginate card movements' do

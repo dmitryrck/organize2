@@ -19,7 +19,7 @@
 
     <tbody>
       <% @accounts.each do |account| %>
-        <tr>
+        <tr class="<%= account.active? ? :success : :warning %>">
           <td>
             <%= link_to account do %>
               #<%= account.id %>

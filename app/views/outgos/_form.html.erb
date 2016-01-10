@@ -9,10 +9,14 @@
         <%= f.input :description, input_html: { autofocus: true } %>
         <%= f.input :paid_at, as: :string, input_html: { class: :date } %>
         <%= f.input :category %>
-        <%= f.input :chargeable_type, collection: %w(Account Card) %>
-        <%= f.association :chargeable, collection: (@outgo.chargeable_type == 'Account' ? Account.ordered : Card.ordered), label: @outgo.chargeable_type %>
-        <%= f.input :value, disabled: @outgo.paid? %>
-        <%= f.input :fee, disabled: @outgo.paid? %>
+        <%= f.input :chargeable_type, collection: %w(Account Card), disabled: (@outgo.paid? || @outgo.chargeable_inactive?) %>
+        <% if @outgo.paid? || @outgo.chargeable_inactive? %>
+          <%= f.association :chargeable, collection: [@outgo.chargeable], label: @outgo.chargeable_type, disabled: true %>
+        <% else %>
+          <%= f.association :chargeable, collection: (@outgo.chargeable_type == 'Account' ? Account.active.ordered : Card.active.ordered), label: @outgo.chargeable_type %>
+        <% end %>
+        <%= f.input :value, disabled: (@outgo.paid? || @outgo.chargeable_inactive?) %>
+        <%= f.input :fee, disabled: (@outgo.paid? || @outgo.chargeable_inactive?) %>
         <%= f.input :fee_kind, collection: FeeKind %>
         <% if f.object.card.present? %>
           <div class="outgo-checkboxes">
@@ -34,6 +38,6 @@
 </div>
 
 <%= javascript_tag do %>
-  window.accounts = <%= JSON.dump(Account.all.map { |a| { id: a.id, name: a.to_s } }).html_safe %>;
-  window.cards = <%= JSON.dump(Card.all.map { |a| { id: a.id, name: a.to_s } }).html_safe %>;
+  window.accounts = <%= JSON.dump(Account.active.ordered.map { |a| { id: a.id, name: a.to_s } }).html_safe %>;
+  window.cards = <%= JSON.dump(Card.active.ordered.all.map { |a| { id: a.id, name: a.to_s } }).html_safe %>;
 <% end %>

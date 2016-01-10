@@ -1,6 +1,7 @@
 <div class="panel panel-default">
   <div class="panel-body">
     <%= show_for @account do |show| %>
+      <%= show.attribute :active %>
       <%= show.attribute :name %>
       <%= show.attribute :start_balance do %>
         <%= number_to_currency @account.start_balance %>

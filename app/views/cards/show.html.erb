@@ -1,6 +1,7 @@
 <div class="panel panel-default">
   <div class="panel-body">
     <%= show_for @card do |show| %>
+      <%= show.attribute :active %>
       <%= show.attribute :name %>
       <%= show.attribute :limit do %>
         <%= number_to_currency @card.limit %>

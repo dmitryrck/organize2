@@ -7,17 +7,11 @@ class Movement < ActiveRecord::Base
   belongs_to :parent, class_name: 'Movement'
   has_many :outgos, foreign_key: :parent_id
 
-  scope :ordered, -> {
-    order("paid_at desc")
-  }
+  delegate :inactive?, to: :chargeable, allow_nil: true, prefix: true
 
-  scope :paid, -> {
-    where(paid: true)
-  }
-
-  scope :unpaid, -> {
-    where(paid: false)
-  }
+  scope :ordered, -> { order('paid_at desc') }
+  scope :paid, -> { where(paid: true) }
+  scope :unpaid, -> { where(paid: false) }
 
   scope :by_period, lambda { |period|
     date = Date.new(period.year.to_i, period.month.to_i, 1)

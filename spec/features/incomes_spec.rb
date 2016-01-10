@@ -68,6 +68,41 @@ describe 'Income', type: :feature do
     expect(page).to have_content 'Paid at: 2014-12-31'
   end
 
+  context "can't edit value or kind" do
+    it 'if paid' do
+      income = Income.create description: 'Income#1',
+        value: 100,
+        paid_at: Date.current,
+        paid: true,
+        chargeable: Account.create(name: 'Account#1')
+
+      click_on 'Incomes'
+
+      click_on income.id
+
+      click_on 'Edit'
+
+      expect(page).to have_disabled_field 'Account', select: true
+      expect(page).to have_disabled_field 'Value'
+    end
+
+    it 'if account is inactive', js: true do
+      income = Income.create description: 'Income#1',
+        value: 100,
+        paid_at: Date.current,
+        chargeable: Account.create(name: 'Account#1', active: false)
+
+      click_on 'Incomes'
+
+      click_on income.id
+
+      click_on 'Edit'
+
+      expect(page).to have_disabled_field 'Value'
+      expect(page).to have_disabled_field 'Account', select: true
+    end
+  end
+
   it 'duplicate' do
     income = Income.create description: 'Income#1',
       value: 25,

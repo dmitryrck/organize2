@@ -145,6 +145,63 @@ describe 'Outgo', type: :feature do
     expect(page).to have_button 'Create Outgo'
   end
 
+  context "can't edit value or kind" do
+    it 'if paid' do
+      outgo = Outgo.create description: 'Outgo#1',
+        value: 100,
+        paid_at: Date.current,
+        paid: true,
+        chargeable: Account.create(name: 'Account#1')
+
+      click_on 'Outgos'
+
+      click_on outgo.id
+
+      click_on 'Edit'
+
+      expect(page).to have_disabled_field 'Kind', select: true
+      expect(page).to have_disabled_field 'Account', select: true
+      expect(page).to have_disabled_field 'Value'
+      expect(page).to have_disabled_field 'Fee'
+    end
+
+    it 'if chargeable is card and inactive' do
+      outgo = Outgo.create description: 'Outgo#1',
+        value: 100,
+        paid_at: Date.current,
+        chargeable: Card.create(name: 'Account#1', active: false)
+
+      click_on 'Outgos'
+
+      click_on outgo.id
+
+      click_on 'Edit'
+
+      expect(page).to have_disabled_field 'Kind', select: true
+      expect(page).to have_disabled_field 'Card', select: true
+      expect(page).to have_disabled_field 'Value'
+      expect(page).to have_disabled_field 'Fee'
+    end
+
+    it 'if chargeable is account and inactive' do
+      outgo = Outgo.create description: 'Outgo#1',
+        value: 100,
+        paid_at: Date.current,
+        chargeable: Account.create(name: 'Account#1', active: false)
+
+      click_on 'Outgos'
+
+      click_on outgo.id
+
+      click_on 'Edit'
+
+      expect(page).to have_disabled_field 'Kind', select: true
+      expect(page).to have_disabled_field 'Account', select: true
+      expect(page).to have_disabled_field 'Value'
+      expect(page).to have_disabled_field 'Fee'
+    end
+  end
+
   it 'update' do
     outgo = Outgo.create description: 'Outgo#1',
       value: 100,

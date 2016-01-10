@@ -4,8 +4,13 @@ class Account < ActiveRecord::Base
   has_many :movements, as: :chargeable, dependent: :restrict_with_error
 
   scope :ordered, -> { order(:name) }
+  scope :active, -> { where(active: true) }
 
   def to_s
     name
+  end
+
+  def inactive?
+    !active?
   end
 end

@@ -10,6 +10,7 @@ describe 'Account', type: :feature do
 
     click_on 'New'
 
+    expect(page).not_to have_field 'Active'
     fill_in 'Name', with: 'Account#1'
     expect(page).to have_field 'Start balance', with: '0.0'
     fill_in 'Start balance', with: '10'
@@ -35,6 +36,7 @@ describe 'Account', type: :feature do
 
     click_on 'Edit'
 
+    uncheck 'Active'
     fill_in 'Name', with: 'Account#2'
     expect(page).not_to have_field 'Start balance'
 
@@ -43,5 +45,6 @@ describe 'Account', type: :feature do
     expect(page).to have_content 'Account was successfully updated.'
     expect(page).to have_content 'Name: Account#2'
     expect(page).to have_content 'Start balance: $10.00'
+    expect(page).to have_content 'Active: No'
   end
 end
