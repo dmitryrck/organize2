@@ -20,7 +20,7 @@
         <%= f.input :fee_kind, collection: FeeKind %>
         <% if f.object.card.present? %>
           <div class="outgo-checkboxes">
-            <%= f.association :outgos, as: :check_boxes, collection: (f.object.card.movements.unpaid + f.object.outgos).uniq %>
+            <%= f.association :outgos, as: :check_boxes, collection: (f.object.card.movements.unpaid + f.object.outgos).uniq, label_method: :description_and_total %>
           </div>
         <% end %>
       </div>

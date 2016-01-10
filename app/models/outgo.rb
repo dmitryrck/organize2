@@ -9,7 +9,11 @@ class Outgo < Movement
   has_enumeration_for :fee_kind
 
   def to_s
-    "#{description} - #{value}"
+    description
+  end
+
+  def description_and_total
+    "#{description} - #{total}"
   end
 
   def total
