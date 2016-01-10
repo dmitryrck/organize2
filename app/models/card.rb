@@ -13,4 +13,8 @@ class Card < ActiveRecord::Base
   def inactive?
     !active?
   end
+
+  def kind_and_name
+    "Card - #{name}"
+  end
 end

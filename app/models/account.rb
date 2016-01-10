@@ -13,4 +13,8 @@ class Account < ActiveRecord::Base
   def inactive?
     !active?
   end
+
+  def kind_and_name
+    "Account - #{name}"
+  end
 end

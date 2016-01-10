@@ -1,0 +1,24 @@
+<div class="panel panel-default">
+  <div class="panel-body">
+    <%= simple_form_for @movement, as: :movement, url: movement_path(@movement) do |f| %>
+      <div class="form-inputs">
+        <%= f.input :paid %>
+        <%= f.association :card %>
+        <%= f.input :parent_id, label: 'Parent ID' %>
+        <%= f.input :description, input_html: { autofocus: true } %>
+        <%= f.input :paid_at, as: :string, input_html: { class: :date } %>
+        <%= f.input :category %>
+        <%= f.input :chargeable_type, collection: %w(Account Card) %>
+        <%= f.association :chargeable, collection: [Account.ordered, Card.ordered].flatten, label_method: :kind_and_name %>
+
+        <%= f.input :value %>
+        <%= f.input :fee %>
+        <%= f.input :fee_kind, collection: FeeKind %>
+      </div>
+
+      <div class="form-actions">
+        <%= f.submit class: 'btn btn-success' %>
+      </div>
+    <% end %>
+  </div>
+</div>

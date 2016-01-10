@@ -10,6 +10,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :movements, only: [:show, :update]
+
   resources :outgos do
     member do
       get :confirm
