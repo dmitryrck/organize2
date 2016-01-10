@@ -343,6 +343,31 @@ describe 'Outgo', type: :feature do
       expect(outgo.chargeable.reload.balance).to eq 110.0
     end
 
+    it 'should mark suboutgos as unpaid' do
+      suboutgo = Outgo.create(
+        description: 'Suboutgo#1',
+        value: 10,
+        paid_at: Date.current,
+        paid: true,
+        parent: outgo,
+        chargeable: Account.create(name: 'Account#2', balance: 100.0)
+      )
+
+      outgo2 = Outgo.create(
+        description: 'Outgo#2',
+        value: 10,
+        paid_at: Date.current,
+        paid: true,
+        chargeable: Account.create(name: 'Account#2', balance: 100.0)
+      )
+
+      visit unconfirm_outgo_path(outgo)
+
+      expect(outgo.chargeable.reload.balance).to eq 110.0
+      expect(suboutgo.reload).to be_unpaid
+      expect(outgo2.reload).to be_paid
+    end
+
     it 'cannot unconfirm if chargeable is a card' do
       outgo.update(chargeable: Card.create(name: 'Account#1'))
 

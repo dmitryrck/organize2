@@ -65,6 +65,7 @@ class OutgosController < MovementsController
 
       @outgo.transaction do
         @outgo.update_column(:paid, false)
+        @outgo.outgos.update_all(paid: false)
         account.update_column(:balance, account.balance + @outgo.total)
       end
 
