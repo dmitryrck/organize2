@@ -265,6 +265,30 @@ describe 'Outgo', type: :feature do
       expect(page).to have_disabled_field 'Value'
     end
 
+    it 'should confirm sub outgos too' do
+      suboutgo = Outgo.create(
+        description: 'SubOutgo#1',
+        value: 10,
+        paid_at: Date.current,
+        paid: false,
+        parent: outgo,
+        chargeable: Account.create(name: 'Account#2', balance: 100)
+      )
+
+      other_outgo = Outgo.create(
+        description: 'Outgo#2',
+        value: 10,
+        paid_at: Date.current,
+        paid: false,
+        chargeable: Account.create(name: 'Account#3', balance: 100)
+      )
+
+      visit confirm_outgo_path(outgo)
+
+      expect(suboutgo.reload).to be_paid
+      expect(other_outgo.reload).not_to be_paid
+    end
+
     it 'cannot confirm if chargeable is a card' do
       outgo.update(chargeable: Card.create(name: 'Card#1'))
 
