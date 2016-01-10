@@ -23,7 +23,7 @@
 
     <span class="badge badge-info pull-right">
       <%= @movements.count %> items<br>
-      <%= number_to_currency @movements.sum(:value) %>
+      <%= number_to_currency @movements.to_a.sum(&:total) %>
     </span>
   </div>
 
