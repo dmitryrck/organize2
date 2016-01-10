@@ -60,15 +60,13 @@
               <span class="label label-info"><%= movement.category %></span>
             <% end %>
           </td>
-          <td><%= number_to_currency movement.value %></td>
-          <td>
-            <%= movement.chargeable %>
-          </td>
+          <td><%= total movement %></td>
+          <td><%= movement.chargeable %></td>
           <td>
             <%= l movement.paid_at, format: :long %>
           </td>
           <td>
-            <%= link_to(action: :edit, id: movement.id) do %>
+            <%= link_to(edit_outgo_path(movement.id)) do %>
               <i class="fa fa-pencil-square-o"></i>
             <% end %>
           </td>
