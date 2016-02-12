@@ -3,6 +3,7 @@ development: &postgres
   encoding: unicode
   username: postgres
   database: organize2_development
+  host: db
   pool: 5
 
 test:
