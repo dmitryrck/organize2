@@ -3,7 +3,7 @@
     <%= link_to 'New', new_account_path, class: 'btn btn-success' %>
 
     <span class="badge badge-info pull-right">
-      <%= Account.count %>
+      <%= number_to_currency Account.sum(:balance) %>
     </span>
   </div>
 

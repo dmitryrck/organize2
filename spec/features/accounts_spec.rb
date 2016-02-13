@@ -47,4 +47,13 @@ describe 'Account', type: :feature do
     expect(page).to have_content 'Start balance: $10.00'
     expect(page).to have_content 'Active: No'
   end
+
+  it 'should summary at home page' do
+    Account.create name: 'Account#1', balance: 12
+    Account.create name: 'Account#2', balance: 34
+
+    click_on 'Accounts'
+
+    expect(page).to have_content '$46'
+  end
 end
