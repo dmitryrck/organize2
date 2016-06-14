@@ -48,11 +48,11 @@ $(function() {
   $(".outgo-checkboxes").find("[type=checkbox]").on("change", function() {
     var value = 0.0;
 
-    $.each($(".outgo-checkboxes").find("span"), function(idx, outgoSpan) {
-      if($(outgoSpan).find("[type=checkbox]").is(":checked")) {
-        arr = $(outgoSpan).find("label").html().split(" - ");
+    $.each($(".outgo-checkboxes").find("tr"), function(idx, outgoTr) {
+      if($(outgoTr).find("[type=checkbox]").is(":checked")) {
+        var outgoValue = $(outgoTr).data("value")
 
-        value += Number(arr[arr.length-1]);
+        value += Number(outgoValue);
       }
     });
 

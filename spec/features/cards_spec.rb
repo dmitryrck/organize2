@@ -178,10 +178,10 @@ describe 'Card', type: :feature do
     end
 
     it 'shows only unpaid outgos to form' do
-      expect(page).to have_content 'Food#1 - 25'
-      expect(page).to have_content 'Food#2 - 50'
-      expect(page).to have_content 'Food#3 - 75'
-      expect(page).not_to have_content 'Food#4 - 100'
+      expect(page).to have_content 'Food#1 $25'
+      expect(page).to have_content 'Food#2 $50'
+      expect(page).to have_content 'Food#3 $75'
+      expect(page).not_to have_content 'Food#4'
     end
 
     it 'creates outgo with selected outgos', js: true do

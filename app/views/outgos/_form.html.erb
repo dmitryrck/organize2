@@ -20,7 +20,56 @@
         <%= f.input :fee_kind, collection: FeeKind %>
         <% if f.object.card.present? %>
           <div class="outgo-checkboxes">
-            <%= f.association :outgos, as: :check_boxes, collection: (f.object.card.movements.unpaid + f.object.outgos).uniq, label_method: :description_and_total %>
+            <div class="form-group check_boxes optional outgo_outgos">
+              <label class="check_boxes optional control-label">Outgos</label>
+
+              <table class="table table-inbox table-hover">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th>#</th>
+                    <th>Description</th>
+                    <th>Value</th>
+                    <th>Chargeable</th>
+                    <th>Paid at</th>
+                    <th></th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <% @outgos.each do |outgo| %>
+                    <tr class="<%= outgo.paid? ? :success : :warning %>" data-value="<%= outgo.total %>">
+                      <td>
+                        <input class="check_boxes optional" type="checkbox" value="<%= outgo.id %>" name="outgo[outgo_ids][]" id="outgo_outgo_ids_<%= outgo.id %>" <%= 'checked="checked"' if f.object.outgos.include?(outgo) %>>
+                      </td>
+                      <td>
+                        <%= link_to outgo do %>
+                          #<%= outgo.id %>
+                      <% end %>
+                      </td>
+                      <td>
+                        <%= content_tag :label, for: "outgo_outgo_ids_#{outgo.id}" do %>
+                          <%= outgo.description %>
+                          <% if outgo.category.present? %>
+                            <span class="label label-info"><%= outgo.category %></span>
+                          <% end %>
+                        <% end %>
+                      </td>
+                      <td><%= total outgo %></td>
+                      <td><%= outgo.chargeable %></td>
+                      <td>
+                        <%= l outgo.paid_at, format: :long %>
+                      </td>
+                      <td>
+                        <%= link_to(edit_outgo_path(outgo.id)) do %>
+                          <i class="fa fa-pencil-square-o"></i>
+                        <% end %>
+                      </td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
           </div>
         <% end %>
       </div>

@@ -1,6 +1,4 @@
 class OutgosController < MovementsController
-  before_action :set_outgo, only: [:show, :edit, :update, :destroy, :confirm, :unconfirm]
-
   respond_to :html
 
   def index
@@ -17,23 +15,39 @@ class OutgosController < MovementsController
           outgo.chargeable_type = 'Account'
         end
       end
+    @outgos = find_outgos(@outgo)
 
     @outgo.paid_at = Date.current
+  end
+
+  def show
+    @outgo = Outgo.find(params[:id])
+    @outgos = find_outgos(@outgo)
+  end
+
+  def edit
+    @outgo = Outgo.find(params[:id])
+    @outgos = find_outgos(@outgo)
   end
 
   def create
     @outgo = Outgo.new(outgo_params)
     @outgo.save
 
+    @outgos = find_outgos(@outgo)
+
     respond_with @outgo
   end
 
   def update
+    @outgo = Outgo.find(params[:id])
     @outgo.update(outgo_params)
+    @outgos = find_outgos(@outgo)
     respond_with @outgo
   end
 
   def confirm
+    @outgo = Outgo.find(params[:id])
     if @outgo.paid?
       flash[:notice] = 'Outgo is already confirmed'
     else
@@ -60,6 +74,7 @@ class OutgosController < MovementsController
   end
 
   def unconfirm
+    @outgo = Outgo.find(params[:id])
     if @outgo.chargeable.is_a?(Account)
       account = @outgo.chargeable
 
@@ -82,6 +97,7 @@ class OutgosController < MovementsController
   end
 
   def destroy
+    @outgo = Outgo.find(params[:id])
     if @outgo.unpaid?
       year, month = @outgo.year, @outgo.month
 
@@ -94,8 +110,16 @@ class OutgosController < MovementsController
 
   private
 
-  def set_outgo
-    @outgo = Outgo.find(params[:id])
+  def find_outgos(outgo)
+    if outgo.card.present?
+      (outgo.card.movements.unpaid + outgo.outgos).
+        uniq.
+        sort do |x, y|
+          [x.paid_at, x.id] <=> [y.paid_at, y.id]
+        end
+    else
+      []
+    end
   end
 
   def outgo_params
