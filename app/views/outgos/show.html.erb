@@ -17,17 +17,72 @@
       <%= show.attribute :fee do %>
         <%= number_to_currency @outgo.fee, precision: 8 %> (<%= @outgo.fee_kind_humanize %>)
       <% end %>
-      <%= show.association :outgos %>
+      <%= show.association :outgos do %>
+        <% if @outgos.any? %>
+          <div class="row">
+            <div class="col-md-8">
+              <table class="table table-inbox table-hover">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Description</th>
+                    <th>Value</th>
+                    <th>Chargeable</th>
+                    <th>Paid at</th>
+                    <th></th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <% @outgos.each do |movement| %>
+                    <%= render partial: 'movements/movement', locals: { movement: movement } %>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="col-md-4">
+              <canvas id="myChart" width="100" height="100"></canvas>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
     <% end %>
 
-    <%= link_to 'Duplicate', new_outgo_path(outgo: @outgo.duplicable_attributes), class: 'btn btn-info' %>
-    <% if @outgo.paid? %>
-      <%= link_to 'Unconfirm', {action: :unconfirm, id: @outgo.id, back: :show}, title: 'Unconfirm', class: 'btn btn-warning' %>
-    <% else %>
-      <%= link_to 'Confirm', {action: :confirm, id: @outgo.id, back: :show}, title: 'Confirm', class: 'btn btn-success' %>
-    <% end %>
-    <%= link_to 'Edit', edit_outgo_path(@outgo), class: 'btn btn-info' %>
-    <%= link_to 'Delete', @outgo, method: :delete, confirm: 'Are you sure?', class: 'btn btn-danger' %>
-    <%= link_to 'Back', outgos_path, class: 'btn btn-default' %>
+    <hr>
+
+    <div class="panel-footer">
+      <%= link_to 'Duplicate', new_outgo_path(outgo: @outgo.duplicable_attributes), class: 'btn btn-info' %>
+      <% if @outgo.paid? %>
+        <%= link_to 'Unconfirm', {action: :unconfirm, id: @outgo.id, back: :show}, title: 'Unconfirm', class: 'btn btn-warning' %>
+      <% else %>
+        <%= link_to 'Confirm', {action: :confirm, id: @outgo.id, back: :show}, title: 'Confirm', class: 'btn btn-success' %>
+      <% end %>
+      <%= link_to 'Edit', edit_outgo_path(@outgo), class: 'btn btn-info' %>
+      <%= link_to 'Delete', @outgo, method: :delete, confirm: 'Are you sure?', class: 'btn btn-danger' %>
+      <%= link_to 'Back', outgos_path, class: 'btn btn-default' %>
+    </div>
   </div>
 </div>
+
+<% if @outgos.any? %>
+  <%= content_for :javascript do %>
+    <script>
+      var data = {
+        labels: <%= @chartjs.map { |key, _| key.present? ? key : "Undefined" }.to_json.html_safe %>,
+        datasets: [
+        {
+          data: <%= @chartjs.map { |_, value| value }.to_json.html_safe %>,
+          backgroundColor: <%= 1.upto(@chartjs.size).map { "#%06x" % (rand * 0xffffff) }.to_json.html_safe %>,
+        }]
+      };
+
+      var ctx = $("#myChart").get(0).getContext("2d");
+
+      var myPieChart = new Chart(ctx, {
+        type: 'pie',
+        data: data,
+      });
+    </script>
+  <% end %>
+<% end %>

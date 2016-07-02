@@ -41,29 +41,7 @@
 
     <tbody>
       <% @movements.each do |movement| %>
-        <tr class="<%= movement.paid? ? :success : :warning %>">
-          <td>
-            <%= link_to movement do %>
-              #<%= movement.id %>
-            <% end %>
-          </td>
-          <td>
-            <%= movement.description %>
-            <% if movement.category.present? %>
-              <span class="label label-info"><%= movement.category %></span>
-            <% end %>
-          </td>
-          <td><%= total movement %></td>
-          <td><%= movement.chargeable %></td>
-          <td>
-            <%= l movement.paid_at, format: :long %>
-          </td>
-          <td>
-            <%= link_to(edit_outgo_path(movement.id)) do %>
-              <i class="fa fa-pencil-square-o"></i>
-            <% end %>
-          </td>
-        </tr>
+        <%= render partial: 'movements/movement', locals: { movement: movement } %>
       <% end %>
     </tbody>
   </table>
