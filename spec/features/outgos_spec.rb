@@ -131,7 +131,8 @@ describe 'Outgo', type: :feature do
 
     click_on 'Outgos'
 
-    click_on outgo.id
+    visit outgos_path(year: outgo.year, month: outgo.month)
+    click_on "##{outgo.id}"
 
     click_on 'Duplicate'
 

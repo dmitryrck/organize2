@@ -110,9 +110,8 @@ describe 'Income', type: :feature do
       category: 'Category#1',
       chargeable: Account.create(name: 'Account#1')
 
-    click_on 'Incomes'
-
-    click_on income.id
+    visit incomes_path(year: income.year, month: income.month)
+    click_on "##{income.id}"
 
     click_on 'Duplicate'
 
