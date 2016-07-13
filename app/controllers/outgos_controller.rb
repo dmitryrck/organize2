@@ -22,8 +22,7 @@ class OutgosController < MovementsController
 
   def show
     @outgo = Outgo.find(params[:id])
-    @outgos = find_outgos(@outgo)
-    @chartjs = CreditCardReport.build(@outgos)
+    @chartjs = CreditCardReport.build(@outgo.outgos)
   end
 
   def edit

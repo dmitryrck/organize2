@@ -18,7 +18,7 @@
         <%= number_to_currency @outgo.fee, precision: 8 %> (<%= @outgo.fee_kind_humanize %>)
       <% end %>
       <%= show.association :outgos do %>
-        <% if @outgos.any? %>
+        <% if @outgo.outgos.any? %>
           <div class="row">
             <div class="col-md-8">
               <table class="table table-inbox table-hover">
@@ -34,7 +34,7 @@
                 </thead>
 
                 <tbody>
-                  <% @outgos.each do |movement| %>
+                  <% @outgo.outgos.each do |movement| %>
                     <%= render partial: 'movements/movement', locals: { movement: movement } %>
                   <% end %>
                 </tbody>
@@ -65,7 +65,7 @@
   </div>
 </div>
 
-<% if @outgos.any? %>
+<% if @outgo.outgos.any? %>
   <%= content_for :javascript do %>
     <script>
       var data = {
