@@ -1,3 +1,8 @@
 class FeeKind < EnumerateIt::Base
-  associate_values :iof, :network, :bank_transfer
+  associate_values(
+    :bank_transfer,
+    :exchange,
+    :iof,
+    :network,
+  )
 end
