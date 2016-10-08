@@ -13,3 +13,4 @@ config/database.yml
 /log/*
 !/log/.keep
 /tmp
+files

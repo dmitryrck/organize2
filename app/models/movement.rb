@@ -2,6 +2,9 @@ class Movement < ActiveRecord::Base
   self.inheritance_column = :kind
 
   validates :description, :chargeable, :value, :paid_at, presence: true
+  validates :transaction_hash, uniqueness:
+    { scope: [:chargeable_type, :chargeable_id] },
+    allow_blank: true
 
   belongs_to :chargeable, polymorphic: true
 
@@ -53,5 +56,10 @@ class Movement < ActiveRecord::Base
 
   def total
     value
+  end
+
+  def related_value
+    return value if kind == 'Income'
+    return value * (-1)
   end
 end

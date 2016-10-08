@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160110111801) do
+ActiveRecord::Schema.define(version: 20161008143524) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,9 +37,9 @@ ActiveRecord::Schema.define(version: 20160110111801) do
   create_table "movements", force: :cascade do |t|
     t.string   "description"
     t.decimal  "value"
-    t.boolean  "paid",                                      default: false
-    t.datetime "created_at",                                                null: false
-    t.datetime "updated_at",                                                null: false
+    t.boolean  "paid",                                       default: false
+    t.datetime "created_at",                                                 null: false
+    t.datetime "updated_at",                                                 null: false
     t.string   "kind"
     t.date     "paid_at"
     t.string   "category"
@@ -47,8 +47,9 @@ ActiveRecord::Schema.define(version: 20160110111801) do
     t.string   "chargeable_type"
     t.integer  "parent_id"
     t.integer  "card_id"
-    t.decimal  "fee",             precision: 15, scale: 10, default: 0.0
+    t.decimal  "fee",              precision: 15, scale: 10, default: 0.0
     t.string   "fee_kind"
+    t.string   "transaction_hash"
   end
 
   add_index "movements", ["card_id"], name: "index_movements_on_card_id", using: :btree
@@ -56,6 +57,7 @@ ActiveRecord::Schema.define(version: 20160110111801) do
   add_index "movements", ["paid"], name: "index_movements_on_paid", using: :btree
   add_index "movements", ["paid_at"], name: "index_movements_on_paid_at", using: :btree
   add_index "movements", ["parent_id"], name: "index_movements_on_parent_id", using: :btree
+  add_index "movements", ["transaction_hash", "chargeable_type", "chargeable_id"], name: "index_movements_on_transaction_hash", unique: true, using: :btree
 
   create_table "transfers", force: :cascade do |t|
     t.integer  "source_id"

@@ -64,7 +64,17 @@ describe MovementsHelper do
       end
     end
 
-    context 'when has also fee value' do
+    context 'when when value is less than 0.01' do
+      let(:movement) do
+        double(:Movement, value: 0.001, fee: 0)
+      end
+
+      it 'returns just value' do
+        expect(total(movement)).to eq "$0.00100000"
+      end
+    end
+
+    context 'when has fee' do
       let(:movement) do
         double(:Movement, value: 100, fee: 4.21, fee_kind: nil)
       end

@@ -24,6 +24,7 @@ end
 group :test do
   gem 'poltergeist'
   gem 'database_cleaner'
+  gem 'factory_girl'
 end
 
 group :production do
