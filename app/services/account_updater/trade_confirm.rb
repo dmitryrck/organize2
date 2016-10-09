@@ -1,13 +1,5 @@
 module AccountUpdater
   class TradeConfirm < TwoAccountsBase
-    def update!
-      @object.transaction do
-        @object.update_column(:confirmed, true)
-        source.update_column(:balance, final_source_balance)
-        destination.update_column(:balance, final_destination_balance)
-      end
-    end
-
     private
 
     def final_source_balance

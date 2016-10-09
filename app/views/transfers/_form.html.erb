@@ -5,8 +5,8 @@
         <%= f.association :source, collection: Account.ordered %>
         <%= f.association :destination, collection: Account.ordered %>
         <%= f.input :transfered_at, as: :string, input_html: { class: :date } %>
-        <%= f.input :value, disabled: @transfer.transfered? %>
-        <%= f.input :fee, disabled: @transfer.transfered? %>
+        <%= f.input :value, disabled: @transfer.confirmed? %>
+        <%= f.input :fee, disabled: @transfer.confirmed? %>
       </div>
 
       <div class="form-actions">

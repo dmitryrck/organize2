@@ -29,7 +29,7 @@
 
     <tbody>
       <% @transfers.each do |transfer| %>
-        <tr class="<%= transfer.transfered? ? :success : :warning %>">
+        <tr class="<%= transfer.confirmed? ? :success : :warning %>">
           <td>
             <%= link_to transfer do %>
               #<%= transfer.id %>
@@ -41,7 +41,7 @@
           <td><%= numeric transfer.fee %></td>
           <td><%= transfer.transfered_at %></td>
           <td>
-            <% if transfer.transfered? %>
+            <% if transfer.confirmed? %>
               <%= link_to({action: :unconfirm, id: transfer.id}, title: 'Unconfirm') do %>
                 <i class="fa fa-times"></i>
               <% end %>

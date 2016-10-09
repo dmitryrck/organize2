@@ -1,4 +1,6 @@
 class Transfer < ActiveRecord::Base
+  delegate :year, :month, to: :transfered_at, allow_nil: true
+
   belongs_to :source, class_name: 'Account'
   belongs_to :destination, class_name: 'Account'
 
@@ -11,12 +13,4 @@ class Transfer < ActiveRecord::Base
 
     where('transfered_at >= ? and transfered_at <= ?', date.beginning_of_month, date.end_of_month)
   }
-
-  def year
-    transfered_at.year
-  end
-
-  def month
-    transfered_at.month
-  end
 end

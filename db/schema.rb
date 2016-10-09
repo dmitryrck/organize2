@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161009125332) do
+ActiveRecord::Schema.define(version: 20161009132132) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -80,7 +80,7 @@ ActiveRecord::Schema.define(version: 20161009125332) do
     t.integer  "source_id"
     t.integer  "destination_id"
     t.decimal  "value"
-    t.boolean  "transfered",       default: false
+    t.boolean  "confirmed",        default: false
     t.date     "transfered_at"
     t.datetime "created_at"
     t.datetime "updated_at"

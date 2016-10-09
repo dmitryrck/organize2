@@ -7,7 +7,11 @@ module AccountUpdater
     end
 
     def update!
-      fail "Not implemented"
+      @object.transaction do
+        @object.update_column(:confirmed, flag_value)
+        source.update_column(:balance, final_source_balance)
+        destination.update_column(:balance, final_destination_balance)
+      end
     end
 
     def self.update!(object)
@@ -24,6 +28,10 @@ module AccountUpdater
 
     def final_destination_balance
       fail "Not implemented"
+    end
+
+    def flag_value
+      true
     end
   end
 end

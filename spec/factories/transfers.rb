@@ -8,7 +8,7 @@ FactoryGirl.define do
     transfered_at Date.current
 
     trait :confirmed do
-      transfered true
+      confirmed true
     end
   end
 end
