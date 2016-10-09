@@ -73,9 +73,9 @@ describe 'Transfer', type: :feature do
   end
 
   context 'can confirm' do
-    let(:source) { create(:account, balance: 11) }
-    let(:destination) { transfer.destination }
-    let!(:transfer) { create(:transfer, source: source) }
+    let(:source) { create(:account, balance: 111) }
+    let(:destination) { create(:account2, balance: 100) }
+    let!(:transfer) { create(:transfer, source: source, destination: destination) }
 
     it 'from index', js: true do
       click_on 'Transfers'
@@ -99,8 +99,8 @@ describe 'Transfer', type: :feature do
     it 'transfer funds' do
       visit confirm_transfer_path(transfer)
 
-      expect(source.reload.balance).to eq 0
-      expect(destination.reload.balance).to eq 10
+      expect(source.reload.balance).to eq 100
+      expect(destination.reload.balance).to eq 110
     end
 
     it 'should disable value field' do
