@@ -1,8 +1,8 @@
 module AccountUpdater
-  class TradeConfirm < TwoAccountsBase
+  class TransferConfirm < TwoAccountsBase
     def update!
       @object.transaction do
-        @object.update_column(:confirmed, true)
+        @object.update_column(:transfered, true)
         source.update_column(:balance, final_source_balance)
         destination.update_column(:balance, final_destination_balance)
       end
@@ -11,11 +11,11 @@ module AccountUpdater
     private
 
     def final_source_balance
-      @source_balance - @object.value_out
+      @source_balance - (@object.value + @object.fee)
     end
 
     def final_destination_balance
-      @destination_balance + @object.value_in - @object.fee
+      @destination_balance + @object.value
     end
   end
 end

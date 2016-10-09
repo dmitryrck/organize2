@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe AccountUpdater::TradeConfirm do
   context '#confirm!' do
-    subject { AccountUpdater::TradeUnconfirm.new(trade: trade) }
+    subject { AccountUpdater::TradeUnconfirm.new(trade) }
 
     let(:trade) { create(:trade) }
 

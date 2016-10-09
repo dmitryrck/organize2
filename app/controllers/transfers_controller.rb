@@ -35,16 +35,9 @@ class TransfersController < ApplicationController
   end
 
   def confirm
-    source = @transfer.source
-    destination = @transfer.destination
+    AccountUpdater::TransferConfirm.update!(@transfer)
 
-    @transfer.transaction do
-      @transfer.update_column(:transfered, true)
-      source.update_column(:balance, source.balance - @transfer.value)
-      destination.update_column(:balance, destination.balance + @transfer.value)
-    end
-
-    flash[:notice] = 'Successfully transfered'
+    flash[:notice] = 'Transfer was successfully transfered'
 
     if params[:back] == 'show'
       redirect_to @transfer
@@ -54,16 +47,9 @@ class TransfersController < ApplicationController
   end
 
   def unconfirm
-    source = @transfer.source
-    destination = @transfer.destination
+    AccountUpdater::TransferUnconfirm.update!(@transfer)
 
-    @transfer.transaction do
-      @transfer.update_column(:transfered, false)
-      source.update_column(:balance, source.balance + @transfer.value)
-      destination.update_column(:balance, destination.balance - @transfer.value)
-    end
-
-    flash[:notice] = 'Successfully unconfirmed'
+    flash[:notice] = 'Transfer was successfully unconfirmed'
 
     if params[:back] == 'show'
       redirect_to @transfer
@@ -81,6 +67,6 @@ class TransfersController < ApplicationController
   def transfer_params
     params
       .require(:transfer)
-      .permit(:source_id, :destination_id, :value, :transfered_at)
+      .permit(:source_id, :destination_id, :value, :transfered_at, :fee)
   end
 end

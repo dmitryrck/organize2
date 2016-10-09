@@ -1,9 +1,7 @@
 require 'rails_helper'
 
 describe 'Transfer', type: :feature do
-  before do
-    visit '/'
-  end
+  before { visit '/' }
 
   it 'paginate by month' do
     account1 = Account.create(name: 'Account#1')
@@ -75,28 +73,15 @@ describe 'Transfer', type: :feature do
   end
 
   context 'can confirm' do
-    let(:account1) do
-      Account.create(name: 'Account#1', balance: 10, start_balance: 0)
-    end
-
-    let(:account2) do
-      Account.create(name: 'Account#2', balance: 0, start_balance: 0)
-    end
-
-    let!(:transfer) do
-      Transfer.create(
-        source: account1,
-        destination: account2,
-        value: 10,
-        transfered_at: Date.current
-      )
-    end
+    let(:source) { create(:account, balance: 11) }
+    let(:destination) { transfer.destination }
+    let!(:transfer) { create(:transfer, source: source) }
 
     it 'from index', js: true do
       click_on 'Transfers'
 
       click_link 'Confirm'
-      expect(page).to have_content 'Successfully transfered'
+      expect(page).to have_content 'Transfer was successfully transfered'
       expect(page).to have_link 'Previous Month'
     end
 
@@ -105,7 +90,7 @@ describe 'Transfer', type: :feature do
       click_on transfer.id
 
       click_link 'Confirm'
-      expect(page).to have_content 'Successfully transfered'
+      expect(page).to have_content 'Transfer was successfully transfered'
 
       expect(page).to have_content 'Source: Account#1'
       expect(page).to have_content 'Value: $10.00'
@@ -114,8 +99,8 @@ describe 'Transfer', type: :feature do
     it 'transfer funds' do
       visit confirm_transfer_path(transfer)
 
-      expect(account1.reload.balance).to eq 0
-      expect(account2.reload.balance).to eq 10
+      expect(source.reload.balance).to eq 0
+      expect(destination.reload.balance).to eq 10
     end
 
     it 'should disable value field' do
@@ -127,28 +112,14 @@ describe 'Transfer', type: :feature do
   end
 
   context 'can unconfirm' do
-    let(:account1) do
-      Account.create(name: 'Account#1', balance: 0, start_balance: 0)
-    end
-
-    let(:account2) do
-      Account.create(name: 'Account#2', balance: 10, start_balance: 0)
-    end
-
-    let!(:transfer) do
-      Transfer.create(
-        source: account1,
-        destination: account2,
-        value: 10,
-        transfered: true,
-        transfered_at: Date.current
-      )
-    end
+    let(:source) { transfer.source }
+    let(:destination) { create(:account, balance: 10) }
+    let!(:transfer) { create(:transfer, :confirmed, destination: destination) }
 
     it 'from index' do
       click_on 'Transfers'
       click_link 'Unconfirm'
-      expect(page).to have_content 'Successfully unconfirmed'
+      expect(page).to have_content 'Transfer was successfully unconfirmed'
       expect(page).to have_link 'Previous Month'
     end
 
@@ -156,7 +127,7 @@ describe 'Transfer', type: :feature do
       click_on 'Transfers'
       click_on transfer.id
       click_link 'Unconfirm'
-      expect(page).to have_content 'Successfully unconfirmed'
+      expect(page).to have_content 'Transfer was successfully unconfirmed'
       expect(page).to have_content 'Source: Account#1'
     end
 
@@ -170,8 +141,8 @@ describe 'Transfer', type: :feature do
     it 'transfer the refunds back' do
       visit unconfirm_transfer_path(transfer)
 
-      expect(account1.reload.balance).to eq 10
-      expect(account2.reload.balance).to eq 0
+      expect(source.reload.balance).to eq 11
+      expect(destination.reload.balance).to eq 0
     end
   end
 end

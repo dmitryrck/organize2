@@ -5,7 +5,10 @@
       <%= show.attribute :destination %>
       <%= show.attribute :transfered_at %>
       <%= show.attribute :value do %>
-        <%= number_to_currency @transfer.value %>
+        <%= numeric @transfer.value %>
+      <% end %>
+      <%= show.attribute :fee do %>
+        <%= numeric @transfer.fee %>
       <% end %>
     <% end %>
 

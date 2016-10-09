@@ -20,6 +20,7 @@
         <th>Source</th>
         <th>Destination</th>
         <th>Value</th>
+        <th>Fee</th>
         <th>Confirmed at</th>
         <th></th>
         <th></th>
@@ -36,7 +37,8 @@
           </td>
           <td><%= transfer.source %></td>
           <td><%= transfer.destination %></td>
-          <td><%= number_to_currency transfer.value %></td>
+          <td><%= numeric transfer.value %></td>
+          <td><%= numeric transfer.fee %></td>
           <td><%= transfer.transfered_at %></td>
           <td>
             <% if transfer.transfered? %>
