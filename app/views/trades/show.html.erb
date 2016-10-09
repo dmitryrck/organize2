@@ -1,0 +1,26 @@
+<div class="panel panel-default">
+  <div class="panel-body">
+    <%= show_for @trade do |show| %>
+      <%= show.attribute :source %>
+      <%= show.attribute :destination %>
+      <%= show.attribute :value_in do %>
+        <%= numeric @trade.value_in %>
+      <% end %>
+      <%= show.attribute :value_out do %>
+        <%= numeric @trade.value_out %>
+      <% end %>
+      <%= show.attribute :fee do %>
+        <%= numeric @trade.fee %>
+      <% end %>
+      <%= show.attribute :trade_at %>
+    <% end %>
+
+    <% if @trade.confirmed? %>
+      <%= link_to 'Unconfirm', { action: :unconfirm, id: @trade.id, back: :show }, title: 'Unconfirm', class: 'btn btn-success' %>
+    <% else %>
+      <%= link_to 'Confirm', { action: :confirm, id: @trade.id, back: :show }, title: 'Confirm', class: 'btn btn-warning' %>
+    <% end %>
+    <%= link_to 'Edit', edit_trade_path(@trade), class: 'btn btn-info' %>
+    <%= link_to 'Back', trades_path, class: 'btn btn-default' %>
+  </div>
+</div>

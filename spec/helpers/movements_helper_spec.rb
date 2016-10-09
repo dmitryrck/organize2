@@ -1,5 +1,9 @@
 require 'rails_helper'
 
+module MovementsHelper
+  include ApplicationHelper
+end
+
 describe MovementsHelper do
   context 'table_color' do
     context 'when chargeable type is card and unpaid'do

@@ -6,17 +6,11 @@ module MovementsHelper
   end
 
   def total(movement)
-    value = movement.value
-
-    precision = value < 0.01 ? 8 : 2
-
-    currency = number_to_currency(value, precision: precision)
-
     if movement.fee.blank? || movement.fee.zero?
-      currency
+      numeric(movement.value)
     else
       content_tag :abbr, title: fee(movement) do
-        currency
+        numeric(movement.value)
       end
     end
   end

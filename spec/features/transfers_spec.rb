@@ -160,7 +160,7 @@ describe 'Transfer', type: :feature do
       expect(page).to have_content 'Source: Account#1'
     end
 
-    it 'should disable value field' do
+    it 'should not disable value field' do
       visit unconfirm_transfer_path(transfer)
 
       click_link 'Edit'

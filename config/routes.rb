@@ -19,6 +19,13 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :trades do
+    member do
+      get :confirm
+      get :unconfirm
+    end
+  end
+
   resources :transfers do
     member do
       get :confirm

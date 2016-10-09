@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161008163139) do
+ActiveRecord::Schema.define(version: 20161009004744) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -59,6 +59,23 @@ ActiveRecord::Schema.define(version: 20161008163139) do
   add_index "movements", ["parent_id"], name: "index_movements_on_parent_id", using: :btree
   add_index "movements", ["transaction_hash", "chargeable_type", "chargeable_id"], name: "index_movements_on_transaction_hash", unique: true, using: :btree
 
+  create_table "trades", force: :cascade do |t|
+    t.integer  "source_id"
+    t.integer  "destination_id"
+    t.decimal  "value_in",         default: 0.0
+    t.decimal  "value_out",        default: 0.0
+    t.decimal  "fee",              default: 0.0
+    t.date     "trade_at"
+    t.string   "transaction_hash"
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+    t.boolean  "confirmed",        default: false
+  end
+
+  add_index "trades", ["destination_id"], name: "index_trades_on_destination_id", using: :btree
+  add_index "trades", ["source_id"], name: "index_trades_on_source_id", using: :btree
+  add_index "trades", ["transaction_hash"], name: "index_trades_on_transaction_hash", unique: true, using: :btree
+
   create_table "transfers", force: :cascade do |t|
     t.integer  "source_id"
     t.integer  "destination_id"
@@ -74,4 +91,6 @@ ActiveRecord::Schema.define(version: 20161008163139) do
 
   add_foreign_key "movements", "cards"
   add_foreign_key "movements", "movements", column: "parent_id"
+  add_foreign_key "trades", "accounts", column: "destination_id"
+  add_foreign_key "trades", "accounts", column: "source_id"
 end

@@ -30,6 +30,9 @@
             <%= content_tag :li, class: (:active if controller_name == 'transfers') do %>
               <%= link_to 'Transfers', transfers_path %>
             <% end %>
+            <%= content_tag :li, class: (:active if controller_name == 'trades') do %>
+              <%= link_to 'Trades', trades_path %>
+            <% end %>
             <%= content_tag :li, class: (:active if controller_name == 'accounts') do %>
               <%= link_to 'Accounts', accounts_path %>
             <% end %>
