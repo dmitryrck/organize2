@@ -1,9 +1,7 @@
 require 'rails_helper'
 
 describe 'Account', type: :feature do
-  before do
-    visit '/'
-  end
+  before { visit '/' }
 
   it 'create' do
     click_on 'Accounts'
@@ -12,6 +10,7 @@ describe 'Account', type: :feature do
 
     expect(page).not_to have_field 'Active'
     fill_in 'Name', with: 'Account#1'
+    fill_in 'Currency', with: 'BRL'
     expect(page).to have_field 'Start balance', with: '0.0'
     fill_in 'Start balance', with: '10'
     expect(page).not_to have_field 'Balance'
@@ -21,6 +20,7 @@ describe 'Account', type: :feature do
     expect(page).to have_content 'Account was successfully created.'
 
     expect(page).to have_content 'Name: Account#1'
+    expect(page).to have_content 'Currency: BRL'
     expect(page).to have_content 'Start balance: $10.00'
     expect(page).to have_content 'Balance: $10.00'
 
@@ -49,11 +49,13 @@ describe 'Account', type: :feature do
   end
 
   it 'should summary at home page' do
-    Account.create name: 'Account#1', balance: 12
-    Account.create name: 'Account#2', balance: 34
+    Account.create name: 'Account#1', balance: 12, currency: 'BRL'
+    Account.create name: 'Account#2', balance: 34, currency: 'BRL'
+    Account.create name: 'Account#3', balance: 10, currency: 'USD'
 
     click_on 'Accounts'
 
-    expect(page).to have_content '$46'
+    expect(page).to have_content 'BRL: $46'
+    expect(page).to have_content 'USD: $10'
   end
 end

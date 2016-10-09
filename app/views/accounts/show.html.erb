@@ -3,6 +3,7 @@
     <%= show_for @account do |show| %>
       <%= show.attribute :active %>
       <%= show.attribute :name %>
+      <%= show.attribute :currency %>
       <%= show.attribute :start_balance do %>
         <%= number_to_currency @account.start_balance %>
       <% end %>

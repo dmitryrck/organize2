@@ -2,9 +2,13 @@
   <div class="panel-heading">
     <%= link_to 'New', new_account_path, class: 'btn btn-success' %>
 
-    <span class="badge badge-info pull-right">
-      <%= number_to_currency Account.sum(:balance) %>
-    </span>
+    <div class="pull-right">
+      <% Account.pluck(:currency).uniq.each do |currency| %>
+        <span class="badge badge-info pull-right">
+          <%= currency %>: <%= numeric Account.where(currency: currency).sum(:balance) %>
+        </span>
+      <% end %>
+    </div>
   </div>
 
   <table class="table table-inbox table-hover">
@@ -12,6 +16,7 @@
       <tr>
         <th>#</th>
         <th>Name</th>
+        <th>Currency</th>
         <th>Balance</th>
         <th></th>
       </tr>
@@ -26,6 +31,7 @@
             <% end %>
           </td>
           <td><%= account.name %></td>
+          <td><%= account.currency %></td>
           <td><%= account.balance %></td>
           <td>
             <%= link_to edit_account_path(account) do %>
