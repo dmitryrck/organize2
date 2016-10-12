@@ -10,7 +10,6 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :movements, only: [:show, :update]
   resources :pendings, only: :index
 
   resources :outgos do
