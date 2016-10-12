@@ -38,4 +38,11 @@ RSpec.describe Movement, type: :model do
       end
     end
   end
+
+  context '#to_s' do
+    it 'should return description' do
+      subject.description = 'Description#1'
+      expect(subject.to_s).to eq 'Description#1'
+    end
+  end
 end

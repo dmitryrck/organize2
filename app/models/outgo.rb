@@ -12,10 +12,6 @@ class Outgo < Movement
     description
   end
 
-  def description_and_total
-    "#{description} - #{total}"
-  end
-
   def total
     value + fee
   end
