@@ -99,7 +99,7 @@ describe 'Income', type: :feature do
       expect(page).to have_disabled_field 'Value'
     end
 
-    it 'if account is inactive', js: true do
+    it 'if account is inactive' do
       income = Income.create description: 'Income#1',
         value: 100,
         paid_at: Date.current,

@@ -77,7 +77,7 @@ describe 'Transfer', type: :feature do
     let(:destination) { create(:account2, balance: 100) }
     let!(:transfer) { create(:transfer, source: source, destination: destination) }
 
-    it 'from index', js: true do
+    it 'from index' do
       click_on 'Transfers'
 
       click_link 'Confirm'
@@ -85,7 +85,7 @@ describe 'Transfer', type: :feature do
       expect(page).to have_link 'Previous Month'
     end
 
-    it 'from show', js: true do
+    it 'from show' do
       click_on 'Transfers'
       click_on transfer.id
 

@@ -76,7 +76,7 @@ describe 'Trade', type: :feature do
     let(:destination) { trade.destination }
     let!(:trade) { create(:trade, source: source) }
 
-    it 'from index', js: true do
+    it 'from index' do
       click_on 'Trades'
 
       click_link 'Confirm'
@@ -84,7 +84,7 @@ describe 'Trade', type: :feature do
       expect(page).to have_link 'Previous Month'
     end
 
-    it 'from show', js: true do
+    it 'from show' do
       click_on 'Trade'
       click_on trade.id
 
@@ -133,11 +133,11 @@ describe 'Trade', type: :feature do
       expect(page).to have_content 'Source: Account#1'
     end
 
-    it 'should not disable value field', js: true do
+    it 'should not disable value field' do
       visit unconfirm_trade_path(trade)
 
       click_link 'Edit'
-      page.driver.render '/tmp/page.png', :full => true
+
       expect(page).not_to have_disabled_field 'Value in'
       expect(page).not_to have_disabled_field 'Value out'
       expect(page).not_to have_disabled_field 'Fee'
