@@ -13,9 +13,9 @@
       <div class="form-actions">
         <%= f.submit class: 'btn btn-success' %>
         <% if @trade.persisted? %>
-          <%= link_to 'Back', trades_path, class: 'btn btn-default' %>
+          <%= link_to 'Back', trade_path(@trade), class: 'btn btn-default' %>
         <% else %>
-          <%= link_to 'Back', @trade, class: 'btn btn-default' %>
+          <%= link_to 'Back', trades_path, class: 'btn btn-default' %>
         <% end %>
       </div>
     <% end %>

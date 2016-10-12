@@ -12,9 +12,9 @@
       <div class="form-actions">
         <%= f.submit class: 'btn btn-success' %>
         <% if @transfer.persisted? %>
-          <%= link_to 'Back', transfers_path, class: 'btn btn-default' %>
+          <%= link_to 'Back', transfer_path(@transfer), class: 'btn btn-default' %>
         <% else %>
-          <%= link_to 'Back', @transfer, class: 'btn btn-default' %>
+          <%= link_to 'Back', transfers_path, class: 'btn btn-default' %>
         <% end %>
       </div>
     <% end %>

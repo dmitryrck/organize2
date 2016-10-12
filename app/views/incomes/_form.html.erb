@@ -19,9 +19,9 @@
       <div class="form-actions">
         <%= f.submit class: 'btn btn-success' %>
         <% if @income.persisted? %>
-          <%= link_to 'Back', incomes_path, class: 'btn btn-default' %>
+          <%= link_to 'Back', income_path(@income), class: 'btn btn-default' %>
         <% else %>
-          <%= link_to 'Back', @income, class: 'btn btn-default' %>
+          <%= link_to 'Back', incomes_path, class: 'btn btn-default' %>
         <% end %>
       </div>
     <% end %>

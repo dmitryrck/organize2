@@ -77,9 +77,9 @@
       <div class="form-actions">
         <%= f.submit class: 'btn btn-success' %>
         <% if @outgo.persisted? %>
-          <%= link_to 'Back', outgos_path, class: 'btn btn-default' %>
+          <%= link_to 'Back', outgo_path(@outgo), class: 'btn btn-default' %>
         <% else %>
-          <%= link_to 'Back', @outgo, class: 'btn btn-default' %>
+          <%= link_to 'Back', outgos_path, class: 'btn btn-default' %>
         <% end %>
       </div>
     <% end %>
