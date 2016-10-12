@@ -23,9 +23,10 @@ group :development, :test do
 end
 
 group :test do
-  gem 'poltergeist'
+  gem 'codeclimate-test-reporter', require: false
   gem 'database_cleaner'
   gem 'factory_girl'
+  gem 'poltergeist'
 end
 
 group :production do
