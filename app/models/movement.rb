@@ -1,6 +1,9 @@
 class Movement < ActiveRecord::Base
   self.inheritance_column = :kind
 
+  include PgSearch
+  pg_search_scope :search, against: :description
+
   validates :description, :chargeable, :value, :paid_at, presence: true
   validates :transaction_hash, uniqueness:
     { scope: [:chargeable_type, :chargeable_id] },

@@ -1,18 +1,31 @@
 <div class="panel panel-default">
   <div class="panel-heading">
     <%= link_to 'New', { action: :new }, class: 'btn btn-success' %>
-    <%= @period.to_s %>
+    <%= @period.to_s if period? %>
 
     <span class="badge badge-info pull-right">
       <%= @movements.select(&:summarize?).count %> items left<br>
       <%= number_to_currency @movements.select(&:summarize?).sum(&:total) %> left
     </span>
+
+    <div class="col-lg-4 pull-right">
+      <%= form_for :search, method: :get do |f| %>
+        <div class="input-group">
+          <%= text_field_tag :q, params[:q], class: 'form-control', autofocus: true %>
+          <span class="input-group-btn">
+            <%= f.button :Search, class: 'btn btn-default' %>
+          </span>
+        </div>
+      <% end %>
+    </div>
   </div>
 
-  <div class="panel-body">
-    <%= link_to 'Previous Month', { action: :index, year: @period.previous.year, month: @period.previous.month}, class: 'btn btn-success btn-sm' %>
-    <%= link_to 'Next Month', { action: :index, year: @period.next.year, month: @period.next.month}, class: 'btn btn-success btn-sm pull-right' %>
-  </div>
+  <% if period? %>
+    <div class="panel-body">
+      <%= link_to 'Previous Month', { action: :index, year: @period.previous.year, month: @period.previous.month}, class: 'btn btn-success btn-sm' %>
+      <%= link_to 'Next Month', { action: :index, year: @period.next.year, month: @period.next.month}, class: 'btn btn-success btn-sm pull-right' %>
+    </div>
+  <% end %>
 
   <table class="table table-inbox table-hover">
     <thead>

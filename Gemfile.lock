@@ -78,6 +78,10 @@ GEM
       mini_portile (~> 0.6.0)
     oj (2.12.13)
     pg (0.18.4)
+    pg_search (1.0.6)
+      activerecord (>= 3.1)
+      activesupport (>= 3.1)
+      arel
     poltergeist (1.6.0)
       capybara (~> 2.1)
       cliver (~> 0.3.1)
@@ -188,6 +192,7 @@ DEPENDENCIES
   jquery-rails
   oj
   pg
+  pg_search
   poltergeist
   puma
   rails (= 4.2.3)

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161009172403) do
+ActiveRecord::Schema.define(version: 20161012162746) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,6 +57,7 @@ ActiveRecord::Schema.define(version: 20161009172403) do
 
   add_index "movements", ["card_id"], name: "index_movements_on_card_id", using: :btree
   add_index "movements", ["chargeable_id"], name: "index_movements_on_chargeable_id", using: :btree
+  add_index "movements", ["description"], name: "index_movements_on_description", using: :btree
   add_index "movements", ["paid"], name: "index_movements_on_paid", using: :btree
   add_index "movements", ["paid_at"], name: "index_movements_on_paid_at", using: :btree
   add_index "movements", ["parent_id"], name: "index_movements_on_parent_id", using: :btree

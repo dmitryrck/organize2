@@ -1,11 +1,6 @@
 class OutgosController < MovementsController
   respond_to :html
 
-  def index
-    @period = Period.new(params[:year] || Date.current.year, params[:month] || Date.current.month)
-    @movements = Outgo.ordered.by_period(@period)
-  end
-
   def new
     @outgo =
       if params[:outgo].present?

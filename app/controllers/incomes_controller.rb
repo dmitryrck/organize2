@@ -3,11 +3,6 @@ class IncomesController < MovementsController
 
   respond_to :html
 
-  def index
-    @period = Period.new(params[:year] || Date.current.year, params[:month] || Date.current.month)
-    @movements = Income.ordered.by_period(@period)
-  end
-
   def new
     @income = Income.new(income_params) do |income|
       income.paid_at = Date.current

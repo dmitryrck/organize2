@@ -1,9 +1,7 @@
 require 'rails_helper'
 
 describe 'Income', type: :feature do
-  before do
-    visit '/'
-  end
+  before { visit '/' }
 
   it 'paginate' do
     Income.create description: 'Income#1',
@@ -21,6 +19,21 @@ describe 'Income', type: :feature do
     expect(page).to have_content 'Income#1'
     click_on 'Previous'
     expect(page).to have_content 'Income#2'
+  end
+
+  it 'search' do
+    create(:income, description: 'Pizza day refund')
+    create(:income, description: 'Pay day')
+    create(:outgo, description: 'Pizza Outgo')
+
+    click_on 'Incomes'
+
+    fill_in 'q', with: 'Pizza'
+    click_button 'Search'
+
+    expect(page).to have_content 'Pizza day refund'
+    expect(page).not_to have_content 'Pay day'
+    expect(page).not_to have_content 'Pizza Outgo'
   end
 
   it 'create' do
