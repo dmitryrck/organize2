@@ -1,17 +1,4 @@
-require 'rails_helper'
-
-RSpec.describe Movement, type: :model do
-  subject do
-    Movement.new description: 'Movement#1',
-      value: 100,
-      paid_at: Date.current,
-      chargeable: account
-  end
-
-  let :account do
-    Account.new name: 'Account#1', start_balance: 10
-  end
-
+shared_examples_for Movement do
   it { is_expected.to be_valid }
 
   it 'should not be invalid with no chargeable' do

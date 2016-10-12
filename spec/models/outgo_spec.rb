@@ -3,9 +3,11 @@ require 'rails_helper'
 RSpec.describe Movement, type: :model do
   subject { build(:outgo, chargeable: chargeable, chargeable_type: chargeable.class.name) }
 
-  context '#summarize?' do
-    let(:chargeable) { build(:account) }
+  let(:chargeable) { build(:account) }
 
+  it_behaves_like Movement
+
+  context '#summarize?' do
     context 'with Account chargeable_type' do
       context 'and paid' do
         before { subject.paid = true }
