@@ -11,7 +11,6 @@
  * file per style scope.
  *
  *= require bootstrap
- *= require font-awesome/font-awesome
  *= require rome
  *= require sticky-footer-navbar
  *= require_self

@@ -111,7 +111,6 @@ GEM
       sprockets-rails
     rails-assets-bootstrap (3.3.7)
       rails-assets-jquery (>= 1.9.1, < 4)
-    rails-assets-font-awesome (4.6.3)
     rails-assets-jquery (3.1.1)
     rails-assets-moment (2.15.1)
     rails-assets-rome (2.1.22)
@@ -209,7 +208,6 @@ DEPENDENCIES
   puma
   rails (= 4.2.7.1)
   rails-assets-bootstrap!
-  rails-assets-font-awesome!
   rails-assets-moment!
   rails-assets-rome!
   rails_12factor
