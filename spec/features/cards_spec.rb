@@ -25,13 +25,13 @@ describe 'Card', type: :feature do
   end
 
   it 'update' do
-    card = Card.create name: 'Card#1',
-      limit: 100,
-      payment_day: 15
+    card = create(:card)
 
     click_on 'Cards'
 
-    click_on card.id
+    within 'table' do
+      click_on card.id
+    end
 
     click_on 'Edit'
 
