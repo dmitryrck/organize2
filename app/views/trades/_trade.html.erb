@@ -1,0 +1,30 @@
+<tr class="<%= trade.confirmed? ? :success : :warning %>">
+  <td>
+    <%= link_to trade do %>
+      #<%= trade.id %>
+  <% end %>
+  </td>
+  <td><%= trade.source %></td>
+  <td><%= trade.destination %></td>
+  <td><%= numeric trade.value_in %></td>
+  <td><%= numeric trade.value_out %></td>
+  <td><%= numeric trade.exchange_rate %></td>
+  <td><%= numeric trade.fee %></td>
+  <td><%= trade.trade_at %></td>
+  <td>
+    <% if trade.confirmed? %>
+      <%= link_to(unconfirm_trade_path(trade.id), title: 'Unconfirm') do %>
+        <i class="fa fa-times"></i>
+      <% end %>
+    <% else %>
+      <%= link_to(confirm_trade_path(trade.id), title: 'Confirm') do %>
+        <i class="fa fa-check"></i>
+      <% end %>
+    <% end %>
+  </td>
+  <td>
+    <%= link_to edit_trade_path(trade), title: 'Edit' do %>
+      <i class="fa fa-pencil-square-o"></i>
+    <% end %>
+  </td>
+</tr>

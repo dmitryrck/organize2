@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   end
 
   resources :movements, only: [:show, :update]
+  resources :pendings, only: :index
 
   resources :outgos do
     member do

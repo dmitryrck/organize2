@@ -13,6 +13,7 @@ class Movement < ActiveRecord::Base
   scope :ordered, -> { order('paid_at desc') }
   scope :paid, -> { where(paid: true) }
   scope :unpaid, -> { where(paid: false) }
+  scope :pending, -> { unpaid }
 
   scope :by_period, lambda { |period|
     date = Date.new(period.year.to_i, period.month.to_i, 1)

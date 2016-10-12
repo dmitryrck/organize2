@@ -1,22 +1,7 @@
 require 'rails_helper'
 
 describe Transfer do
-  subject do
-    Transfer.new(
-      source: account1,
-      destination: account2,
-      value: 100,
-      transfered_at: Date.current
-    )
-  end
-
-  let :account1 do
-    Account.new name: 'Account#1'
-  end
-
-  let :account2 do
-    Account.new name: 'Account#2'
-  end
+  subject { build(:transfer) }
 
   it { is_expected.to be_valid }
 

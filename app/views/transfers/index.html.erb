@@ -15,49 +15,11 @@
 
   <table class="table table-inbox table-hover">
     <thead>
-      <tr>
-        <th>#</th>
-        <th>Source</th>
-        <th>Destination</th>
-        <th>Value</th>
-        <th>Fee</th>
-        <th>Confirmed at</th>
-        <th></th>
-        <th></th>
-      </tr>
+      <%= render 'header' %>
     </thead>
 
     <tbody>
-      <% @transfers.each do |transfer| %>
-        <tr class="<%= transfer.confirmed? ? :success : :warning %>">
-          <td>
-            <%= link_to transfer do %>
-              #<%= transfer.id %>
-            <% end %>
-          </td>
-          <td><%= transfer.source %></td>
-          <td><%= transfer.destination %></td>
-          <td><%= numeric transfer.value %></td>
-          <td><%= numeric transfer.fee %></td>
-          <td><%= transfer.transfered_at %></td>
-          <td>
-            <% if transfer.confirmed? %>
-              <%= link_to({action: :unconfirm, id: transfer.id}, title: 'Unconfirm') do %>
-                <i class="fa fa-times"></i>
-              <% end %>
-            <% else %>
-              <%= link_to({action: :confirm, id: transfer.id}, title: 'Confirm') do %>
-                <i class="fa fa-check"></i>
-              <% end %>
-            <% end %>
-          </td>
-          <td>
-            <%= link_to edit_transfer_path(transfer), title: 'Edit' do %>
-              <i class="fa fa-pencil-square-o"></i>
-            <% end %>
-          </td>
-        </tr>
-      <% end %>
+      <%= render @transfers %>
     </tbody>
   </table>
 </div>

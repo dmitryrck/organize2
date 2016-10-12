@@ -8,6 +8,7 @@ class Trade < ActiveRecord::Base
     :trade_at, presence: true
 
   scope :ordered, -> { order('trade_at desc') }
+  scope :pending, -> { where(confirmed: false) }
 
   scope :by_period, lambda { |period|
     date = Date.new(period.year.to_i, period.month.to_i, 1)

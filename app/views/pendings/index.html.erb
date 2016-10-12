@@ -1,0 +1,27 @@
+<% %w[outgo income transfer trade].each do |key| %>
+  <% unless @pendings[key].empty? %>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <%= key.pluralize %>
+
+        <span class="badge badge-info pull-right">
+          <%= @pendings[key].size %> items left<br>
+        </span>
+      </div>
+
+      <table class="table table-inbox table-hover">
+        <thead>
+          <%= render partial: "#{key.pluralize}/header" %>
+        </thead>
+
+        <tbody>
+          <% @pendings[key].each do |pending| %>
+            <%= render pending %>
+          <% end %>
+        </tbody>
+      </table>
+
+      <hr>
+    </div>
+  <% end %>
+<% end %>

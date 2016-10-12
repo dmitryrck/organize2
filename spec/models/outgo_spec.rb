@@ -1,21 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe Movement, type: :model do
-  subject do
-    Outgo.new description: 'Movement#1',
-      value: 100,
-      paid_at: Date.current,
-      chargeable: account
-  end
-
-  let :account do
-    Account.new name: 'Account#1', start_balance: 10
-  end
+  subject { build(:outgo, chargeable: chargeable, chargeable_type: chargeable.class.name) }
 
   context '#summarize?' do
-    context 'with Account chargeable_type' do
-      before { subject.chargeable_type = 'Account' }
+    let(:chargeable) { build(:account) }
 
+    context 'with Account chargeable_type' do
       context 'and paid' do
         before { subject.paid = true }
 
@@ -30,7 +21,7 @@ RSpec.describe Movement, type: :model do
     end
 
     context 'with Card chargeable_type' do
-      before { subject.chargeable_type = 'Card' }
+      let(:chargeable) { build(:card) }
 
       context 'and paid' do
         before { subject.paid = true }

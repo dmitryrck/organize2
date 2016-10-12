@@ -16,60 +16,11 @@
 
   <table class="table table-inbox table-hover">
     <thead>
-      <tr>
-        <th>#</th>
-        <th>Description</th>
-        <th>Value</th>
-        <th>Chargeable</th>
-        <th>Paid at</th>
-        <th></th>
-        <th></th>
-      </tr>
+      <%= render 'header' %>
     </thead>
 
     <tbody>
-      <% @movements.each do |movement| %>
-        <tr class="<%= table_color movement %>">
-          <td>
-            <%= link_to movement do %>
-              #<%= movement.id %>
-            <% end %>
-          </td>
-          <td>
-            <%= movement.description %>
-            <% if movement.category.present? %>
-              <span class="label label-info"><%= movement.category %></span>
-            <% end %>
-          </td>
-          <td><%= total movement %></td>
-          <td>
-            <%= movement.chargeable %>
-          </td>
-          <td>
-            <%= l movement.paid_at, format: :long %>
-          </td>
-          <td>
-            <% if movement.chargeable_type == 'Card' %>
-              <i class="fa fa-credit-card"></i>
-            <% else %>
-              <% if movement.paid? %>
-                <%= link_to({action: :unconfirm, id: movement.id}, title: 'Unconfirm') do %>
-                  <i class="fa fa-times"></i>
-                <% end %>
-              <% else %>
-                <%= link_to({action: :confirm, id: movement.id}, title: 'Confirm') do %>
-                  <i class="fa fa-check"></i>
-                <% end %>
-              <% end %>
-            <% end %>
-          </td>
-          <td>
-            <%= link_to(action: :edit, id: movement.id) do %>
-              <i class="fa fa-pencil-square-o"></i>
-            <% end %>
-          </td>
-        </tr>
-      <% end %>
+      <%= render @movements %>
     </tbody>
   </table>
 </div>

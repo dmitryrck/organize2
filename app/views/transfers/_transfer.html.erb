@@ -1,0 +1,28 @@
+<tr class="<%= transfer.confirmed? ? :success : :warning %>">
+  <td>
+    <%= link_to transfer do %>
+      #<%= transfer.id %>
+  <% end %>
+  </td>
+  <td><%= transfer.source %></td>
+  <td><%= transfer.destination %></td>
+  <td><%= numeric transfer.value %></td>
+  <td><%= numeric transfer.fee %></td>
+  <td><%= transfer.transfered_at %></td>
+  <td>
+    <% if transfer.confirmed? %>
+      <%= link_to(unconfirm_transfer_path(transfer.id), title: 'Unconfirm') do %>
+        <i class="fa fa-times"></i>
+      <% end %>
+    <% else %>
+      <%= link_to(confirm_transfer_path(transfer), title: 'Confirm') do %>
+        <i class="fa fa-check"></i>
+      <% end %>
+    <% end %>
+  </td>
+  <td>
+    <%= link_to edit_transfer_path(transfer), title: 'Edit' do %>
+      <i class="fa fa-pencil-square-o"></i>
+    <% end %>
+  </td>
+</tr>

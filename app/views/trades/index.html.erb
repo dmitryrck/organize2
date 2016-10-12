@@ -15,52 +15,11 @@
 
   <table class="table table-inbox table-hover">
     <thead>
-      <tr>
-        <th>#</th>
-        <th><abbr title="Paid">Source</abbr></th>
-        <th><abbr title="Receive">Destination</abbr></th>
-        <th>Value in</th>
-        <th>Value out</th>
-        <th>Exchange rate</th>
-        <th>Fee</th>
-        <th>Trade at</th>
-        <th colspan="2"></th>
-      </tr>
+      <%= render 'header' %>
     </thead>
 
     <tbody>
-      <% @trades.each do |trade| %>
-        <tr class="<%= trade.confirmed? ? :success : :warning %>">
-          <td>
-            <%= link_to trade do %>
-              #<%= trade.id %>
-            <% end %>
-          </td>
-          <td><%= trade.source %></td>
-          <td><%= trade.destination %></td>
-          <td><%= numeric trade.value_in %></td>
-          <td><%= numeric trade.value_out %></td>
-          <td><%= numeric trade.exchange_rate %></td>
-          <td><%= numeric trade.fee %></td>
-          <td><%= trade.trade_at %></td>
-          <td>
-            <% if trade.confirmed? %>
-              <%= link_to({ action: :unconfirm, id: trade.id }, title: 'Unconfirm') do %>
-                <i class="fa fa-times"></i>
-              <% end %>
-            <% else %>
-              <%= link_to({ action: :confirm, id: trade.id }, title: 'Confirm') do %>
-                <i class="fa fa-check"></i>
-              <% end %>
-            <% end %>
-          </td>
-          <td>
-            <%= link_to edit_trade_path(trade), title: 'Edit' do %>
-              <i class="fa fa-pencil-square-o"></i>
-            <% end %>
-          </td>
-        </tr>
-      <% end %>
+      <%= render @trades %>
     </tbody>
   </table>
 </div>
