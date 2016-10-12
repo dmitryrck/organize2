@@ -11,7 +11,7 @@ Create a backup:
 
 Download backup:
 
-    % curl -o latest.dump `heroku pg:backups public-url`
+    % wget $(heroku pg:backups public-url) -O latest.dump
 
 And to restore:
 
