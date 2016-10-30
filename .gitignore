@@ -14,3 +14,4 @@ config/database.yml
 !/log/.keep
 /tmp
 files
+docker-compose.yml

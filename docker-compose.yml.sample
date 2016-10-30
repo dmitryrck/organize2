@@ -1,0 +1,18 @@
+version: "2"
+
+services:
+  db:
+    image: postgres
+    volumes:
+      - /var/lib/postgresql/data
+    expose:
+      - '5432'
+
+  web:
+    build: .
+    volumes:
+      - .:/app
+    ports:
+      - "3000:3000"
+    links:
+      - db
