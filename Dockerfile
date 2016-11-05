@@ -6,7 +6,7 @@ env DEBIAN_FRONTEND=noninteractive \
 
 run sed -i '/deb-src/d' /etc/apt/sources.list && \
   apt-get update && \
-  apt-get install -y build-essential postgresql-client nodejs
+  apt-get install -y build-essential postgresql-client
 
 run curl -sSL "https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-$PHANTOMJS_VERSION-linux-x86_64.tar.bz2" | tar xfj - -C /usr/local && \
   ln -s /usr/local/phantomjs-$PHANTOMJS_VERSION-linux-x86_64/bin/phantomjs /usr/local/bin/phantomjs
