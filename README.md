@@ -11,6 +11,10 @@
 # Running (Docker)
 
     % cp docker-compose.yml.sample docker-compose.yml
+
+Edit `docker-compose.yml` according to your needs, for example: remove heroku
+configuration if you will not use heroku.
+
     % cp config/database.yml.sample config/database.yml
     % docker-compose build
     % docker-compose run --rm web rake db:create
@@ -18,19 +22,25 @@
 
 # Backup from Heroku
 
+## Auth
+
+    % docker-compose run --rm heroku heroku login
+    Creating volume "organize2_heroku" with default driver
+    heroku-cli: Installing CLI... 23.86MB/23.86MB
+    Enter your Heroku credentials.
+    Email: heroku@example.com
+    Password (typing will be hidden):
+    Logged in as heroku@example.com
+
+## Backup
+
 Create a backup:
 
-    % heroku pg:backups capture
+    % docker-compose run --rm heroku heroku pg:backups capture
 
 Download backup:
 
-    % wget $(heroku pg:backups public-url) -O latest.dump
-
-# Restore backup
-
-And to restore:
-
-    % pg_restore -O -d organize2_development latest.dump
+    % wget $(docker-compose run --rm heroku pg:backups public-url) -O latest.dump
 
 # Restore backup (Docker)
 
