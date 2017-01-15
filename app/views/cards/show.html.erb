@@ -3,10 +3,9 @@
     <%= show_for @card do |show| %>
       <%= show.attribute :active %>
       <%= show.attribute :name %>
-      <%= show.attribute :limit do %>
-        <%= number_to_currency @card.limit %>
-      <% end %>
+      <%= show.attribute :limit %>
       <%= show.attribute :payment_day %>
+      <%= show.attribute :precision %>
     <% end %>
 
     <div class="form-actions">

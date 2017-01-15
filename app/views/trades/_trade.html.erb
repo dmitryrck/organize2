@@ -6,10 +6,10 @@
   </td>
   <td><%= trade.source %></td>
   <td><%= trade.destination %></td>
-  <td><%= numeric trade.value_in %></td>
-  <td><%= numeric trade.value_out %></td>
-  <td><%= numeric trade.exchange_rate %></td>
-  <td><%= numeric trade.fee %></td>
+  <td><%= trade.value_in %></td>
+  <td><%= trade.value_out %></td>
+  <td><%= number_to_currency trade.exchange_rate, precision: trade.source.precision %></td>
+  <td><%= trade.fee %></td>
   <td><%= trade.trade_at %></td>
   <td>
     <% if trade.confirmed? %>

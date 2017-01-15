@@ -10,6 +10,7 @@ describe 'Account', type: :feature do
 
     expect(page).not_to have_field 'Active'
     fill_in 'Name', with: 'Account#1'
+    fill_in 'Precision', with: '3'
     fill_in 'Currency', with: 'BRL'
     expect(page).to have_field 'Start balance', with: '0.0'
     fill_in 'Start balance', with: '10'
@@ -21,6 +22,7 @@ describe 'Account', type: :feature do
 
     expect(page).to have_content 'Name: Account#1'
     expect(page).to have_content 'Currency: BRL'
+    expect(page).to have_content 'Precision: 3'
     expect(page).to have_content 'Start balance: $10.00'
     expect(page).to have_content 'Balance: $10.00'
 
@@ -55,7 +57,7 @@ describe 'Account', type: :feature do
 
     click_on 'Accounts'
 
-    expect(page).to have_content 'BRL: $46'
-    expect(page).to have_content 'USD: $10'
+    expect(page).to have_content '46'
+    expect(page).to have_content '10'
   end
 end

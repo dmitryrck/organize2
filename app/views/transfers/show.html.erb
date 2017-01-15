@@ -4,12 +4,8 @@
       <%= show.attribute :source %>
       <%= show.attribute :destination %>
       <%= show.attribute :transfered_at %>
-      <%= show.attribute :value do %>
-        <%= numeric @transfer.value %>
-      <% end %>
-      <%= show.attribute :fee do %>
-        <%= numeric @transfer.fee %>
-      <% end %>
+      <%= show.attribute :value %>
+      <%= show.attribute :fee %>
     <% end %>
 
     <% if @transfer.confirmed? %>

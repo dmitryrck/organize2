@@ -1,13 +1,12 @@
 class AccountsController < ApplicationController
-  before_action :set_account, only: [:show, :edit, :update]
-
   respond_to :html
 
   def index
-    @accounts = Account.ordered
+    @accounts = Account.ordered.decorate
   end
 
   def show
+    @account = find_account
     respond_with(@account)
   end
 
@@ -17,6 +16,7 @@ class AccountsController < ApplicationController
   end
 
   def edit
+    @account = Account.find(params[:id])
   end
 
   def create
@@ -28,19 +28,20 @@ class AccountsController < ApplicationController
   end
 
   def update
+    @account = find_account
     @account.update(account_params)
     respond_with(@account)
   end
 
   private
 
-  def set_account
-    @account = Account.find(params[:id])
+  def find_account
+    Account.find(params[:id]).decorate
   end
 
   def account_params
     params
       .require(:account)
-      .permit(:active, :name, :currency, :start_balance, :balance)
+      .permit(:active, :name, :currency, :start_balance, :balance, :precision)
   end
 end

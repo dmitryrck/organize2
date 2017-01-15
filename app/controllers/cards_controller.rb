@@ -1,10 +1,8 @@
 class CardsController < ApplicationController
-  before_action :set_card, only: [:show, :edit, :update, :confirm, :unconfirm]
-
   respond_to :html
 
   def index
-    @cards = Card.ordered
+    @cards = Card.ordered.decorate
   end
 
   def new
@@ -18,24 +16,30 @@ class CardsController < ApplicationController
     respond_with @card
   end
 
+  def edit
+    @card = Card.find(params[:id])
+  end
+
   def update
+    @card = find_card
     @card.update(card_params)
     respond_with @card
   end
 
   def show
+    @card = find_card
     @movements = @card.movements.unpaid.ordered
   end
 
   private
 
-  def set_card
-    @card = Card.find(params[:id])
+  def find_card
+    Card.find(params[:id]).decorate
   end
 
   def card_params
     params
       .require(:card)
-      .permit(:active, :name, :limit, :payment_day)
+      .permit(:active, :name, :limit, :payment_day, :precision)
   end
 end

@@ -1,14 +1,13 @@
 class TransfersController < ApplicationController
-  before_action :set_transfer, only: [:show, :edit, :update, :confirm, :unconfirm]
-
   respond_to :html
 
   def index
     @period = Period.new(params[:year] || Date.current.year, params[:month] || Date.current.month)
-    @transfers = Transfer.ordered.by_period(@period)
+    @transfers = Transfer.ordered.by_period(@period).decorate
   end
 
   def show
+    @transfer = find_transfer
     respond_with(@transfer)
   end
 
@@ -21,6 +20,7 @@ class TransfersController < ApplicationController
   end
 
   def edit
+    @transfer = Transfer.find(params[:id])
   end
 
   def create
@@ -30,11 +30,14 @@ class TransfersController < ApplicationController
   end
 
   def update
+    @transfer = find_transfer
     @transfer.update(transfer_params)
     respond_with(@transfer)
   end
 
   def confirm
+    @transfer = Transfer.find(params[:id])
+
     AccountUpdater::TransferConfirm.update!(@transfer)
 
     flash[:notice] = 'Transfer was successfully transfered'
@@ -47,6 +50,8 @@ class TransfersController < ApplicationController
   end
 
   def unconfirm
+    @transfer = Transfer.find(params[:id])
+
     AccountUpdater::TransferUnconfirm.update!(@transfer)
 
     flash[:notice] = 'Transfer was successfully unconfirmed'
@@ -60,8 +65,8 @@ class TransfersController < ApplicationController
 
   private
 
-  def set_transfer
-    @transfer = Transfer.find(params[:id])
+  def find_transfer
+    Transfer.find(params[:id]).decorate
   end
 
   def transfer_params

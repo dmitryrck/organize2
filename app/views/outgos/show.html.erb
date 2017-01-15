@@ -11,14 +11,12 @@
       <%= show.attribute :category %>
       <%= show.attribute :chargeable_type %>
       <%= show.attribute :chargeable %>
-      <%= show.attribute :value do %>
-        <%= number_to_currency @outgo.value %>
-      <% end %>
+      <%= show.attribute :value %>
       <%= show.attribute :fee do %>
-        <%= number_to_currency @outgo.fee, precision: 8 %> (<%= @outgo.fee_kind_humanize %>)
+        <%= @outgo.fee %> (<%= @outgo.fee_kind_humanize %>)
       <% end %>
-      <%= show.association :outgos do %>
-        <% if @outgo.outgos.any? %>
+      <% if @outgo.outgos.any? %>
+        <%= show.association :outgos do %>
           <div class="row">
             <div class="col-md-8">
               <table class="table table-inbox table-hover">

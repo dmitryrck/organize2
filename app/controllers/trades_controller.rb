@@ -1,14 +1,13 @@
 class TradesController < ApplicationController
-  before_action :set_trade, only: [:show, :edit, :update, :destroy, :confirm, :unconfirm]
-
   respond_to :html
 
   def index
     @period = Period.new(params[:year] || Date.current.year, params[:month] || Date.current.month)
-    @trades = Trade.ordered.by_period(@period)
+    @trades = Trade.ordered.by_period(@period).decorate
   end
 
   def show
+    @trade = find_trade
     respond_with(@trade)
   end
 
@@ -21,6 +20,7 @@ class TradesController < ApplicationController
   end
 
   def edit
+    @trade = Trade.find(params[:id])
   end
 
   def create
@@ -30,16 +30,20 @@ class TradesController < ApplicationController
   end
 
   def update
+    @trade = find_trade
     @trade.update(trade_params)
     respond_with(@trade)
   end
 
   def destroy
+    @trade = Trade.find(params[:id])
     @trade.destroy
     respond_with(@trade)
   end
 
   def confirm
+    @trade = Trade.find(params[:id])
+
     AccountUpdater::TradeConfirm.update!(@trade)
 
     flash[:notice] = 'Trade was successfully confirmed'
@@ -52,6 +56,8 @@ class TradesController < ApplicationController
   end
 
   def unconfirm
+    @trade = Trade.find(params[:id])
+
     AccountUpdater::TradeUnconfirm.update!(@trade)
 
     flash[:notice] = 'Trade was successfully unconfirmed'
@@ -65,11 +71,13 @@ class TradesController < ApplicationController
 
   private
 
-  def set_trade
-    @trade = Trade.find(params[:id])
+  def find_trade
+    Trade.find(params[:id]).decorate
   end
 
   def trade_params
-    params.require(:trade).permit(:source_id, :destination_id, :value_in, :value_out, :fee, :trade_at)
+    params.
+      require(:trade).
+      permit(:source_id, :destination_id, :value_in, :value_out, :fee, :trade_at)
   end
 end

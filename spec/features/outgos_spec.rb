@@ -61,7 +61,8 @@ describe 'Outgo', type: :feature do
     expect(page).to have_content 'Account/Card: Account#1'
     expect(page).to have_content 'Category: Food'
     expect(page).to have_content "Paid at: #{Date.current}"
-    expect(page).to have_content 'Fee: $4.17000000 (IOF)'
+    expect(page).to have_content 'Fee: $4.17 (IOF)'
+    expect(page).not_to have_content "Outgos: Not specified"
   end
 
   it 'create with negative value' do

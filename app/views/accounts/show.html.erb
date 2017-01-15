@@ -4,12 +4,9 @@
       <%= show.attribute :active %>
       <%= show.attribute :name %>
       <%= show.attribute :currency %>
-      <%= show.attribute :start_balance do %>
-        <%= number_to_currency @account.start_balance %>
-      <% end %>
-      <%= show.attribute :balance do %>
-        <%= number_to_currency @account.balance %>
-      <% end %>
+      <%= show.attribute :start_balance %>
+      <%= show.attribute :balance %>
+      <%= show.attribute :precision %>
     <% end %>
 
     <%= link_to 'Edit', edit_account_path(@account), class: 'btn btn-info' %>

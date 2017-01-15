@@ -6,6 +6,7 @@
         <%= f.input :name, input_html: { autofocus: true } %>
         <%= f.input :currency, hint: 'BRL, USD, …' %>
         <%= f.input :start_balance if @account.new_record? %>
+        <%= f.input :precision %>
       </div>
 
       <div class="form-actions">

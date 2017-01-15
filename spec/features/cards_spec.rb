@@ -1,9 +1,7 @@
 require 'rails_helper'
 
 describe 'Card', type: :feature do
-  before do
-    visit '/'
-  end
+  before { visit '/' }
 
   it 'create' do
     click_on 'Cards'
@@ -14,6 +12,7 @@ describe 'Card', type: :feature do
     fill_in 'Name', with: 'Card#1'
     fill_in 'Limit', with: '1000'
     fill_in 'Payment day', with: '15'
+    fill_in 'Precision', with: 4
 
     click_on 'Create'
 
@@ -22,6 +21,7 @@ describe 'Card', type: :feature do
     expect(page).to have_content 'Name: Card#1'
     expect(page).to have_content 'Limit: $1,000.00'
     expect(page).to have_content 'Payment day: 15'
+    expect(page).to have_content 'Precision: 4'
   end
 
   it 'update' do
@@ -78,7 +78,9 @@ describe 'Card', type: :feature do
 
     click_on 'Cards'
 
-    click_on card.id
+    within "table" do
+      click_on card.id
+    end
 
     click_on 'New'
 

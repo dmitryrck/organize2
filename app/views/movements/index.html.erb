@@ -5,7 +5,7 @@
 
     <span class="badge badge-info pull-right">
       <%= @movements.select(&:summarize?).count %> items left<br>
-      <%= number_to_currency @movements.select(&:summarize?).sum(&:total) %> left
+      <%= number_to_currency @movements.select(&:summarize?).sum { |movement| movement.source.value + movement.source.fee } %> left
     </span>
 
     <div class="col-lg-4 pull-right">

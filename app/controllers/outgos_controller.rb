@@ -10,13 +10,14 @@ class OutgosController < MovementsController
           outgo.chargeable_type = 'Account'
         end
       end
+
     @outgos = find_outgos(@outgo)
 
     @outgo.paid_at = Date.current
   end
 
   def show
-    @outgo = Outgo.find(params[:id])
+    @outgo = find_outgo
     @chartjs = CreditCardReport.build(@outgo.outgos)
   end
 
@@ -35,7 +36,7 @@ class OutgosController < MovementsController
   end
 
   def update
-    @outgo = Outgo.find(params[:id])
+    @outgo = find_outgo
     @outgo.update(outgo_params)
     @outgos = find_outgos(@outgo)
     respond_with @outgo
@@ -105,12 +106,18 @@ class OutgosController < MovementsController
 
   private
 
+  def find_outgo
+    Outgo.find(params[:id]).decorate
+  end
+
   def find_outgos(outgo)
     if outgo.card.present?
       (outgo.card.movements.unpaid + outgo.outgos).
         uniq.
-        sort do |x, y|
+        sort { |x, y|
           [x.paid_at, x.id] <=> [y.paid_at, y.id]
+        }.map do |outgo|
+          outgo.decorate
         end
     else
       []
