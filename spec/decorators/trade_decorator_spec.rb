@@ -14,14 +14,14 @@ describe TradeDecorator do
   let(:destination) { build(:account, precision: 4) }
 
   describe ".value_in" do
-    it { expect(subject.value_in).to eq "$10.000" }
+    it { expect(subject.value_in).to eq "$10.0000" }
   end
 
   describe ".value_out" do
-    it { expect(subject.value_out).to eq "$12.0000" }
+    it { expect(subject.value_out).to eq "$12.000" }
   end
 
   describe ".fee" do
-    it { expect(subject.fee).to eq "$1.000" }
+    it { expect(subject.fee).to eq "$1.0000" }
   end
 end

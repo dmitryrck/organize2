@@ -9,14 +9,14 @@ class TradeDecorator < Draper::Decorator
   end
 
   def value_in
-    h.number_to_currency(object.value_in, precision: source_precision)
+    h.number_to_currency(object.value_in, precision: destination_precision)
   end
 
   def value_out
-    h.number_to_currency(object.value_out, precision: destination_precision)
+    h.number_to_currency(object.value_out, precision: source_precision)
   end
 
   def fee
-    h.number_to_currency(object.fee, precision: source_precision)
+    h.number_to_currency(object.fee, precision: destination_precision)
   end
 end
