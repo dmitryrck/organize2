@@ -2,8 +2,8 @@
   <div class="panel-body">
     <%= simple_form_for @transfer do |f| %>
       <div class="form-inputs">
-        <%= f.association :source, collection: Account.ordered %>
-        <%= f.association :destination, collection: Account.ordered %>
+        <%= f.association :source, collection: Account.active.ordered %>
+        <%= f.association :destination, collection: Account.active.ordered %>
         <%= f.input :transfered_at, as: :string, input_html: { class: :date } %>
         <%= f.input :value, disabled: @transfer.confirmed? %>
         <%= f.input :fee, disabled: @transfer.confirmed? %>
