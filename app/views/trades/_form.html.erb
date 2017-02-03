@@ -2,8 +2,8 @@
   <div class="panel-body">
     <%= simple_form_for(@trade) do |f| %>
       <div class="form-inputs">
-        <%= f.input :source_id, collection: Account.all %>
-        <%= f.input :destination_id, collection: Account.all %>
+        <%= f.input :source_id, collection: Account.ordered %>
+        <%= f.input :destination_id, collection: Account.ordered %>
         <%= f.input :value_in, disabled: @trade.confirmed? %>
         <%= f.input :value_out, disabled: @trade.confirmed? %>
         <%= f.input :fee, hint: 'based on value out', disabled: @trade.confirmed? %>
