@@ -24,4 +24,18 @@ describe TradeDecorator do
   describe ".fee" do
     it { expect(subject.fee).to eq "USD 1.0000" }
   end
+
+  describe ".icon" do
+    context "when it is buy" do
+      before { trade.kind = "Buy" }
+
+      it { expect(subject.icon).to eq %q[<i class="fa fa-shopping-cart"></i>] }
+    end
+
+    context "when it is sell" do
+      before { trade.kind = "Sell" }
+
+      it { expect(subject.icon).to eq %q[<i class="fa fa-money"></i>] }
+    end
+  end
 end

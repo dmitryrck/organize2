@@ -19,4 +19,13 @@ class TradeDecorator < Draper::Decorator
   def fee
     "#{destination_currency} #{h.number_with_precision(object.fee, precision: destination_precision)}"
   end
+
+  def icon
+    case trade.kind
+    when "Buy"
+      h.content_tag :i, nil, class: "fa fa-shopping-cart"
+    when "Sell"
+      h.content_tag :i, nil, class: "fa fa-money"
+    end
+  end
 end
