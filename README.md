@@ -40,7 +40,7 @@ Create a backup:
 
 Download backup:
 
-    % wget $(docker-compose run --rm heroku pg:backups public-url) -O latest.dump
+    % wget $(docker-compose run --rm heroku heroku pg:backups public-url) -O latest.dump
 
 # Restore backup (Docker)
 
