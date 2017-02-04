@@ -23,9 +23,9 @@ class TradeDecorator < Draper::Decorator
   def icon
     case trade.kind
     when "Buy"
-      h.content_tag :i, nil, class: "fa fa-shopping-cart"
+      h.content_tag :i, nil, class: "fa fa-shopping-cart", title: trade.kind
     when "Sell"
-      h.content_tag :i, nil, class: "fa fa-money"
+      h.content_tag :i, nil, class: "fa fa-money", title: trade.kind
     end
   end
 end

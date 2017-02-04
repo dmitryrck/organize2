@@ -29,13 +29,13 @@ describe TradeDecorator do
     context "when it is buy" do
       before { trade.kind = "Buy" }
 
-      it { expect(subject.icon).to eq %q[<i class="fa fa-shopping-cart"></i>] }
+      it { expect(subject.icon).to eq %q[<i class="fa fa-shopping-cart" title="Buy"></i>] }
     end
 
     context "when it is sell" do
       before { trade.kind = "Sell" }
 
-      it { expect(subject.icon).to eq %q[<i class="fa fa-money"></i>] }
+      it { expect(subject.icon).to eq %q[<i class="fa fa-money" title="Sell"></i>] }
     end
   end
 end

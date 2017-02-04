@@ -5,7 +5,7 @@ class PendingsController < ApplicationController
     @pendings = {}
 
     [Outgo, Income, Transfer, Trade].each do |model|
-      @pendings[model.name.underscore] = model.pending
+      @pendings[model.name.underscore] = model.pending.decorate
     end
   end
 end
