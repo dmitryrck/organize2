@@ -7,6 +7,7 @@ FactoryGirl.define do
     value_out 20
     fee 1
     trade_at Date.current
+    kind "Buy"
 
     factory :last_month_trade do
       value_in 120

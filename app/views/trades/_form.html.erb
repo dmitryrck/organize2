@@ -2,6 +2,7 @@
   <div class="panel-body">
     <%= simple_form_for(@trade) do |f| %>
       <div class="form-inputs">
+        <%= f.input :kind, collection: %w[Buy Sell] %>
         <%= f.input :source_id, collection: Account.ordered %>
         <%= f.input :destination_id, collection: Account.ordered %>
         <%= f.input :value_in, disabled: @trade.confirmed? %>

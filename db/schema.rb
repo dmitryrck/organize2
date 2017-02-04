@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170115115708) do
+ActiveRecord::Schema.define(version: 20170204161532) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,6 +76,7 @@ ActiveRecord::Schema.define(version: 20170115115708) do
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false
     t.boolean  "confirmed",        default: false
+    t.string   "kind"
   end
 
   add_index "trades", ["destination_id"], name: "index_trades_on_destination_id", using: :btree

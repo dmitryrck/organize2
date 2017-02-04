@@ -4,7 +4,17 @@
       #<%= trade.id %>
   <% end %>
   </td>
-  <td><%= trade.source %></td>
+  <td>
+    <% if trade.kind == "Buy" %>
+      <i class="fa fa-shopping-cart"></i>
+    <% end %>
+
+    <% if trade.kind == "Sell" %>
+      <i class="fa fa-money"></i>
+    <% end %>
+
+    <%= trade.source %>
+  </td>
   <td><%= trade.destination %></td>
   <td><%= trade.value_in %></td>
   <td><%= trade.value_out %></td>

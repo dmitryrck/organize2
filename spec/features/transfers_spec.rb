@@ -56,7 +56,9 @@ describe 'Transfer', type: :feature do
 
     click_on 'Transfers'
 
-    click_on transfer.id
+    within "table" do
+      click_on transfer.id
+    end
 
     click_on 'Edit'
 
@@ -87,7 +89,10 @@ describe 'Transfer', type: :feature do
 
     it 'from show' do
       click_on 'Transfers'
-      click_on transfer.id
+
+      within "table" do
+        click_on transfer.id
+      end
 
       click_link 'Confirm'
       expect(page).to have_content 'Transfer was successfully transfered'
@@ -125,7 +130,11 @@ describe 'Transfer', type: :feature do
 
     it 'from show' do
       click_on 'Transfers'
-      click_on transfer.id
+
+      within "table" do
+        click_on transfer.id
+      end
+
       click_link 'Unconfirm'
       expect(page).to have_content 'Transfer was successfully unconfirmed'
       expect(page).to have_content 'Source: Account#1'

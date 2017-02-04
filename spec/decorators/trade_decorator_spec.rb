@@ -10,18 +10,18 @@ describe TradeDecorator do
       source: source, destination: destination
     )
   end
-  let(:source) { build(:account, precision: 3) }
-  let(:destination) { build(:account, precision: 4) }
+  let(:source) { build(:account, precision: 3, currency: "BRL") }
+  let(:destination) { build(:account, precision: 4, currency: "USD") }
 
   describe ".value_in" do
-    it { expect(subject.value_in).to eq "$10.0000" }
+    it { expect(subject.value_in).to eq "USD 10.0000" }
   end
 
   describe ".value_out" do
-    it { expect(subject.value_out).to eq "$12.000" }
+    it { expect(subject.value_out).to eq "BRL 12.000" }
   end
 
   describe ".fee" do
-    it { expect(subject.fee).to eq "$1.0000" }
+    it { expect(subject.fee).to eq "USD 1.0000" }
   end
 end

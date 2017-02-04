@@ -67,7 +67,9 @@ describe 'Income', type: :feature do
 
     click_on 'Incomes'
 
-    click_on income.id
+    within "table" do
+      click_on income.id
+    end
 
     click_on 'Edit'
 
@@ -91,7 +93,9 @@ describe 'Income', type: :feature do
 
       click_on 'Incomes'
 
-      click_on income.id
+      within "table" do
+        click_on income.id
+      end
 
       click_on 'Edit'
 
@@ -107,7 +111,9 @@ describe 'Income', type: :feature do
 
       click_on 'Incomes'
 
-      click_on income.id
+      within "table" do
+        click_on income.id
+      end
 
       click_on 'Edit'
 
@@ -157,7 +163,11 @@ describe 'Income', type: :feature do
 
     it 'from show' do
       click_on 'Incomes'
-      click_on income.id
+
+      within "table" do
+        click_on income.id
+      end
+
       click_link 'Confirm'
       expect(page).to have_content 'Income was successfully confirmed'
       expect(page).to have_content 'Description: Income#1'
@@ -205,7 +215,11 @@ describe 'Income', type: :feature do
 
     it 'can unconfirm payment' do
       click_on 'Incomes'
-      click_on income.id
+
+      within "table" do
+        click_on income.id
+      end
+
       click_link 'Unconfirm'
       expect(page).to have_content 'Income was successfully unconfirmed'
       expect(page).to have_content 'Description: Income#1'

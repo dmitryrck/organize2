@@ -1,6 +1,7 @@
 <div class="panel panel-default">
   <div class="panel-body">
     <%= show_for @trade do |show| %>
+      <%= show.attribute :kind %>
       <%= show.attribute :source %>
       <%= show.attribute :destination %>
       <%= show.attribute :value_in %>

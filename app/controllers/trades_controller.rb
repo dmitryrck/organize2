@@ -14,6 +14,7 @@ class TradesController < ApplicationController
   def new
     @trade = Trade.new do |trade|
       trade.trade_at = Date.current
+      trade.kind = "Buy"
     end
 
     respond_with(@trade)
@@ -78,6 +79,6 @@ class TradesController < ApplicationController
   def trade_params
     params.
       require(:trade).
-      permit(:source_id, :destination_id, :value_in, :value_out, :fee, :trade_at)
+      permit(:source_id, :destination_id, :value_in, :value_out, :fee, :trade_at, :kind)
   end
 end

@@ -12,12 +12,12 @@ describe 'Trade', type: :feature do
 
     click_on 'Trades'
 
-    expect(page).to have_content('$10.00') & \
-      have_content('$20.00')
+    expect(page).to have_content('10.00') & \
+      have_content('20.00')
 
     click_on 'Previous'
-    expect(page).to have_content('$120.00') & \
-      have_content('$240.00')
+    expect(page).to have_content('120.00') & \
+      have_content('240.00')
   end
 
   it 'create' do
@@ -39,11 +39,12 @@ describe 'Trade', type: :feature do
 
     expect(page).to have_content 'Trade was successfully created.'
 
+    expect(page).to have_content 'Kind: Buy'
     expect(page).to have_content 'Source: Account#1'
     expect(page).to have_content 'Destination: Account#2'
-    expect(page).to have_content 'Value in: $100.0'
-    expect(page).to have_content 'Value out: $200.0'
-    expect(page).to have_content 'Fee: $1.0'
+    expect(page).to have_content 'Value in: 100.0'
+    expect(page).to have_content 'Value out: 200.0'
+    expect(page).to have_content 'Fee: 1.0'
   end
 
   it 'update' do
@@ -55,6 +56,7 @@ describe 'Trade', type: :feature do
 
     click_on 'Edit'
 
+    select "Sell", from: "Kind"
     select 'Account#2', from: 'Source'
     select 'Account#1', from: 'Destination'
     fill_in 'Value in', with: '50'
@@ -64,11 +66,12 @@ describe 'Trade', type: :feature do
     click_on 'Update'
 
     expect(page).to have_content 'Trade was successfully updated.'
+    expect(page).to have_content 'Kind: Sell'
     expect(page).to have_content 'Source: Account#2'
     expect(page).to have_content 'Destination: Account#1'
-    expect(page).to have_content 'Value in: $50.0'
-    expect(page).to have_content 'Value out: $100.0'
-    expect(page).to have_content 'Fee: $10.0'
+    expect(page).to have_content 'Value in: 50.0'
+    expect(page).to have_content 'Value out: 100.0'
+    expect(page).to have_content 'Fee: 10.0'
   end
 
   context 'can confirm' do
@@ -92,7 +95,7 @@ describe 'Trade', type: :feature do
       expect(page).to have_content 'Trade was successfully confirmed'
 
       expect(page).to have_content 'Source: Account#1'
-      expect(page).to have_content 'Value in: $10.00'
+      expect(page).to have_content 'Value in: 10.00'
     end
 
     it 'trade funds' do

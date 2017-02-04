@@ -10,6 +10,11 @@ RSpec.describe Trade, type: :model do
     expect(subject).not_to be_valid
   end
 
+  it 'should not be valid with no kind' do
+    subject.kind = nil
+    expect(subject).not_to be_valid
+  end
+
   it 'should not be valid with no destionation' do
     subject.destination = nil
     expect(subject).not_to be_valid

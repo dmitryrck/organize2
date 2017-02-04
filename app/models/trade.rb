@@ -5,7 +5,7 @@ class Trade < ActiveRecord::Base
   belongs_to :destination, class_name: 'Account'
 
   validates :source_id, :destination_id, :value_in, :value_out, :fee,
-    :trade_at, presence: true
+    :trade_at, :kind, presence: true
 
   scope :ordered, -> { order('trade_at desc') }
   scope :pending, -> { where(confirmed: false) }
