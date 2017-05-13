@@ -10,6 +10,7 @@ class MovementsController < ApplicationController
             end
 
     @movements = scope.decorate
+    @summary = MovementsDecorator.new(@movements)
   end
 
   private

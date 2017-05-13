@@ -3,9 +3,14 @@
     <%= link_to 'New', { action: :new }, class: 'btn btn-success' %>
     <%= @period.to_s if period? %>
 
-    <span class="badge badge-info pull-right">
-      <%= @movements.select(&:summarize?).count %> items left<br>
-      <%= number_to_currency @movements.select(&:summarize?).sum { |movement| movement.source.value + movement.source.fee } %> left
+    <span class="label label-warning pull-right">
+      <%= pluralize(@summary.paid_count, "item") %><br>
+      <%= number_to_currency @summary.paid_value %>
+    </span>
+
+    <span class="label label-success pull-right">
+      <%= pluralize(@summary.unpaid_count, "item") %><br>
+      <%= number_to_currency @summary.unpaid_value %>
     </span>
 
     <div class="col-lg-4 pull-right">

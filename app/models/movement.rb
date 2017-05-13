@@ -37,7 +37,11 @@ class Movement < ActiveRecord::Base
   end
 
   def summarize?
-    true
+    !paid?
+  end
+
+  def unsummarize?
+    !summarize?
   end
 
   def duplicable_attributes

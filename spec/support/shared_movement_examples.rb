@@ -1,5 +1,7 @@
 shared_examples_for Movement do
   it { is_expected.to be_valid }
+  it { is_expected.to respond_to(:summarize?) }
+  it { is_expected.to respond_to(:unsummarize?) }
 
   it 'should not be invalid with no chargeable' do
     subject.chargeable = nil
