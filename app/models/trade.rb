@@ -17,6 +17,11 @@ class Trade < ActiveRecord::Base
   }
 
   def exchange_rate
-    value_out/value_in
+    case kind
+    when "Buy"
+      value_out / value_in
+    when "Sell"
+      value_in / value_out
+    end
   end
 end
