@@ -35,9 +35,11 @@ describe 'Outgo', type: :feature do
     expect(page).not_to have_content 'Pizza Income'
   end
 
-  it "shows two labels" do
+  it "shows labels" do
     create(:outgo, description: "First item", value: 5, paid: true)
     create(:outgo, description: "Second item", value: 8, paid: true)
+
+    create(:card_outgo, description: "Card item", value: 11)
 
     create(:outgo, description: "First item again", value: 3, paid: false)
 
@@ -45,6 +47,7 @@ describe 'Outgo', type: :feature do
 
     click_on "Outgos"
     expect(page).to have_content "2 items $13.0"
+    expect(page).to have_content "1 item $11.0"
     expect(page).to have_content "1 item $3.0"
     fill_in "q", with: "First"
     click_on "Search"

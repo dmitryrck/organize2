@@ -1,18 +1,26 @@
 class MovementsDecorator < Draper::CollectionDecorator
-  def paid_count
-    count(:summarize?)
+  def regular_and_paid_count
+    @paid_count ||= count(:regular_and_paid?)
   end
 
-  def paid_value
-    value(:summarize?)
+  def regular_and_paid_value
+    value(:regular_and_paid?)
   end
 
-  def unpaid_count
-    count(:unsummarize?)
+  def regular_and_unpaid_count
+    @unpaid_count ||= count(:regular_and_unpaid?)
   end
 
-  def unpaid_value
-    value(:unsummarize?)
+  def regular_and_unpaid_value
+    value(:regular_and_unpaid?)
+  end
+
+  def card_count
+    @card_count ||= count(:card?)
+  end
+
+  def card_value
+    value(:card?)
   end
 
   private

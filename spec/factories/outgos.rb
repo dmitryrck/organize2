@@ -9,5 +9,9 @@ FactoryGirl.define do
     factory :outgo2 do
       description 'Outgo#2'
     end
+
+    factory :card_outgo do
+      association :chargeable, factory: :card, strategy: :cache
+    end
   end
 end

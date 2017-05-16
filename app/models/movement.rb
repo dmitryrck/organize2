@@ -36,12 +36,16 @@ class Movement < ActiveRecord::Base
     !paid?
   end
 
-  def summarize?
-    !paid?
+  def regular_and_unpaid?
+    regular? && !paid?
   end
 
-  def unsummarize?
-    !summarize?
+  def regular_and_paid?
+    regular? && paid?
+  end
+
+  def card?
+    chargeable_type == "Card"
   end
 
   def duplicable_attributes
@@ -69,5 +73,11 @@ class Movement < ActiveRecord::Base
   def related_value
     return value if kind == 'Income'
     return value * (-1)
+  end
+
+  private
+
+  def regular?
+    !card?
   end
 end

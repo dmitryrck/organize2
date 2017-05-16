@@ -3,15 +3,26 @@
     <%= link_to 'New', { action: :new }, class: 'btn btn-success' %>
     <%= @period.to_s if period? %>
 
-    <span class="label label-warning pull-right">
-      <%= pluralize(@summary.paid_count, "item") %><br>
-      <%= number_to_currency @summary.paid_value %>
-    </span>
+    <% unless @summary.regular_and_paid_count.zero? %>
+      <span class="label label-success pull-right">
+        <%= pluralize(@summary.regular_and_paid_count, "item") %><br>
+        <%= number_to_currency @summary.regular_and_paid_value %>
+      </span>
+    <% end %>
 
-    <span class="label label-success pull-right">
-      <%= pluralize(@summary.unpaid_count, "item") %><br>
-      <%= number_to_currency @summary.unpaid_value %>
-    </span>
+    <% unless @summary.card_count.zero? %>
+      <span class="label label-info pull-right">
+        <%= pluralize(@summary.card_count, "item") %><br>
+        <%= number_to_currency @summary.card_value %>
+      </span>
+    <% end %>
+
+    <% unless @summary.regular_and_unpaid_count.zero? %>
+      <span class="label label-warning pull-right">
+        <%= pluralize(@summary.regular_and_unpaid_count, "item") %><br>
+        <%= number_to_currency @summary.regular_and_unpaid_value %>
+      </span>
+    <% end %>
 
     <div class="col-lg-4 pull-right">
       <%= form_for :search, method: :get do |f| %>
