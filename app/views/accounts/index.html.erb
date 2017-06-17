@@ -3,10 +3,10 @@
     <%= link_to 'New', new_account_path, class: 'btn btn-success' %>
 
     <div class="pull-right">
-      <% Account.pluck(:currency).uniq.each do |currency| %>
+      <% AccountSummarizer.accounts.each do |currency, balance| %>
         <span class="label label-info pull-right">
           <%= currency %><br>
-          <%= Account.where(currency: currency).sum(:balance) %>
+          <%= balance %>
         </span>
       <% end %>
     </div>
