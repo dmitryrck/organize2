@@ -4,8 +4,9 @@
 
     <div class="pull-right">
       <% Account.pluck(:currency).uniq.each do |currency| %>
-        <span class="badge badge-info pull-right">
-          <%= currency %>: <%= Account.where(currency: currency).sum(:balance) %>
+        <span class="label label-info pull-right">
+          <%= currency %><br>
+          <%= Account.where(currency: currency).sum(:balance) %>
         </span>
       <% end %>
     </div>
