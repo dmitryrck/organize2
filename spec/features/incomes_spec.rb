@@ -99,8 +99,8 @@ describe 'Income', type: :feature do
 
       click_on 'Edit'
 
-      expect(page).to have_disabled_field 'Account', select: true
-      expect(page).to have_disabled_field 'Value'
+      expect(page).to have_field "Account", disabled: true
+      expect(page).to have_field "Value", disabled: true
     end
 
     it 'if account is inactive' do
@@ -117,8 +117,8 @@ describe 'Income', type: :feature do
 
       click_on 'Edit'
 
-      expect(page).to have_disabled_field 'Value'
-      expect(page).to have_disabled_field 'Account', select: true
+      expect(page).to have_field "Value", disabled: true
+      expect(page).to have_field "Account", disabled: true
     end
   end
 
@@ -177,7 +177,7 @@ describe 'Income', type: :feature do
       visit confirm_income_path(income)
 
       visit edit_income_path(income)
-      expect(page).to have_disabled_field 'Value'
+      expect(page).to have_field "Value", disabled: true
     end
 
     it "should update account's balance" do

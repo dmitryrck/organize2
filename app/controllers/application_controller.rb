@@ -1,7 +1,7 @@
 require 'application_responder'
 
 class ApplicationController < ActionController::Base
-  before_filter :authenticate
+  before_action :authenticate
 
   self.responder = ApplicationResponder
 

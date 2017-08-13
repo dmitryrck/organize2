@@ -194,10 +194,10 @@ describe 'Outgo', type: :feature do
 
       click_on 'Edit'
 
-      expect(page).to have_disabled_field 'Kind', select: true
-      expect(page).to have_disabled_field 'Account', select: true
-      expect(page).to have_disabled_field 'Value'
-      expect(page).to have_disabled_field 'Fee'
+      expect(page).to have_field "Kind", disabled: true
+      expect(page).to have_field "Account", disabled: true
+      expect(page).to have_field "Value", disabled: true
+      expect(page).to have_field "Fee", disabled: true
     end
 
     it 'if chargeable is card and inactive' do
@@ -212,10 +212,10 @@ describe 'Outgo', type: :feature do
 
       click_on 'Edit'
 
-      expect(page).to have_disabled_field 'Kind', select: true
-      expect(page).to have_disabled_field 'Card', select: true
-      expect(page).to have_disabled_field 'Value'
-      expect(page).to have_disabled_field 'Fee'
+      expect(page).to have_field "Kind", disabled: true
+      expect(page).to have_field "Card", disabled: true
+      expect(page).to have_field "Value", disabled: true
+      expect(page).to have_field "Fee", disabled: true
     end
 
     it 'if chargeable is account and inactive' do
@@ -230,10 +230,10 @@ describe 'Outgo', type: :feature do
 
       click_on 'Edit'
 
-      expect(page).to have_disabled_field 'Kind', select: true
-      expect(page).to have_disabled_field 'Account', select: true
-      expect(page).to have_disabled_field 'Value'
-      expect(page).to have_disabled_field 'Fee'
+      expect(page).to have_field "Kind", disabled: true
+      expect(page).to have_field "Account", disabled: true
+      expect(page).to have_field "Value", disabled: true
+      expect(page).to have_field "Fee", disabled: true
     end
   end
 
@@ -297,7 +297,7 @@ describe 'Outgo', type: :feature do
     it 'should disable value field' do
       visit confirm_outgo_path(outgo)
       visit edit_outgo_path(outgo)
-      expect(page).to have_disabled_field 'Value'
+      expect(page).to have_field "Value", disabled: true
     end
 
     it 'should confirm sub outgos too' do

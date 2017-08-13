@@ -38,7 +38,7 @@
 
                 <tbody>
                   <% @outgos.each do |outgo| %>
-                    <tr class="<%= outgo.paid? ? :success : :warning %>" data-value="<%= outgo.source.total %>">
+                    <tr class="<%= outgo.paid? ? :success : :warning %>" data-value="<%= outgo.object.total %>">
                       <td>
                         <input class="check_boxes optional" type="checkbox" value="<%= outgo.id %>" name="outgo[outgo_ids][]" id="outgo_outgo_ids_<%= outgo.id %>" <%= 'checked="checked"' if f.object.outgos.include?(outgo) %>>
                       </td>

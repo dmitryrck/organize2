@@ -1,5 +1,5 @@
 class Trade < ActiveRecord::Base
-  delegate :year, :month, to: :trade_at, allow_blank: true
+  delegate :year, :month, to: :trade_at, allow_nil: true
 
   belongs_to :source, class_name: 'Account'
   belongs_to :destination, class_name: 'Account'

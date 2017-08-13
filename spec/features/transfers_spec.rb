@@ -112,7 +112,8 @@ describe 'Transfer', type: :feature do
       visit confirm_transfer_path(transfer)
 
       click_link 'Edit'
-      expect(page).to have_disabled_field 'Value'
+
+      expect(page).to have_field "* Value", disabled: true
     end
   end
 
@@ -144,7 +145,7 @@ describe 'Transfer', type: :feature do
       visit unconfirm_transfer_path(transfer)
 
       click_link 'Edit'
-      expect(page).not_to have_disabled_field 'Value'
+      expect(page).not_to have_field "Value", disabled: true
     end
 
     it 'transfer the refunds back' do

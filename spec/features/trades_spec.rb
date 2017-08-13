@@ -109,9 +109,9 @@ describe 'Trade', type: :feature do
       visit confirm_trade_path(trade)
 
       click_link 'Edit'
-      expect(page).to have_disabled_field 'Value in'
-      expect(page).to have_disabled_field 'Value out'
-      expect(page).to have_disabled_field 'Fee'
+      expect(page).to have_field "Value in", disabled: true
+      expect(page).to have_field "Value out", disabled: true
+      expect(page).to have_field "Fee", disabled: true
     end
   end
 
@@ -141,9 +141,9 @@ describe 'Trade', type: :feature do
 
       click_link 'Edit'
 
-      expect(page).not_to have_disabled_field 'Value in'
-      expect(page).not_to have_disabled_field 'Value out'
-      expect(page).not_to have_disabled_field 'Fee'
+      expect(page).not_to have_field "Value in", disabled: true
+      expect(page).not_to have_field "Value out", disabled: true
+      expect(page).not_to have_field "Fee", disabled: true
     end
 
     it 'trade the refunds back' do

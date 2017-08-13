@@ -2,11 +2,11 @@ source 'https://rubygems.org'
 
 ruby '2.3.1'
 
-gem 'rails', '4.2.9'
+gem "rails", "5.1.3"
 
 gem 'draper'
 gem 'enumerate_it'
-gem 'jbuilder', '~> 2.0'
+gem 'jbuilder', '~> 2.5'
 gem 'jquery-rails'
 gem 'oj'
 gem 'pg'
@@ -16,6 +16,7 @@ gem 'responders'
 gem 'sass-rails', '~> 5.0'
 gem 'show_for'
 gem 'simple_form'
+
 gem 'uglifier', '>= 1.3.0'
 
 group :development, :test do
