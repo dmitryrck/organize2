@@ -16,3 +16,4 @@ config/database.yml
 /tmp
 files
 docker-compose.yml
+.env
