@@ -22,6 +22,11 @@ services:
     build: .
     volumes:
       - .:/app
+      - bundle_path:/bundle
+    environment:
+      - BUNDLE_PATH=/bundle/vendor
+      - BUNDLE_APP_CONFIG=/app/.bundle
+    user: ruby
     working_dir: /app
     command: bundle exec puma -C config/puma.rb
     ports:
@@ -30,5 +35,6 @@ services:
       - db
 
 volumes:
+  bundle_path:
   db:
   heroku:

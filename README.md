@@ -5,18 +5,15 @@
 
 # Running
 
-    % bundle install
-    % foreman
-
-# Running (Docker)
-
     % cp docker-compose.yml.sample docker-compose.yml
 
 Edit `docker-compose.yml` according to your needs, for example: remove heroku
 configuration if you will not use heroku.
 
     % cp config/database.yml.sample config/database.yml
-    % docker-compose build
+    % docker-compose build && docker-compose pull
+    % docker-compose run --rm -u root web bash -c "mkdir -p /bundle/vendor && chown ruby /bundle/vendor"
+    % docker-compose run --rm web bundle install
     % docker-compose run --rm web rake db:create
     % docker-compose run --rm web rake db:migrate
 
@@ -42,7 +39,7 @@ Download backup:
 
     % wget $(docker-compose run --rm heroku heroku pg:backups public-url) -O latest.dump
 
-# Restore backup (Docker)
+# Restore backup
 
     % docker-compose run --rm web rake db:drop
     % docker-compose run --rm web rake db:create

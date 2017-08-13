@@ -14,8 +14,5 @@ run curl -sSL "https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-$PHANTO
 run curl -sSL "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.xz" | tar xfJ - -C /usr/local --strip-components=1 && \
   npm install npm -g
 
-workdir /tmp
-copy Gemfile* /tmp/
-run bundle install
-
-workdir /app
+run useradd -m -s /bin/bash -u 1000 ruby
+user ruby
