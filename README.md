@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/dmitryrck/organize2.svg?branch=master)](https://travis-ci.org/dmitryrck/organize2)
+[![Build Status](https://semaphoreci.com/api/v1/dmitryrck/organize2/branches/master/badge.svg)](https://semaphoreci.com/dmitryrck/organize2)
 [![Code Climate](https://codeclimate.com/github/dmitryrck/organize2/badges/gpa.svg)](https://codeclimate.com/github/dmitryrck/organize2)
 [![Test Coverage](https://codeclimate.com/github/dmitryrck/organize2/badges/coverage.svg)](https://codeclimate.com/github/dmitryrck/organize2/coverage)
 [![Issue Count](https://codeclimate.com/github/dmitryrck/organize2/badges/issue_count.svg)](https://codeclimate.com/github/dmitryrck/organize2)
