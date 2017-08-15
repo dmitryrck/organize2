@@ -42,6 +42,6 @@ Download backup:
 
 # Restore backup
 
-    % docker-compose run --rm web rake db:drop
-    % docker-compose run --rm web rake db:create
+    % docker-compose run --rm web bundle exec rake db:drop
+    % docker-compose run --rm web bundle exec rake db:create
     % docker-compose run --rm web pg_restore -U postgres -h db -O -d organize2_development /app/latest.dump
