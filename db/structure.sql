@@ -49,7 +49,7 @@ CREATE TABLE accounts (
 CREATE VIEW account_balances AS
  SELECT accounts.currency,
     sum(accounts.balance) AS value,
-    avg(accounts."precision") AS avg
+    (avg(accounts."precision"))::integer AS "precision"
    FROM accounts
   GROUP BY accounts.currency;
 

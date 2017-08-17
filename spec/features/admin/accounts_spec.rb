@@ -5,10 +5,11 @@ describe "Accounts" do
 
   let(:user) { create(:admin_user) }
 
-  context "filtering" do
+  context "index" do
     before do
-      create(:account, name: "Account#1", active: true)
-      create(:account, name: "Account#2", active: false)
+      create(:account, name: "Account#1", currency: "BRL", balance: 100.0, precision: 4, active: true)
+      create(:account, name: "Account#2", currency: "USD", balance: 10.0, active: false)
+      create(:account, name: "Account#3", currency: nil, balance: 1.0, active: false)
 
       click_on "Accounts"
     end
@@ -21,6 +22,12 @@ describe "Accounts" do
     it "should filter by inactive" do
       click_on "Inactive"
       expect(page).to have_content "Account#2"
+    end
+
+    it "should show balances" do
+      expect(page).to have_content("BRL100.0000") &
+        have_content("USD10.0") &
+        have_content("$1.0")
     end
   end
 

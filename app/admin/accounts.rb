@@ -11,6 +11,14 @@ ActiveAdmin.register Account do
   scope :active
   scope :inactive
 
+  sidebar I18n.t("balances") do
+    AccountBalance.all.each do |balance|
+      unless balance.value.zero?
+        para number_to_currency(balance.value, unit: (balance.currency.presence || "$"), precision: balance.precision.to_i)
+      end
+    end
+  end
+
   index do
     selectable_column
 

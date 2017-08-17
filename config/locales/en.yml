@@ -20,6 +20,7 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
+  balances: "Balances"
   hello: "Hello world"
   activerecord:
     attributes:
