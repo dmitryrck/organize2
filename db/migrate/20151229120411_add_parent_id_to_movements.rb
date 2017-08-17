@@ -1,4 +1,4 @@
-class AddParentIdToMovements < ActiveRecord::Migration
+class AddParentIdToMovements < ActiveRecord::Migration[4.2]
   def change
     add_column :movements, :parent_id, :integer
     add_index :movements, :parent_id

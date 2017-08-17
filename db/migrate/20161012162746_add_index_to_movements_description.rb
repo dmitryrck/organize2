@@ -1,4 +1,4 @@
-class AddIndexToMovementsDescription < ActiveRecord::Migration
+class AddIndexToMovementsDescription < ActiveRecord::Migration[4.2]
   def change
     add_index :movements, :description
   end

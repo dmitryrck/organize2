@@ -1,4 +1,4 @@
-class AddTransactionHashToMovements < ActiveRecord::Migration
+class AddTransactionHashToMovements < ActiveRecord::Migration[4.2]
   def change
     add_column :movements, :transaction_hash, :string, null: true
     add_index :movements, [:transaction_hash, :chargeable_type, :chargeable_id],

@@ -1,4 +1,4 @@
-class ChangeMovementsToChargeable < ActiveRecord::Migration
+class ChangeMovementsToChargeable < ActiveRecord::Migration[4.2]
   def up
     add_column :movements, :chargeable_type, :string
     rename_column :movements, :account_id, :chargeable_id
