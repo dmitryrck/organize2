@@ -1,4 +1,24 @@
-require 'capybara/poltergeist'
+require "capybara/rspec"
+require "capybara/poltergeist"
 
 Capybara.javascript_driver = :poltergeist
 Capybara.default_driver = :poltergeist
+
+module Helpers
+  def sign_in(user = nil)
+    user ||= create(:admin_user)
+
+    visit admin_root_path
+
+    fill_in "Email*", with: user.email
+    fill_in "Password*", with: "secret"
+
+    click_button "Login"
+
+    visit admin_root_path
+  end
+end
+
+RSpec.configure do |config|
+  config.include Helpers, type: :feature
+end

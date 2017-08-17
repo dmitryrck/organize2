@@ -41,3 +41,9 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-moment'
   gem 'rails-assets-rome'
 end
+
+# Admin
+gem "activeadmin", git: "https://github.com/activeadmin/activeadmin.git"
+gem "devise"
+gem "inherited_resources", git: "https://github.com/activeadmin/inherited_resources.git"
+gem "pundit"
