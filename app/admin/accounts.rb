@@ -3,6 +3,8 @@ ActiveAdmin.register Account do
 
   config.sort_order = "active_desc"
 
+  decorate_with AccountDecorator
+
   filter :active
   filter :name
   filter :currency
@@ -27,11 +29,7 @@ ActiveAdmin.register Account do
     column :active
     column :name
     column :currency
-    column :balance do |account|
-      if account.currency.present?
-        number_to_currency(account.balance, unit: account.currency, precision: account.precision)
-      end
-    end
+    column :balance
 
     actions
   end
@@ -40,16 +38,8 @@ ActiveAdmin.register Account do
     attributes_table do
       row :active
       row :name
-      row :start_balance do |account|
-        if account.currency.present?
-          number_to_currency(account.start_balance, unit: account.currency, precision: account.precision)
-        end
-      end
-      row :balance do |account|
-        if account.currency.present?
-          number_to_currency(account.balance, unit: account.currency, precision: account.precision)
-        end
-      end
+      row :start_balance
+      row :balance
       row :currency
       row :precision
       row :created_at
