@@ -1,4 +1,6 @@
 ActiveAdmin.register Transfer do
+  extend PaginateByMonth
+
   menu priority: 3
 
   decorate_with TransferDecorator
@@ -14,7 +16,6 @@ ActiveAdmin.register Transfer do
 
   controller do
     def scoped_collection
-      # TODO
       if params[:commit] != "Filter"
         period = Period.from_params(params)
         end_of_association_chain.by_period(period)
@@ -22,20 +23,6 @@ ActiveAdmin.register Transfer do
         end_of_association_chain
       end
     end
-  end
-
-  action_item :previous, only: :index do
-    period = Period.from_params(params)
-    target = period.prev
-
-    link_to "Previous month", admin_transfers_path(month: target.month, year: target.year)
-  end
-
-  action_item :next, only: :index do
-    period = Period.from_params(params)
-    target = period.next
-
-    link_to "Next month", admin_transfers_path(month: target.month, year: target.year)
   end
 
   action_item :confirmation, only: :show do
@@ -107,7 +94,7 @@ ActiveAdmin.register Transfer do
   end
 
   form do |f|
-    inputs t("active_admin.details", model: Transfer) do
+    f.inputs t("active_admin.details", model: Transfer) do
       input :source,
         input_html: { autofocus: true, disabled: resource.confirmed? },
         collection: Account.ordered
@@ -120,6 +107,6 @@ ActiveAdmin.register Transfer do
       input :transaction_hash
     end
 
-    actions
+    f.actions
   end
 end
