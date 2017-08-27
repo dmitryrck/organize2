@@ -60,9 +60,9 @@ ActiveAdmin.register Transfer do
   filter :source, collection: proc { Account.ordered }
   filter :destination, collection: proc { Account.ordered }
   filter :value
+  filter :fee
   filter :confirmed
   filter :date
-  filter :fee
 
   index do
     selectable_column

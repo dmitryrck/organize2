@@ -558,6 +558,41 @@ CREATE UNIQUE INDEX index_trades_on_transaction_hash ON trades USING btree (tran
 
 
 --
+-- Name: index_transfers_on_confirmed; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_transfers_on_confirmed ON transfers USING btree (confirmed);
+
+
+--
+-- Name: index_transfers_on_date; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_transfers_on_date ON transfers USING btree (date);
+
+
+--
+-- Name: index_transfers_on_destination_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_transfers_on_destination_id ON transfers USING btree (destination_id);
+
+
+--
+-- Name: index_transfers_on_fee; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_transfers_on_fee ON transfers USING btree (fee);
+
+
+--
+-- Name: index_transfers_on_source_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_transfers_on_source_id ON transfers USING btree (source_id);
+
+
+--
 -- Name: index_transfers_on_transaction_hash; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -565,10 +600,25 @@ CREATE UNIQUE INDEX index_transfers_on_transaction_hash ON transfers USING btree
 
 
 --
+-- Name: index_transfers_on_value; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_transfers_on_value ON transfers USING btree (value);
+
+
+--
 -- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (version);
+
+
+--
+-- Name: fk_rails_26c6f4ba8e; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY transfers
+    ADD CONSTRAINT fk_rails_26c6f4ba8e FOREIGN KEY (destination_id) REFERENCES accounts(id);
 
 
 --
@@ -593,6 +643,14 @@ ALTER TABLE ONLY movements
 
 ALTER TABLE ONLY trades
     ADD CONSTRAINT fk_rails_a0ee042f6a FOREIGN KEY (source_id) REFERENCES accounts(id);
+
+
+--
+-- Name: fk_rails_bb4f14833d; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY transfers
+    ADD CONSTRAINT fk_rails_bb4f14833d FOREIGN KEY (source_id) REFERENCES accounts(id);
 
 
 --
@@ -645,6 +703,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170815225825'),
 ('20170815225827'),
 ('20170817224352'),
-('20170827174326');
+('20170827174326'),
+('20170827175749');
 
 
