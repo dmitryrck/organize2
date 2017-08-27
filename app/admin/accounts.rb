@@ -52,7 +52,7 @@ ActiveAdmin.register Account do
   end
 
   form do |f|
-    inputs t("active_admin.details", model: Account) do
+    f.inputs t("active_admin.details", model: Account) do
       input :active
       input :name, input_html: { autofocus: true }
       if account.new_record?
@@ -62,6 +62,6 @@ ActiveAdmin.register Account do
       input :precision
     end
 
-    actions
+    f.actions
   end
 end
