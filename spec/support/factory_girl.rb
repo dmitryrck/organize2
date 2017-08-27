@@ -1,9 +1,11 @@
 module FactoryGirl
   module Strategy
     class Cache
+      # :nocov:
       def association(runner)
         runner.run(:cache)
       end
+      # :nocov:
 
       def result(evaluation)
         repository.read(evaluation) || repository.store(evaluation)

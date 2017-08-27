@@ -36,12 +36,6 @@ class TradesController < ApplicationController
     respond_with(@trade)
   end
 
-  def destroy
-    @trade = Trade.find(params[:id])
-    @trade.destroy
-    respond_with(@trade)
-  end
-
   def confirm
     @trade = Trade.find(params[:id])
 

@@ -34,4 +34,9 @@ describe Card do
       it { is_expected.to be_inactive }
     end
   end
+
+  it "#kind_and_name" do
+    subject.name = "Card#1"
+    expect(subject.kind_and_name).to eq "Card - Card#1"
+  end
 end

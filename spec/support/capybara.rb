@@ -5,6 +5,7 @@ Capybara.javascript_driver = :poltergeist
 Capybara.default_driver = :poltergeist
 
 module Helpers
+  # :nocov:
   def sign_in(user = nil)
     user ||= create(:admin_user)
 
@@ -17,6 +18,7 @@ module Helpers
 
     visit admin_root_path
   end
+  # :nocov:
 end
 
 RSpec.configure do |config|

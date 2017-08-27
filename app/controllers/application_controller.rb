@@ -11,6 +11,7 @@ class ApplicationController < ActionController::Base
 
   protected
 
+  # :nocov:
   def authenticate
     return if Rails.env.test? || (ENV['USERNAME'].blank? || ENV['PASSWORD'].blank?)
 
@@ -18,4 +19,5 @@ class ApplicationController < ActionController::Base
       username == ENV['USERNAME'] && password == ENV['PASSWORD']
     end
   end
+  # :nocov:
 end

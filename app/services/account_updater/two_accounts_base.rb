@@ -22,6 +22,7 @@ module AccountUpdater
 
     delegate :source, :destination, to: :@object
 
+    # :nocov:
     def final_source_balance
       fail "Not implemented"
     end
@@ -29,6 +30,7 @@ module AccountUpdater
     def final_destination_balance
       fail "Not implemented"
     end
+    # :nocov:
 
     def flag_value
       true
