@@ -7,8 +7,8 @@ ActiveAdmin.register Transfer do
 
   config.paginate = false
 
-  permit_params :source_id, :destination_id, :value, :transfered_at,
-    :transaction_hash, :fee
+  permit_params :source_id, :destination_id, :value, :date, :transaction_hash,
+    :fee
 
   action_item :new, only: :show do
     link_to t("active_admin.new_model", model: Transfer.model_name.human), new_admin_transfer_path
@@ -61,7 +61,7 @@ ActiveAdmin.register Transfer do
   filter :destination, collection: proc { Account.ordered }
   filter :value
   filter :confirmed
-  filter :transfered_at
+  filter :date
   filter :fee
 
   index do
@@ -74,7 +74,7 @@ ActiveAdmin.register Transfer do
     column :destination
     column :value
     column :fee
-    column :transfered_at
+    column :date
 
     actions
   end
@@ -86,7 +86,7 @@ ActiveAdmin.register Transfer do
       row :destination
       row :value
       row :fee
-      row :transfered_at
+      row :date
       row :transaction_hash
     end
 
@@ -102,8 +102,8 @@ ActiveAdmin.register Transfer do
         input_html: { disabled: resource.confirmed? }
       input :value, input_html: { disabled: resource.confirmed? }
       input :fee, input_html: { disabled: resource.confirmed? }
-      input :transfered_at, as: :string,
-        input_html: { value: (transfer.transfered_at.presence || Date.current) }
+      input :date, as: :string,
+        input_html: { value: (transfer.date.presence || Date.current) }
       input :transaction_hash
     end
 

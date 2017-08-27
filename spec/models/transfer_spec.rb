@@ -20,8 +20,8 @@ describe Transfer do
     expect(subject).not_to be_valid
   end
 
-  it 'should not be valid with no transfered_at' do
-    subject.transfered_at = nil
+  it 'should not be valid with no date' do
+    subject.date = nil
     expect(subject).not_to be_valid
   end
 

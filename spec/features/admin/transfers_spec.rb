@@ -14,7 +14,7 @@ describe "Transfers" do
 
     select "Account#1", from: "Source"
     select "Account#2", from: "Destination"
-    expect(page).to have_field "Transfered at", with: Date.current
+    expect(page).to have_field "Date", with: Date.current
     fill_in "Value", with: "100"
 
     click_on "Create"

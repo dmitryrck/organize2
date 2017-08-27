@@ -8,8 +8,8 @@ RSpec.describe Admin::TransfersController do
   let(:destination) { create(:account2, balance: 100) }
 
   describe "GET index" do
-    let(:other_month) { create(:transfer, transfered_at: Date.new(2017, 1, 1)) }
-    let(:current_month) { create(:transfer, transfered_at: Date.current) }
+    let(:other_month) { create(:transfer, date: Date.new(2017, 1, 1)) }
+    let(:current_month) { create(:transfer, date: Date.current) }
 
     it "should list current month" do
       get :index

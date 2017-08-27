@@ -297,7 +297,7 @@ CREATE TABLE transfers (
     destination_id integer,
     value numeric,
     confirmed boolean DEFAULT false,
-    transfered_at date,
+    date date,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
     transaction_hash character varying,
@@ -565,6 +565,13 @@ CREATE UNIQUE INDEX index_transfers_on_transaction_hash ON transfers USING btree
 
 
 --
+-- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (version);
+
+
+--
 -- Name: fk_rails_4ab97a6e99; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -637,6 +644,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170204161532'),
 ('20170815225825'),
 ('20170815225827'),
-('20170817224352');
+('20170817224352'),
+('20170827174326');
 
 

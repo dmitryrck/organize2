@@ -5,7 +5,7 @@ FactoryGirl.define do
 
     value 10
     fee 1
-    transfered_at Date.current
+    date Date.current
 
     trait :confirmed do
       confirmed true
