@@ -24,4 +24,9 @@ describe Transfer do
     subject.transfered_at = nil
     expect(subject).not_to be_valid
   end
+
+  it "#to_s" do
+    subject.id = 9000
+    expect(subject.to_s).to eq "Transfer#9000"
+  end
 end

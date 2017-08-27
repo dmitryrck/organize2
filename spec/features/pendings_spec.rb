@@ -28,6 +28,7 @@ describe 'Pendings', type: :feature do
   end
 
   it 'should list transfers' do
+    pending
     create_list(:transfer, 3)
 
     click_on 'Pendings'

@@ -21,4 +21,5 @@ end
 
 RSpec.configure do |config|
   config.include Helpers, type: :feature
+  config.include Devise::Test::ControllerHelpers, type: :controller
 end

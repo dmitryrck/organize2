@@ -14,4 +14,8 @@ class Transfer < ActiveRecord::Base
 
     where('transfered_at >= ? and transfered_at <= ?', date.beginning_of_month, date.end_of_month)
   }
+
+  def to_s
+    "#{self.class.model_name.human}##{id}"
+  end
 end

@@ -1,6 +1,13 @@
 class Period
   attr_reader :year, :month
 
+  def self.from_params(params)
+    new(
+      (params[:year].presence  || Date.current.year),
+      (params[:month].presence || Date.current.month),
+    )
+  end
+
   def initialize(year, month)
     @year = year.to_s
     @month = format_month(month)

@@ -49,7 +49,7 @@ describe "Accounts" do
       have_content("PRECISION 4")
   end
 
-  context "when there is a account" do
+  context "when there is an account" do
     let!(:account) { create(:account) }
 
     it "should be able to update" do

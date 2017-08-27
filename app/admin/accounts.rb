@@ -1,9 +1,11 @@
 ActiveAdmin.register Account do
-  permit_params :name, :start_balance, :active, :currency, :precision
+  menu priority: 6
+
+  decorate_with AccountDecorator
 
   config.sort_order = "active_desc"
 
-  decorate_with AccountDecorator
+  permit_params :name, :start_balance, :active, :currency, :precision
 
   filter :active
   filter :name

@@ -3,7 +3,7 @@ module AccountUpdater
     private
 
     def final_source_balance
-      @source_balance - (@object.value + @object.fee)
+      @source_balance - (@object.value + (@object.fee.presence || 0))
     end
 
     def final_destination_balance

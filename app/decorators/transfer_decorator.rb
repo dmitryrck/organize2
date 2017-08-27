@@ -1,17 +1,23 @@
 class TransferDecorator < Draper::Decorator
   delegate_all
 
-  delegate :precision, to: :source, allow_nil: true
+  delegate :precision, :currency, to: :source, allow_nil: true
 
   def source
     object.source
   end
 
   def value
-    h.number_to_currency(object.value, precision: precision)
+    to_currency(object.value)
   end
 
   def fee
-    h.number_to_currency(object.fee, precision: precision)
+    to_currency(object.fee)
+  end
+
+  private
+
+  def to_currency(value)
+    h.number_to_currency((value.presence || 0), unit: (currency.presence || "$"), precision: precision.to_i)
   end
 end

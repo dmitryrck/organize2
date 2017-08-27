@@ -56,4 +56,26 @@ describe Period do
       expect(period.previous).to eq previous_period
     end
   end
+
+  context "#from_params" do
+    let(:subject) { Period.from_params(params) }
+
+    context "when params has content" do
+      let(:params) do
+        { month: 1, year: 1900 }
+      end
+
+      it { expect(subject.month).to eq "01" }
+      it { expect(subject.year).to eq "1900" }
+    end
+
+    context "when params has no content" do
+      let(:params) do
+        { }
+      end
+
+      it { expect(subject.month).to eq Date.current.month.to_s.rjust(2, "0") }
+      it { expect(subject.year).to eq Date.current.year.to_s }
+    end
+  end
 end
