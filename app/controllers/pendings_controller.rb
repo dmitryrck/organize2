@@ -4,7 +4,7 @@ class PendingsController < ApplicationController
   def index
     @pendings = {}
 
-    [Outgo, Income, Transfer, Trade].each do |model|
+    [Outgo, Income].each do |model|
       @pendings[model.name.underscore] = model.pending.decorate
     end
   end

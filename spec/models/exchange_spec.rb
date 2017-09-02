@@ -1,7 +1,7 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe Trade, type: :model do
-  subject { build(:trade) }
+RSpec.describe Exchange, type: :model do
+  subject { build(:exchange) }
 
   it { is_expected.to be_valid }
 
@@ -35,12 +35,28 @@ RSpec.describe Trade, type: :model do
     expect(subject).not_to be_valid
   end
 
-  it 'should not be valid with no trade_at' do
-    subject.trade_at = nil
+  it 'should not be valid with no date' do
+    subject.date = nil
     expect(subject).not_to be_valid
   end
 
   context "#exchange_rate" do
+    context "when value_in is zero" do
+      it "should return zero" do
+        subject.value_in = 0
+
+        expect(subject.exchange_rate).to be_zero
+      end
+    end
+
+    context "when value_out is zero" do
+      it "should return zero" do
+        subject.value_out = 0
+
+        expect(subject.exchange_rate).to be_zero
+      end
+    end
+
     context "when it is a buy" do
       it "should return correct value" do
         subject.kind = "Buy"
@@ -60,5 +76,10 @@ RSpec.describe Trade, type: :model do
         expect(subject.exchange_rate).to eq 2
       end
     end
+  end
+
+  it "#to_s" do
+    subject.id = 9000
+    expect(subject.to_s).to eq "Exchange#9000"
   end
 end

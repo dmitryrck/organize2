@@ -197,6 +197,45 @@ ALTER SEQUENCE cards_id_seq OWNED BY cards.id;
 
 
 --
+-- Name: exchanges; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE exchanges (
+    id integer NOT NULL,
+    source_id integer,
+    destination_id integer,
+    value_in numeric DEFAULT 0.0,
+    value_out numeric DEFAULT 0.0,
+    fee numeric DEFAULT 0.0,
+    date date,
+    transaction_hash character varying,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    confirmed boolean DEFAULT false,
+    kind character varying
+);
+
+
+--
+-- Name: exchanges_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE exchanges_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: exchanges_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE exchanges_id_seq OWNED BY exchanges.id;
+
+
+--
 -- Name: movements; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -246,45 +285,6 @@ ALTER SEQUENCE movements_id_seq OWNED BY movements.id;
 CREATE TABLE schema_migrations (
     version character varying NOT NULL
 );
-
-
---
--- Name: trades; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE trades (
-    id integer NOT NULL,
-    source_id integer,
-    destination_id integer,
-    value_in numeric DEFAULT 0.0,
-    value_out numeric DEFAULT 0.0,
-    fee numeric DEFAULT 0.0,
-    trade_at date,
-    transaction_hash character varying,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
-    confirmed boolean DEFAULT false,
-    kind character varying
-);
-
-
---
--- Name: trades_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE trades_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: trades_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE trades_id_seq OWNED BY trades.id;
 
 
 --
@@ -356,14 +356,14 @@ ALTER TABLE ONLY cards ALTER COLUMN id SET DEFAULT nextval('cards_id_seq'::regcl
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY movements ALTER COLUMN id SET DEFAULT nextval('movements_id_seq'::regclass);
+ALTER TABLE ONLY exchanges ALTER COLUMN id SET DEFAULT nextval('exchanges_id_seq'::regclass);
 
 
 --
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY trades ALTER COLUMN id SET DEFAULT nextval('trades_id_seq'::regclass);
+ALTER TABLE ONLY movements ALTER COLUMN id SET DEFAULT nextval('movements_id_seq'::regclass);
 
 
 --
@@ -414,27 +414,19 @@ ALTER TABLE ONLY cards
 
 
 --
+-- Name: exchanges_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY exchanges
+    ADD CONSTRAINT exchanges_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: movements_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY movements
     ADD CONSTRAINT movements_pkey PRIMARY KEY (id);
-
-
---
--- Name: schema_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
---
-
-ALTER TABLE ONLY schema_migrations
-    ADD CONSTRAINT schema_migrations_pkey PRIMARY KEY (version);
-
-
---
--- Name: trades_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
---
-
-ALTER TABLE ONLY trades
-    ADD CONSTRAINT trades_pkey PRIMARY KEY (id);
 
 
 --
@@ -488,6 +480,27 @@ CREATE UNIQUE INDEX index_admin_users_on_reset_password_token ON admin_users USI
 
 
 --
+-- Name: index_exchanges_on_destination_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_exchanges_on_destination_id ON exchanges USING btree (destination_id);
+
+
+--
+-- Name: index_exchanges_on_source_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_exchanges_on_source_id ON exchanges USING btree (source_id);
+
+
+--
+-- Name: index_exchanges_on_transaction_hash; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE UNIQUE INDEX index_exchanges_on_transaction_hash ON exchanges USING btree (transaction_hash);
+
+
+--
 -- Name: index_movements_on_card_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -534,27 +547,6 @@ CREATE INDEX index_movements_on_parent_id ON movements USING btree (parent_id);
 --
 
 CREATE UNIQUE INDEX index_movements_on_transaction_hash ON movements USING btree (transaction_hash, chargeable_type, chargeable_id);
-
-
---
--- Name: index_trades_on_destination_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX index_trades_on_destination_id ON trades USING btree (destination_id);
-
-
---
--- Name: index_trades_on_source_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX index_trades_on_source_id ON trades USING btree (source_id);
-
-
---
--- Name: index_trades_on_transaction_hash; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE UNIQUE INDEX index_trades_on_transaction_hash ON trades USING btree (transaction_hash);
 
 
 --
@@ -625,7 +617,7 @@ ALTER TABLE ONLY transfers
 -- Name: fk_rails_4ab97a6e99; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY trades
+ALTER TABLE ONLY exchanges
     ADD CONSTRAINT fk_rails_4ab97a6e99 FOREIGN KEY (destination_id) REFERENCES accounts(id);
 
 
@@ -641,7 +633,7 @@ ALTER TABLE ONLY movements
 -- Name: fk_rails_a0ee042f6a; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY trades
+ALTER TABLE ONLY exchanges
     ADD CONSTRAINT fk_rails_a0ee042f6a FOREIGN KEY (source_id) REFERENCES accounts(id);
 
 
@@ -704,6 +696,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170815225827'),
 ('20170817224352'),
 ('20170827174326'),
-('20170827175749');
+('20170827175749'),
+('20170901235708');
 
 

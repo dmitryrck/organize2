@@ -17,7 +17,7 @@ class TransferDecorator < Draper::Decorator
 
   private
 
-  def to_currency(value)
-    h.number_to_currency((value.presence || 0), unit: (currency.presence || "$"), precision: precision.to_i)
+  def to_currency(value = nil)
+    h.number_to_currency(value || 0, unit: currency.presence || "$", precision: precision.to_i)
   end
 end

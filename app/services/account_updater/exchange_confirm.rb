@@ -1,5 +1,5 @@
 module AccountUpdater
-  class TradeConfirm < TwoAccountsBase
+  class ExchangeConfirm < TwoAccountsBase
     private
 
     def final_source_balance

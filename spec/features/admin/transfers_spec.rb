@@ -78,13 +78,30 @@ describe "Transfers" do
       expect(page).to have_link "New Transfer"
     end
 
-    it "should be able to destroy" do
-      click_on "Transfer"
-      within "#transfer_#{transfer.id}" do
-        click_on "Delete"
+    context "when deleting" do
+      context "when is not confirmed" do
+        it "should destroy" do
+          click_on "Transfer"
+          within "#transfer_#{transfer.id}" do
+            click_on "Delete"
+          end
+
+          expect(page).not_to have_content("Account#1")
+        end
       end
 
-      expect(page).not_to have_content("Account#1")
+      context "when is confirmed" do
+        before { transfer.update(confirmed: true) }
+
+        it "should not destroy" do
+          click_on "Transfer"
+          within "#transfer_#{transfer.id}" do
+            click_on "Delete"
+          end
+
+          expect(page).to have_content("Account#1")
+        end
+      end
     end
   end
 end

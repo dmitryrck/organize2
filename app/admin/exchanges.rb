@@ -1,19 +1,21 @@
-ActiveAdmin.register Transfer do
+ActiveAdmin.register Exchange do
   extend PaginateByMonth
   extend ConfirmableResource
 
-  menu priority: 3
+  menu priority: 4
 
-  decorate_with TransferDecorator
+  decorate_with ExchangeDecorator
 
-  permit_params :source_id, :destination_id, :value, :date, :transaction_hash,
-    :fee
+  permit_params :source_id, :destination_id, :value_in, :value_out, :fee,
+    :date, :kind, :transaction_hash
 
+  filter :confirmed
+  filter :kind, as: :select, collection: proc { ExchangeKind.list }
   filter :source, collection: proc { Account.ordered }
   filter :destination, collection: proc { Account.ordered }
-  filter :value
+  filter :value_in
+  filter :value_out
   filter :fee
-  filter :confirmed
   filter :date
 
   index do
@@ -22,9 +24,11 @@ ActiveAdmin.register Transfer do
     id_column
 
     column :confirmed
+    column :kind
     column :source
     column :destination
-    column :value
+    column :value_in
+    column :value_out
     column :fee
     column :date
 
@@ -36,7 +40,9 @@ ActiveAdmin.register Transfer do
       row :confirmed
       row :source
       row :destination
-      row :value
+      row :value_in
+      row :value_out
+      row :exchange_rate
       row :fee
       row :date
       row :transaction_hash
@@ -46,15 +52,20 @@ ActiveAdmin.register Transfer do
   end
 
   form do |f|
+    f.object.kind ||= ExchangeKind.value_for("BUY")
     f.object.date ||= Date.current
 
-    f.inputs t("active_admin.details", model: Transfer) do
-      input :source,
+    f.inputs t("active_admin.details", model: Exchange) do
+      input :kind,
         input_html: { autofocus: true, disabled: resource.confirmed? },
+        collection: ExchangeKind.list
+      input :source,
+        input_html: { disabled: resource.confirmed? },
         collection: Account.ordered
       input :destination, collection: Account.ordered,
         input_html: { disabled: resource.confirmed? }
-      input :value, input_html: { disabled: resource.confirmed? }
+      input :value_in, input_html: { disabled: resource.confirmed? }
+      input :value_out, input_html: { disabled: resource.confirmed? }
       input :fee, input_html: { disabled: resource.confirmed? }
       input :date, as: :string
       input :transaction_hash

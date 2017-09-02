@@ -36,13 +36,4 @@ describe 'Pendings', type: :feature do
     expect(page).to have_content 'transfer'
     expect(page).to have_content '3 items left'
   end
-
-  it 'should list trades' do
-    create_list(:trade, 3)
-
-    click_on 'Pendings'
-
-    expect(page).to have_content 'trades'
-    expect(page).to have_content '3 items left'
-  end
 end

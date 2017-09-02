@@ -22,6 +22,9 @@
 en:
   balances: "Balances"
   hello: "Hello world"
+  confirmable:
+    confirm: "%{model} was successfully confirmed"
+    unconfirm: "%{model} was successfully unconfirmed"
   activerecord:
     attributes:
       income:
