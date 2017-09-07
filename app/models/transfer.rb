@@ -1,6 +1,7 @@
 class Transfer < ActiveRecord::Base
   include Datable
   include Confirmable
+  include Transactionable
 
   belongs_to :source, class_name: 'Account'
   belongs_to :destination, class_name: 'Account'
