@@ -9,6 +9,11 @@ class Exchange < ActiveRecord::Base
 
   validates :source_id, :destination_id, :value_in, :value_out, :fee,
     :date, :kind, presence: true
+  validates :transaction_hash, uniqueness: true, allow_blank: true
+
+  before_validation do |exchange|
+    exchange.transaction_hash = nil if transaction_hash.blank?
+  end
 
   has_enumeration_for :kind, with: ExchangeKind
 
