@@ -30,6 +30,10 @@ class MovementsDecorator < Draper::CollectionDecorator
   end
 
   def value(symbol)
-    object.select(&symbol).sum { |movement| movement.object.value + movement.object.fee }
+    object.select(&symbol).sum do |movement|
+      return movement.object.value if movement.object.fee.nil?
+
+      movement.object.value + movement.object.fee
+    end
   end
 end
