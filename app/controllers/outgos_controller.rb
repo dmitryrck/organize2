@@ -138,6 +138,7 @@ class OutgosController < MovementsController
         :paid_at,
         :parent_id,
         :value,
+        :drive_id,
         outgo_ids: [],
       )
   end

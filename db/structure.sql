@@ -255,7 +255,8 @@ CREATE TABLE movements (
     card_id integer,
     fee numeric(15,10) DEFAULT 0.0,
     fee_kind character varying,
-    transaction_hash character varying
+    transaction_hash character varying,
+    drive_id character varying
 );
 
 
@@ -301,7 +302,8 @@ CREATE TABLE transfers (
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
     transaction_hash character varying,
-    fee numeric DEFAULT 0.0
+    fee numeric DEFAULT 0.0,
+    drive_id character varying
 );
 
 
@@ -697,6 +699,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170817224352'),
 ('20170827174326'),
 ('20170827175749'),
-('20170901235708');
+('20170901235708'),
+('20171107115001'),
+('20171107153235');
 
 

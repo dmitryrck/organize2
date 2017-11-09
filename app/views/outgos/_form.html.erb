@@ -18,6 +18,7 @@
         <%= f.input :value, disabled: (@outgo.paid? || @outgo.chargeable_inactive?) %>
         <%= f.input :fee, disabled: (@outgo.paid? || @outgo.chargeable_inactive?) %>
         <%= f.input :fee_kind, collection: FeeKind %>
+        <%= f.input :drive_id %>
         <% if f.object.card.present? %>
           <div class="outgo-checkboxes">
             <div class="form-group check_boxes optional outgo_outgos">
