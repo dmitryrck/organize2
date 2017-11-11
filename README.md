@@ -15,8 +15,8 @@ configuration if you will not use heroku.
     % docker-compose build && docker-compose pull
     % docker-compose run --rm -u root web bash -c "mkdir -p /bundle/vendor && chown ruby /bundle/vendor"
     % docker-compose run --rm web bundle install
-    % docker-compose run --rm web rake db:create
-    % docker-compose run --rm web rake db:migrate
+    % docker-compose run --rm web bundle exec rake db:create
+    % docker-compose run --rm web bundle exec rake db:migrate
 
 # Backup from Heroku
 
