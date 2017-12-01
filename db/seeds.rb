@@ -13,8 +13,8 @@ date_range = (-90..60).to_a
     kind: %w(Outgo Income).sample,
     value: rand(num * 2) + rand,
     category: FFaker::Color.name,
-    paid_at: Date.current + date_range.to_a.sample,
-    paid: FFaker::Boolean.maybe,
+    date: Date.current + date_range.to_a.sample,
+    confirmed: FFaker::Boolean.maybe,
     chargeable: Account.all.to_a.sample
 end
 AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
