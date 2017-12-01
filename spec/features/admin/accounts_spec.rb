@@ -7,9 +7,9 @@ describe "Accounts" do
 
   context "index" do
     before do
-      create(:account, name: "Account#1", currency: "BRL", balance: 100.0, precision: 4, active: true)
-      create(:account, name: "Account#2", currency: "USD", balance: 10.0, active: false)
-      create(:account, name: "Account#3", currency: nil, balance: 1.0, active: false)
+      create(:account, name: "Account#1", currency: "BRL", start_balance: 100.0, precision: 4, active: true)
+      create(:account, name: "Account#2", currency: "USD", start_balance: 10.0, active: false)
+      create(:account, name: "Account#3", currency: nil, start_balance: 1.0, active: false)
 
       click_on "Accounts"
     end
@@ -43,10 +43,12 @@ describe "Accounts" do
     click_on "Create"
 
     expect(page).to have_content("Account#1") &
-      have_content("USD123.45") &
-      have_content("USD0.0") &
+      have_content("START BALANCE USD123.45") &
+      have_content("BALANCE USD123.45") &
       have_content("ACTIVE YES") &
       have_content("PRECISION 4")
+
+    expect(page).not_to have_content("BALANCE USD0.0")
   end
 
   context "when there is an account" do

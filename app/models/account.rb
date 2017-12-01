@@ -9,6 +9,10 @@ class Account < ActiveRecord::Base
   scope :active, -> { where(active: true) }
   scope :inactive, -> { where(active: false) }
 
+  before_create do |account|
+    account.balance = account.start_balance
+  end
+
   def to_s
     name
   end

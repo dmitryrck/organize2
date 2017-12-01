@@ -2,10 +2,10 @@ require "rails_helper"
 
 describe AccountSummarizer do
   before do
-    Account.create(name: "Account#1", balance: 12, currency: "BRL")
-    Account.create(name: "Account#2", balance: 34, currency: "BRL")
-    Account.create(name: "Account#3", balance: 10, currency: "USD")
-    Account.create(name: "Account#4", balance:  0, currency: "EUR")
+    Account.create(name: "Account#1", start_balance: 12, currency: "BRL")
+    Account.create(name: "Account#2", start_balance: 34, currency: "BRL")
+    Account.create(name: "Account#3", start_balance: 10, currency: "USD")
+    Account.create(name: "Account#4", start_balance:  0, currency: "EUR")
   end
 
   subject { AccountSummarizer }
