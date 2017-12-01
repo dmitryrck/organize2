@@ -30,6 +30,7 @@ ActiveAdmin.register Exchange do
     column :value_in
     column :value_out
     column :fee
+    column :exchange_rate
     column :date
 
     actions

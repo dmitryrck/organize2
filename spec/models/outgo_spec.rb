@@ -9,14 +9,14 @@ RSpec.describe Movement, type: :model do
 
   context '#summarize?' do
     context 'with Account chargeable_type' do
-      context 'and paid' do
-        before { subject.paid = true }
+      context "and confirmed" do
+        before { subject.confirmed = true }
 
         it { expect(subject).not_to be_summarize }
       end
 
-      context 'and unpaid' do
-        before { subject.paid = false }
+      context "and unconfirned" do
+        before { subject.confirmed = false }
 
         it { expect(subject).to be_summarize }
       end
@@ -25,14 +25,14 @@ RSpec.describe Movement, type: :model do
     context 'with Card chargeable_type' do
       let(:chargeable) { build(:card) }
 
-      context 'and paid' do
-        before { subject.paid = true }
+      context "and confirmed" do
+        before { subject.confirmed = true }
 
         it { expect(subject).not_to be_summarize }
       end
 
-      context 'and unpaid' do
-        before { subject.paid = false }
+      context "and unconfirned" do
+        before { subject.confirmed = false }
 
         it { expect(subject).not_to be_summarize }
       end

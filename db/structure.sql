@@ -173,7 +173,8 @@ CREATE TABLE cards (
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
     active boolean DEFAULT true,
-    "precision" integer DEFAULT 2
+    "precision" integer DEFAULT 2,
+    currency character varying
 );
 
 
@@ -243,11 +244,11 @@ CREATE TABLE movements (
     id integer NOT NULL,
     description character varying,
     value numeric,
-    paid boolean DEFAULT false,
+    confirmed boolean DEFAULT false,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     kind character varying,
-    paid_at date,
+    date date,
     category character varying,
     chargeable_id integer,
     chargeable_type character varying,
@@ -517,24 +518,24 @@ CREATE INDEX index_movements_on_chargeable_id ON movements USING btree (chargeab
 
 
 --
+-- Name: index_movements_on_confirmed; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_movements_on_confirmed ON movements USING btree (confirmed);
+
+
+--
+-- Name: index_movements_on_date; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_movements_on_date ON movements USING btree (date);
+
+
+--
 -- Name: index_movements_on_description; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_movements_on_description ON movements USING btree (description);
-
-
---
--- Name: index_movements_on_paid; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX index_movements_on_paid ON movements USING btree (paid);
-
-
---
--- Name: index_movements_on_paid_at; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX index_movements_on_paid_at ON movements USING btree (paid_at);
 
 
 --
@@ -701,6 +702,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170827175749'),
 ('20170901235708'),
 ('20171107115001'),
-('20171107153235');
+('20171107153235'),
+('20171111224601'),
+('20171111235004'),
+('20171111235302');
 
 

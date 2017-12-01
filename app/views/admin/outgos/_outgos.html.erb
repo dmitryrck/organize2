@@ -1,0 +1,45 @@
+<div class="outgo-checkboxes">
+  <div class="form-group check_boxes optional outgo_outgos">
+    <label class="check_boxes optional control-label">Outgos</label>
+
+    <table class="table table-inbox table-hover">
+      <thead>
+        <tr>
+          <th></th>
+          <th>#</th>
+          <th>Description</th>
+          <th>Value</th>
+          <th>Chargeable</th>
+          <th>Date</th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% FindOutgos.list!(@outgo).each do |outgo| %>
+          <tr data-value="<%= outgo.object.total %>">
+            <td>
+              <input class="check_boxes optional" type="checkbox" value="<%= outgo.id %>" name="outgo[outgo_ids][]" id="outgo_outgo_ids_<%= outgo.id %>" <%= 'checked="checked"' if f.object.outgos.include?(outgo) %>>
+            </td>
+            <td><%= link_to outgo.id, admin_outgo_path(outgo) %></td>
+            <td>
+              <%= content_tag :label, for: "outgo_outgo_ids_#{outgo.id}" do %>
+                <%= outgo.description %>
+              <% end %>
+            </td>
+            <td><%= outgo.total %></td>
+            <td><%= outgo.chargeable %></td>
+            <td><%= l outgo.date, format: :long %></td>
+            <td>
+              <%= link_to(edit_admin_outgo_path(outgo.id)) do %>
+                <i class="fa fa-pencil-square-o"></i>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<%= hidden_field_tag "outgo[outgo_ids][]", nil %>

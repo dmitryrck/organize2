@@ -1,17 +1,11 @@
-class AccountDecorator < Draper::Decorator
+class AccountDecorator < ApplicationDecorator
   delegate_all
 
   def balance
-    currency(object.balance)
+    to_currency(object.balance, currency: currency, precision: precision)
   end
 
   def start_balance
-    currency(object.start_balance)
-  end
-
-  private
-
-  def currency(value)
-    h.number_to_currency(value, unit: (object.currency.presence || "$"), precision: object.precision.to_i)
+    to_currency(object.start_balance, currency: currency, precision: precision)
   end
 end

@@ -10,6 +10,7 @@ describe ExchangeDecorator do
       source: source, destination: destination
     )
   end
+
   let(:source) { build(:account, precision: 3, currency: "BRL") }
   let(:destination) { build(:account, precision: 4, currency: "USD") }
 

@@ -13,10 +13,10 @@ class Outgo < Movement
   end
 
   def total
-    value + fee
+    value + (fee.presence || 0)
   end
 
   def summarize?
-    chargeable_type != 'Card' && !paid?
+    chargeable_type != 'Card' && !confirmed?
   end
 end

@@ -15,47 +15,4 @@ $(function() {
     });
   });
   <% end %>
-
-  function json2options(json) {
-    var output = ''
-      , size = json.length
-    ;
-
-    for(var idx = 0; idx < size; ++idx) {
-      output += '<option value="' + json[idx].id + '">' + json[idx].name + '</option>'
-    }
-
-    return output;
-  }
-
-  $('#outgo_chargeable_type').on('change', function() {
-    var options = '<option value></option>'
-      , label = '<abbr title="required">*</abbr> '
-    ;
-
-    if($(this).val() == 'Account') {
-      options += json2options(window.accounts);
-      label += 'Account'
-    } else if($(this).val() == 'Card') {
-      options += json2options(window.cards);
-      label += 'Card'
-    }
-
-    $('#outgo_chargeable_id').html(options);
-    $("label[for=outgo_chargeable_id]").html(label)
-  });
-
-  $(".outgo-checkboxes").find("[type=checkbox]").on("change", function() {
-    var value = 0.0;
-
-    $.each($(".outgo-checkboxes").find("tr"), function(idx, outgoTr) {
-      if($(outgoTr).find("[type=checkbox]").is(":checked")) {
-        var outgoValue = $(outgoTr).data("value")
-
-        value += Number(outgoValue);
-      }
-    });
-
-    $("#outgo_value, #outgo_total").val(value);
-  }).change();
 });

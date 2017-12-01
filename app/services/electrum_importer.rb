@@ -19,9 +19,9 @@ class ElectrumImporter
         )
         movement.description = row[1]
         movement.value = row[3][1..-1].to_f
-        movement.paid_at = row[4]
+        movement.date = row[4]
         movement.kind = row[3][0] == '+' ? 'Income' : 'Outgo'
-        movement.paid = true
+        movement.confirmed = true
 
         if movement.new_record?
           balance += movement.related_value

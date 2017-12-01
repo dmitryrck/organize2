@@ -2,7 +2,7 @@ module Confirmable
   extend ActiveSupport::Concern
 
   included do
-    scope :pending, -> { where(confirmed: false) }
+    scope :unconfirmed, -> { where(confirmed: false) }
 
     before_destroy do |record|
       if record.confirmed?

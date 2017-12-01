@@ -4,7 +4,7 @@ FactoryGirl.define do
 
     description 'Income#1'
     value 100
-    paid_at Date.current
+    date { Date.current }
 
     factory :income2 do
       description 'Income#2'

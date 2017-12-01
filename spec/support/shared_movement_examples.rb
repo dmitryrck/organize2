@@ -13,8 +13,8 @@ shared_examples_for Movement do
     expect(subject).to_not be_valid
   end
 
-  it 'should not be invalid with no paid_at' do
-    subject.paid_at = nil
+  it 'should not be invalid with no date' do
+    subject.date = nil
     expect(subject).to_not be_valid
   end
 
@@ -23,21 +23,17 @@ shared_examples_for Movement do
     expect(subject).to_not be_valid
   end
 
-  context 'unpaid?' do
-    context 'when it is paid' do
-      before do
-        subject.paid = true
-      end
+  context "unconfirmed?" do
+    context 'when it is confirmed' do
+      before { subject.confirmed = true }
 
-      it { is_expected.not_to be_unpaid }
+      it { is_expected.not_to be_unconfirmed }
     end
 
-    context 'when it is unpaid' do
-      before do
-        subject.paid = false
-      end
+    context "when it is unconfirmed" do
+      before { subject.confirmed = false }
 
-      it { is_expected.to be_unpaid }
+      it { is_expected.to be_unconfirmed }
     end
   end
 end

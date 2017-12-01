@@ -1,7 +1,7 @@
-class CardDecorator < Draper::Decorator
+class CardDecorator < ApplicationDecorator
   delegate_all
 
   def limit
-    h.number_to_currency(object.limit, precision: precision)
+    to_currency(object.limit, currency: currency, precision: precision)
   end
 end
