@@ -17,6 +17,7 @@ ActiveAdmin.register Exchange do
   filter :value_out
   filter :fee
   filter :date
+  filter :transaction_hash
 
   index do
     selectable_column
