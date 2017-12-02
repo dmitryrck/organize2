@@ -1,0 +1,2 @@
+class ExchangeRate < ApplicationRecord
+end
