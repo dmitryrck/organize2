@@ -7,5 +7,6 @@ describe AccountUpdater::IncomeUnconfirm do
     let(:account) { income.chargeable }
 
     it { expect { subject.update! }.to change { account.balance }.by(-10) }
+    it { expect { subject.update! }.to change { income.reload.confirmed? }.to(false) }
   end
 end

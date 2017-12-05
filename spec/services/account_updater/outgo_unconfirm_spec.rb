@@ -6,6 +6,8 @@ describe AccountUpdater::OutgoUnconfirm do
     let(:outgo) { create(:outgo, value: 10, fee: 1, confirmed: true) }
     let(:account) { outgo.chargeable }
 
+    it { expect { subject.update! }.to change { outgo.reload.confirmed? }.to(false) }
+
     context "when there is a fee" do
       it { expect { subject.update! }.to change { account.balance }.by(11) }
     end
