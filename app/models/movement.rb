@@ -1,6 +1,7 @@
 class Movement < ActiveRecord::Base
   include Datable
   include Confirmable
+  include Transactionable
 
   self.inheritance_column = :kind
 
