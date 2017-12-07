@@ -16,7 +16,8 @@ ActiveAdmin.register Outgo do
   filter :fee_kind, as: :select, collection: proc { FeeKind.to_a }
 
   permit_params :description, :value, :date, :category, :card_id, :fee,
-    :fee_kind, :chargeable_type, :chargeable_id, :drive_id, outgo_ids: []
+    :fee_kind, :chargeable_type, :chargeable_id, :drive_id, :transaction_hash,
+    outgo_ids: []
 
   action_item :duplicate, only: :show do
     link_to "Duplicate", new_admin_outgo_path(outgo: outgo.duplicable_attributes)
@@ -62,6 +63,8 @@ ActiveAdmin.register Outgo do
         outgo.fee_kind_humanize
       end
       row :card
+      row :drive_id
+      row :transaction_hash
       row :created_at
       row :updated_at
     end

@@ -14,7 +14,7 @@ ActiveAdmin.register Income do
   filter :category
 
   permit_params :description, :value, :date, :category, :chargeable_type,
-    :chargeable_id, :drive_id
+    :chargeable_id, :drive_id, :transaction_hash
 
   action_item :duplicate, only: :show do
     link_to "Duplicate", new_admin_income_path(income: income.duplicable_attributes)
@@ -55,6 +55,8 @@ ActiveAdmin.register Income do
       row :date
       row :chargeable
       row :value
+      row :drive_id
+      row :transaction_hash
       row :created_at
       row :updated_at
     end
@@ -70,6 +72,7 @@ ActiveAdmin.register Income do
       input :chargeable_type, as: :hidden, input_html: { value: "Account", disabled: income.confirmed? }
       input :chargeable_id, collection: Account.active.ordered, as: :select, input_html: { disabled: income.confirmed? }
       input :value, input_html: { disabled: income.confirmed? }
+      input :transaction_hash
     end
 
     actions
