@@ -34,7 +34,7 @@ describe "Exchanges" do
     let!(:exchange) { create(:exchange) }
 
     it "should be able to update" do
-      click_on "Exchange"
+      click_on "Exchanges"
       within "#exchange_#{exchange.id}" do
         click_on "Edit"
       end
@@ -49,7 +49,7 @@ describe "Exchanges" do
     it "should block inputs if confirmed" do
       exchange.update_column(:confirmed, true)
 
-      click_on "Exchange"
+      click_on "Exchanges"
       within "#exchange_#{exchange.id}" do
         click_on "Edit"
       end
@@ -89,7 +89,7 @@ describe "Exchanges" do
     context "when deleting" do
       context "when is not confirmed" do
         it "should destroy" do
-          click_on "Exchange"
+          click_on "Exchanges"
           within "#exchange_#{exchange.id}" do
             click_on "Delete"
           end
@@ -102,7 +102,7 @@ describe "Exchanges" do
         before { exchange.update(confirmed: true) }
 
         it "should not destroy" do
-          click_on "Exchange"
+          click_on "Exchanges"
           within "#exchange_#{exchange.id}" do
             click_on "Delete"
           end
