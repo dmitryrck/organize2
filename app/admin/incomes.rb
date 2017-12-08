@@ -12,6 +12,7 @@ ActiveAdmin.register Income do
   filter :confirmed
   filter :date
   filter :category
+  filter :transaction_hash
 
   permit_params :description, :value, :date, :category, :chargeable_type,
     :chargeable_id, :drive_id, :transaction_hash
