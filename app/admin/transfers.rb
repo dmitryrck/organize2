@@ -15,6 +15,7 @@ ActiveAdmin.register Transfer do
   filter :fee
   filter :confirmed
   filter :date
+  filter :transaction_hash
 
   index do
     selectable_column
