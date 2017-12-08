@@ -14,6 +14,7 @@ ActiveAdmin.register Outgo do
   filter :category
   filter :fee
   filter :fee_kind, as: :select, collection: proc { FeeKind.to_a }
+  filter :transaction_hash
 
   permit_params :description, :value, :date, :category, :card_id, :fee,
     :fee_kind, :chargeable_type, :chargeable_id, :drive_id, :transaction_hash,
