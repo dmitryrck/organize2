@@ -64,6 +64,10 @@ class Movement < ActiveRecord::Base
     !confirmed?
   end
 
+  def to_s
+    description
+  end
+
   private
 
   def regular?

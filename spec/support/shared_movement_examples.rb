@@ -36,4 +36,11 @@ shared_examples_for Movement do
       it { is_expected.to be_unconfirmed }
     end
   end
+
+  context "#to_s" do
+    it "should return description" do
+      subject.description = "Description#1"
+      expect(subject.to_s).to eq "Description#1"
+    end
+  end
 end

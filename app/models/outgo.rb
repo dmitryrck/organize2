@@ -8,10 +8,6 @@ class Outgo < Movement
 
   has_enumeration_for :fee_kind
 
-  def to_s
-    description
-  end
-
   def total
     value + (fee.presence || 0)
   end
