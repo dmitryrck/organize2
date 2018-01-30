@@ -1,6 +1,7 @@
 ActiveAdmin.register Income do
   extend PaginateByMonth
   extend ConfirmableResource
+  extend OneAccountSidebar
 
   menu priority: 2
 
@@ -19,17 +20,6 @@ ActiveAdmin.register Income do
 
   action_item :duplicate, only: :show do
     link_to "Duplicate", new_admin_income_path(income: income.duplicable_attributes)
-  end
-
-  sidebar "Account/Card", only: :show do
-    para "#{resource.class.human_attribute_name(:name)}: #{resource.chargeable.to_s}"
-
-    case resource.chargeable
-    when Account
-      para "#{resource.chargeable.class.human_attribute_name(:balance)}: #{resource.chargeable.balance}"
-    when Card
-      para "#{resource.chargeable.class.human_attribute_name(:payment_day)}: #{resource.chargeable.payment_day}"
-    end
   end
 
   index do

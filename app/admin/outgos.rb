@@ -1,6 +1,7 @@
 ActiveAdmin.register Outgo do
   extend PaginateByMonth
   extend ConfirmableResource
+  extend OneAccountSidebar
 
   menu priority: 1
 
@@ -22,17 +23,6 @@ ActiveAdmin.register Outgo do
 
   action_item :duplicate, only: :show do
     link_to "Duplicate", new_admin_outgo_path(outgo: outgo.duplicable_attributes)
-  end
-
-  sidebar "Account/Card", only: :show do
-    para "#{resource.class.human_attribute_name(:name)}: #{resource.chargeable.to_s}"
-
-    case resource.chargeable
-    when Account
-      para "#{resource.chargeable.class.human_attribute_name(:balance)}: #{resource.chargeable.balance}"
-    when Card
-      para "#{resource.chargeable.class.human_attribute_name(:payment_day)}: #{resource.chargeable.payment_day}"
-    end
   end
 
   index do

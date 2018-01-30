@@ -1,6 +1,7 @@
 ActiveAdmin.register Exchange do
   extend PaginateByMonth
   extend ConfirmableResource
+  extend TwoAccountsSidebar
 
   menu priority: 4
 

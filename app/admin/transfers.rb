@@ -1,6 +1,7 @@
 ActiveAdmin.register Transfer do
   extend PaginateByMonth
   extend ConfirmableResource
+  extend TwoAccountsSidebar
 
   menu priority: 3
 
