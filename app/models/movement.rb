@@ -16,6 +16,7 @@ class Movement < ActiveRecord::Base
   belongs_to :chargeable, polymorphic: true
 
   delegate :inactive?, to: :chargeable, allow_nil: true, prefix: true
+  delegate :currency, to: :chargeable, allow_nil: true
 
   scope :card, -> { where(chargeable_type: "Card") }
 

@@ -5,6 +5,21 @@ describe "Outgos" do
 
   let(:user) { create(:admin_user) }
 
+  it "should be able to summarize" do
+    create(:outgo, date: 1.year.ago, value: 30)
+    create(:outgo)
+    create(:outgo2, value: 20)
+
+    click_on "Outgos"
+
+    expect(page).to have_content "120"
+
+    fill_in "q_description", with: "Outgo#1"
+    click_on "Filter"
+
+    expect(page).to have_content "130"
+  end
+
   it "should be able to create" do
     create(:account)
 
