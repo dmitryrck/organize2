@@ -13,6 +13,7 @@ ActiveAdmin.register Outgo do
   filter :description
   filter :date
   filter :category
+  filter :value
   filter :fee
   filter :fee_kind, as: :select, collection: proc { FeeKind.to_a }
   filter :transaction_hash

@@ -12,6 +12,7 @@ ActiveAdmin.register Income do
   filter :description
   filter :confirmed
   filter :date
+  filter :value
   filter :category
   filter :transaction_hash
 
