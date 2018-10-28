@@ -19,9 +19,9 @@ describe "Incomes" do
 
     click_on "Create"
 
-    expect(page).to have_content("Income#1") &
-      have_content("$100.00") &
-      have_content("ACCOUNT Account#1")
+    expect(page).to have_content("Income#1")
+    expect(page).to have_content("$100.00")
+    expect(page).to have_content("ACCOUNT Account#1")
   end
 
   context "when there is an income" do
@@ -38,8 +38,8 @@ describe "Incomes" do
 
       click_on "Update"
 
-      expect(page).to have_content("Income#2") &
-        have_content("$12.99")
+      expect(page).to have_content("Income#2")
+      expect(page).to have_content("$12.99")
     end
 
     it "should be able to comment" do
@@ -52,8 +52,8 @@ describe "Incomes" do
       click_on "Add"
 
       within ".comments" do
-        expect(page).to have_content("Comment#1") &
-          have_content("admin@example.com")
+        expect(page).to have_content("Comment#1")
+        expect(page).to have_content("admin@example.com")
       end
     end
 
@@ -62,6 +62,7 @@ describe "Incomes" do
       within "#income_#{income.id}" do
         click_on "Delete"
       end
+      page.driver.browser.switch_to.alert.accept
 
       expect(page).not_to have_content("Income#1")
     end

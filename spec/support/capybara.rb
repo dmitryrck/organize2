@@ -1,27 +1,14 @@
-require "capybara/rspec"
-require "capybara/poltergeist"
+Capybara.server = :puma, { Silent: true }
 
-Capybara.javascript_driver = :poltergeist
-Capybara.default_driver = :poltergeist
+Capybara.register_driver :chrome do |app|
+  capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
+    chromeOptions: {
+      args: %w[no-sandbox headless disable-popup-blocking disable-gpu]
+    }
+  )
 
-module Helpers
-  # :nocov:
-  def sign_in(user = nil)
-    user ||= create(:admin_user)
-
-    visit admin_root_path
-
-    fill_in "Email*", with: user.email
-    fill_in "Password*", with: "secret"
-
-    click_button "Login"
-
-    visit admin_root_path
-  end
-  # :nocov:
+  Capybara::Selenium::Driver.new(app, browser: :chrome, desired_capabilities: capabilities)
 end
 
-RSpec.configure do |config|
-  config.include Helpers, type: :feature
-  config.include Devise::Test::ControllerHelpers, type: :controller
-end
+Capybara.default_driver = :chrome
+Capybara.javascript_driver = :chrome

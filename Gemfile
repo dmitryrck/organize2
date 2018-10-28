@@ -24,11 +24,12 @@ group :development, :test do
 end
 
 group :test do
+  gem "capybara"
   gem 'codeclimate-test-reporter', require: false
   gem 'database_cleaner'
   gem 'factory_girl'
-  gem 'poltergeist'
   gem "rails-controller-testing"
+  gem "selenium-webdriver"
   gem 'simplecov', require: false
 end
 

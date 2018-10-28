@@ -25,9 +25,9 @@ describe "Accounts" do
     end
 
     it "should show balances" do
-      expect(page).to have_content("BRL100.0000") &
-        have_content("USD10.0") &
-        have_content("$1.0")
+      expect(page).to have_content("BRL100.0000")
+      expect(page).to have_content("USD10.0")
+      expect(page).to have_content("$1.0")
     end
   end
 
@@ -42,11 +42,11 @@ describe "Accounts" do
 
     click_on "Create"
 
-    expect(page).to have_content("Account#1") &
-      have_content("START BALANCE USD123.45") &
-      have_content("BALANCE USD123.45") &
-      have_content("ACTIVE YES") &
-      have_content("PRECISION 4")
+    expect(page).to have_content("Account#1")
+    expect(page).to have_content("START BALANCE USD123.45")
+    expect(page).to have_content("BALANCE USD123.45")
+    expect(page).to have_content("ACTIVE YES")
+    expect(page).to have_content("PRECISION 4")
 
     expect(page).not_to have_content("BALANCE USD0.0")
   end
@@ -65,8 +65,8 @@ describe "Accounts" do
 
       click_on "Update"
 
-      expect(page).to have_content("Account#2") &
-        have_content("BRL")
+      expect(page).to have_content("Account#2")
+      expect(page).to have_content("BRL")
     end
 
     it "should be able to comment" do
@@ -79,8 +79,8 @@ describe "Accounts" do
       click_on "Add"
 
       within ".comments" do
-        expect(page).to have_content("Comment#1") &
-          have_content("admin@example.com")
+        expect(page).to have_content("Comment#1")
+        expect(page).to have_content("admin@example.com")
       end
     end
 
@@ -89,6 +89,7 @@ describe "Accounts" do
       within "#account_#{account.id}" do
         click_on "Delete"
       end
+      page.driver.browser.switch_to.alert.accept
 
       expect(page).not_to have_content("Account#1")
     end

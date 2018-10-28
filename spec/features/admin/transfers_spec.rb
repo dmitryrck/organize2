@@ -21,9 +21,9 @@ describe "Transfers" do
 
     expect(page).to have_content "Transfer was successfully created."
 
-    expect(page).to have_content("SOURCE Account#1") &
-      have_content("DESTINATION Account#2") &
-      have_content("VALUE $100.0")
+    expect(page).to have_content("SOURCE Account#1")
+    expect(page).to have_content("DESTINATION Account#2")
+    expect(page).to have_content("VALUE $100.0")
   end
 
   context "when there is a transfer" do
@@ -64,8 +64,8 @@ describe "Transfers" do
       click_on "Add"
 
       within ".comments" do
-        expect(page).to have_content("Comment#1") &
-          have_content("admin@example.com")
+        expect(page).to have_content("Comment#1")
+        expect(page).to have_content("admin@example.com")
       end
     end
 
@@ -85,8 +85,9 @@ describe "Transfers" do
           within "#transfer_#{transfer.id}" do
             click_on "Delete"
           end
+          page.driver.browser.switch_to.alert.accept
 
-          expect(page).not_to have_content("Account#1")
+          expect(page).to have_content("Transfer was successfully destroyed")
         end
       end
 
@@ -98,7 +99,9 @@ describe "Transfers" do
           within "#transfer_#{transfer.id}" do
             click_on "Delete"
           end
+          page.driver.browser.switch_to.alert.accept
 
+          expect(page).to have_no_content("Transfer was successfully destroyed")
           expect(page).to have_content("Account#1")
         end
       end

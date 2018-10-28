@@ -23,11 +23,11 @@ describe "Exchanges" do
 
     expect(page).to have_content "Exchange was successfully created."
 
-    expect(page).to have_content("SOURCE Account#1") &
-      have_content("DESTINATION Account#2") &
-      have_content("VALUE IN $100.00") &
-      have_content("VALUE OUT $100.00") &
-      have_content("FEE $10.00")
+    expect(page).to have_content("SOURCE Account#1")
+    expect(page).to have_content("DESTINATION Account#2")
+    expect(page).to have_content("VALUE IN $100.00")
+    expect(page).to have_content("VALUE OUT $100.00")
+    expect(page).to have_content("FEE $10.00")
   end
 
   context "when there is a exchange" do
@@ -72,8 +72,8 @@ describe "Exchanges" do
       click_on "Add"
 
       within ".comments" do
-        expect(page).to have_content("Comment#1") &
-          have_content("admin@example.com")
+        expect(page).to have_content("Comment#1")
+        expect(page).to have_content("admin@example.com")
       end
     end
 
@@ -93,8 +93,9 @@ describe "Exchanges" do
           within "#exchange_#{exchange.id}" do
             click_on "Delete"
           end
+          page.driver.browser.switch_to.alert.accept
 
-          expect(page).not_to have_content("Account#1")
+          expect(page).to have_content("Exchange was successfully destroyed")
         end
       end
 
@@ -106,6 +107,7 @@ describe "Exchanges" do
           within "#exchange_#{exchange.id}" do
             click_on "Delete"
           end
+          page.driver.browser.switch_to.alert.accept
 
           expect(page).to have_content("Account#1")
         end

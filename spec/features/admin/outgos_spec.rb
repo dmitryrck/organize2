@@ -34,10 +34,10 @@ describe "Outgos" do
 
     click_on "Create"
 
-    expect(page).to have_content("Outgo#1") &
-      have_content("$100.00") &
-      have_content("$0.0") &
-      have_content("ACCOUNT/CARD Account#1")
+    expect(page).to have_content("Outgo#1")
+    expect(page).to have_content("$100.00")
+    expect(page).to have_content("$0.0")
+    expect(page).to have_content("ACCOUNT/CARD Account#1")
   end
 
   context "when there is an outgo" do
@@ -54,8 +54,8 @@ describe "Outgos" do
 
       click_on "Update"
 
-      expect(page).to have_content("Outgo#2") &
-        have_content("$12.99")
+      expect(page).to have_content("Outgo#2")
+      expect(page).to have_content("$12.99")
     end
 
     it "should be able to comment" do
@@ -68,8 +68,8 @@ describe "Outgos" do
       click_on "Add"
 
       within ".comments" do
-        expect(page).to have_content("Comment#1") &
-          have_content("admin@example.com")
+        expect(page).to have_content("Comment#1")
+        expect(page).to have_content("admin@example.com")
       end
     end
 
@@ -78,6 +78,7 @@ describe "Outgos" do
       within "#outgo_#{outgo.id}" do
         click_on "Delete"
       end
+      page.driver.browser.switch_to.alert.accept
 
       expect(page).not_to have_content("Outgo#1")
     end

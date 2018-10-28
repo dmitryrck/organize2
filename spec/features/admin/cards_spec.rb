@@ -36,10 +36,10 @@ describe "Cards" do
 
     click_on "Create"
 
-    expect(page).to have_content("Card#1") &
-      have_content("$123.45") &
-      have_content("PAYMENT DAY 20") &
-      have_content("PRECISION 4")
+    expect(page).to have_content("Card#1")
+    expect(page).to have_content("$123.45")
+    expect(page).to have_content("PAYMENT DAY 20")
+    expect(page).to have_content("PRECISION 4")
   end
 
   context "when there is a card" do
@@ -68,8 +68,8 @@ describe "Cards" do
       click_on "Add"
 
       within ".comments" do
-        expect(page).to have_content("Comment#1") &
-          have_content("admin@example.com")
+        expect(page).to have_content("Comment#1")
+        expect(page).to have_content("admin@example.com")
       end
     end
 
@@ -78,6 +78,7 @@ describe "Cards" do
       within "#card_#{card.id}" do
         click_on "Delete"
       end
+      page.driver.browser.switch_to.alert.accept
 
       expect(page).not_to have_content("Card#1")
     end
@@ -117,9 +118,9 @@ describe "Cards" do
       end
 
       it "shows only unpaid outgos to form" do
-        expect(page).to have_content("Outgo#1") &
-          have_content("Outgo#3") &
-          have_content("Outgo#4")
+        expect(page).to have_content("Outgo#1")
+        expect(page).to have_content("Outgo#3")
+        expect(page).to have_content("Outgo#4")
 
         expect(page).not_to have_content("Outgo#2")
       end
@@ -141,8 +142,8 @@ describe "Cards" do
 
         click_on "Create Outgo"
 
-        expect(page).to have_content("Outgo was successfully created") &
-          have_content("Outgo#1")
+        expect(page).to have_content("Outgo was successfully created")
+        expect(page).to have_content("Outgo#1")
       end
     end
   end
