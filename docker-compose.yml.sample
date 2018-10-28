@@ -4,19 +4,9 @@ services:
   db:
     image: postgres
     volumes:
-      - .:/app
       - db:/var/lib/postgresql/data
     expose:
       - '5432'
-
-  heroku:
-    build:
-      context: .
-      dockerfile: Dockerfile.heroku
-    volumes:
-      - .:/app
-      - heroku:/root
-    working_dir: /app
 
   web:
     build: .
