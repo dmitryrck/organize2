@@ -116,7 +116,7 @@ GEM
     factory_girl (4.8.0)
       activesupport (>= 3.0.0)
     ffaker (2.6.0)
-    ffi (1.9.18)
+    ffi (1.9.25)
     font-awesome-rails (4.7.0.2)
       railties (>= 3.2, < 5.2)
     formtastic (3.1.5)
