@@ -1,4 +1,4 @@
-from ruby:2.3.1
+from ruby
 
 env DEBIAN_FRONTEND=noninteractive \
   PHANTOMJS_VERSION=2.1.1 \
