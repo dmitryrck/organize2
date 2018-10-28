@@ -6,6 +6,7 @@ gem 'draper'
 gem 'enumerate_it'
 gem 'jbuilder', '~> 2.5'
 gem 'jquery-rails'
+gem "listen"
 gem 'oj'
 gem 'pg'
 gem 'pg_search'
