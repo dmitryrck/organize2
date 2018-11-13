@@ -6,17 +6,16 @@ services:
     volumes:
       - db:/var/lib/postgresql/data
     expose:
-      - '5432'
+      - "5432"
 
   web:
-    build: .
+    image: dmitryrck/ruby
     volumes:
       - .:/app
       - bundle_path:/bundle
     environment:
       - BUNDLE_PATH=/bundle/vendor
       - BUNDLE_APP_CONFIG=/app/.bundle
-    user: ruby
     working_dir: /app
     command: bundle exec puma -C config/puma.rb
     ports:
@@ -27,4 +26,3 @@ services:
 volumes:
   bundle_path:
   db:
-  heroku:
