@@ -5,11 +5,11 @@ Account.destroy_all
 2.times do
   Account.create(
     name: FFaker::Company.name,
-    balance: rand(100),
+    start_balance: rand(100),
   )
 end
 
-date_range = (-90..60).to_a
+date_range = (-30..30).to_a
 
 accounts = Account.all.to_a
 
