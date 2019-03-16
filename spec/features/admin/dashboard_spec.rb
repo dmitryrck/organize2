@@ -9,13 +9,18 @@ describe "Dashboard" do
   end
 
   let(:account) { create(:account, start_balance: 100) }
+  let(:account3) { create(:account, name: "Account#3") }
   let(:user) { create(:admin_user) }
 
-  it "should show only active accounts" do
+  it "should show only active accounts with outgos" do
+    create(:outgo, chargeable: account, confirmed: false)
+    create(:outgo, chargeable: account3, confirmed: true)
+
     click_on "Dashboard"
 
     expect(page).to have_content "Account#1"
     expect(page).not_to have_content "Account#2"
+    expect(page).not_to have_content "Account#3"
   end
 
   context "when there are unpaid outgos" do

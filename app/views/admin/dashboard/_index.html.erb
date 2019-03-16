@@ -3,6 +3,7 @@
 <% @accounts = Account.active.readonly! %>
 
 <% @accounts.each do |account| %>
+  <% if account.outgos.unpaid.any? %>
   <div class="panel">
     <h3><%= account %> (<%= account.balance %>)</h3>
     <div class="panel_contents">
@@ -50,4 +51,5 @@
       </table>
     </div>
   </div>
+  <% end %>
 <% end %>
