@@ -19,6 +19,8 @@ class Movement < ActiveRecord::Base
   delegate :currency, to: :chargeable, allow_nil: true
 
   scope :card, -> { where(chargeable_type: "Card") }
+  scope :unpaid, -> { where(confirmed: false) }
+  scope :paid, -> { where(confirmed: true) }
 
   def regular_and_unpaid?
     regular? && !confirmed?

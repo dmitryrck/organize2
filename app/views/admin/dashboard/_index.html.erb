@@ -1,0 +1,53 @@
+<%# This was supposed to be in the controller, but I don't know how to do it
+    with ActiveAdmin %>
+<% @accounts = Account.active.readonly! %>
+
+<% @accounts.each do |account| %>
+  <div class="panel">
+    <h3><%= account %> (<%= account.balance %>)</h3>
+    <div class="panel_contents">
+      <table id="account_<%= account.id %>" border="0" cellspacing="0" cellpadding="0">
+        <thead>
+          <tr>
+            <th class="col">Week</th>
+            <th class="col">Paid (Outgo)</th>
+            <th class="col">Unpaid (Outgo)</th>
+            <th class="col">Paid (Income)</th>
+            <th class="col">Unpaid (Income)</th>
+            <th class="col">Estimate</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% if account.outgos.unpaid.any? %>
+            <% (account.outgos.unpaid.minimum(:date).upto(account.outgos.unpaid.maximum(:date))).to_a.group_by(&:cweek).each do |week, days| %>
+              <tr class="odd">
+                <%# TODO %>
+                <% range = days[0].beginning_of_week..days[0].end_of_week %>
+                <% account.balance = account.balance - account.outgos.unpaid.where(date: range).sum(:value) + account.incomes.unpaid.where(date: range).sum(:value) %>
+                <td>
+                  <%= days[0].beginning_of_week %> → <%= days[0].end_of_week %>
+                </td>
+                <td class="col">
+                  <%= account.outgos.paid.where(date: range).sum(:value) %>
+                </td>
+                <td class="col">
+                  <%= account.outgos.unpaid.where(date: range).sum(:value) %>
+                </td>
+                <td class="col">
+                  <%= account.incomes.paid.where(date: range).sum(:value) %>
+                </td>
+                <td class="col">
+                  <%= account.incomes.unpaid.where(date: range).sum(:value) %>
+                </td>
+                <td class="col">
+                  <%= account.balance %>
+                </td>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+<% end %>
