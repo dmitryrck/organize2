@@ -1,20 +1,31 @@
+Movement.update_all(confirmed: false)
 Movement.destroy_all
 Account.destroy_all
 
-3.times do
-  Account.create name: FFaker::Company.name,
-    balance: rand(100)
+2.times do
+  Account.create(
+    name: FFaker::Company.name,
+    balance: rand(100),
+  )
 end
 
 date_range = (-90..60).to_a
 
+accounts = Account.all.to_a
+
 50.times do |num|
-  Movement.create! description: [FFaker::Food.fruit, FFaker::Food.ingredient, FFaker::Food.meat].join(' '),
+  Movement.create!(
+    description: "[#{FFaker::Food.fruit}] #{FFaker::Food.meat}",
     kind: %w(Outgo Income).sample,
-    value: rand(num * 2) + rand,
+    value: (rand(num * 2) + rand).round(2),
     category: FFaker::Color.name,
-    date: Date.current + date_range.to_a.sample,
+    date: Date.current + date_range.sample,
     confirmed: FFaker::Boolean.maybe,
-    chargeable: Account.all.to_a.sample
+    chargeable: accounts.sample,
+  )
 end
-AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
+
+AdminUser.find_or_create_by(email: "admin@example.com") do |user|
+  user.password = "password"
+  user.password_confirmation = "password"
+end
