@@ -7,7 +7,7 @@ ActiveAdmin.register Outgo do
 
   decorate_with OutgoDecorator
 
-  config.sort_order = "date_asc"
+  config.sort_order = "date_desc"
   config.paginate = false
 
   filter :confirmed

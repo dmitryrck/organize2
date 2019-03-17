@@ -7,7 +7,7 @@ ActiveAdmin.register Income do
 
   decorate_with IncomeDecorator
 
-  config.sort_order = "date_asc"
+  config.sort_order = "date_desc"
   config.paginate = false
 
   filter :description
