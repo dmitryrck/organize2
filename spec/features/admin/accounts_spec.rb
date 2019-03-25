@@ -33,6 +33,10 @@ describe "Accounts" do
 
   it "should be able to create" do
     click_on "Accounts"
+
+    page.driver.browser.manage.window.resize_to(1024, 768)
+    page.driver.save_screenshot Rails.root.join("app/assets/images/screenshots/create_account_01.png"), full: true
+
     click_on "New"
 
     fill_in "Name", with: "Account#1"
@@ -40,7 +44,11 @@ describe "Accounts" do
     fill_in "Currency", with: "USD"
     fill_in "Precision", with: 4
 
+    page.driver.save_screenshot Rails.root.join("app/assets/images/screenshots/create_account_02.png"), full: true
+
     click_on "Create"
+
+    page.driver.save_screenshot Rails.root.join("app/assets/images/screenshots/create_account_03.png"), full: true
 
     expect(page).to have_content("Account#1")
     expect(page).to have_content("START BALANCE USD123.45")

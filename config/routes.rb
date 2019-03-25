@@ -3,4 +3,5 @@ Rails.application.routes.draw do
   ActiveAdmin.routes(self)
 
   root to: "admin/outgos#index"
+  resources :docs, only: %i[index show]
 end
