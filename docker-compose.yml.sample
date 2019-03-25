@@ -23,6 +23,18 @@ services:
     links:
       - db
 
+  docs:
+    image: dmitryrck/ruby
+    volumes:
+      - ./docs:/app
+      - bundle_path:/usr/local/bundle
+    environment:
+      - BUNDLE_APP_CONFIG=/app/.bundle
+    working_dir: /app
+    command: bundle exec jekyll serve --host=0.0.0.0
+    ports:
+      - "4000:4000"
+
 volumes:
   bundle_path:
   db:
