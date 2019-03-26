@@ -1,5 +1,13 @@
-<ul>
+<div class="col-lg-8 col-md-10 mx-auto">
   <% @docs.each do |doc| %>
-    <li><%= link_to doc.title, doc.url %></li>
+    <div class="post-preview">
+      <div class="post-title">
+        <%= link_to doc.title, doc.url %>
+      </div>
+
+      <div class="post-subtitle">
+        <%= doc.description %>
+      </div>
+    </div>
   <% end %>
-</ul>
+</div>

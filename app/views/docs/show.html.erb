@@ -1,5 +1,9 @@
-<%= render "header" %>
+<div class="col-lg-8 col-md-10 mx-auto">
+  <div class="post-preview">
+    <div class="post-title">
+      <%= @doc.title %>
+    </div>
 
-<h2><%= @doc.title %></h2>
-
-<%= render file: @doc.path %>
+    <%= render file: @doc.path %>
+  </div>
+</div>
