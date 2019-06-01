@@ -5,19 +5,31 @@ describe "Outgos" do
 
   let(:user) { create(:admin_user) }
 
-  it "should be able to summarize" do
-    create(:outgo, date: 1.year.ago, value: 30)
-    create(:outgo)
-    create(:outgo2, value: 20)
+  context "when summarizing in the index page" do
+    before do
+      create(:outgo, date: 1.year.ago, value: 30)
+      create(:outgo, value: 100)
+      create(:outgo2, value: 20)
+      create(:outgo2, value: 31)
+      create(:outgo2, value: 42, in_reports: false)
 
-    click_on "Outgos"
+      click_on "Outgos"
+    end
 
-    expect(page).to have_content "120"
+    it "should show correct value for the month" do
+      within "#sum_sidebar_section" do
+        expect(page).to have_content "151"
+      end
+    end
 
-    fill_in "q_description", with: "Outgo#1"
-    click_on "Filter"
+    it "should show correct value for search" do
+      fill_in "q_description", with: "Outgo#1"
+      click_on "Filter"
 
-    expect(page).to have_content "130"
+      within "#sum_sidebar_section" do
+        expect(page).to have_content "130"
+      end
+    end
   end
 
   it "should be able to create" do

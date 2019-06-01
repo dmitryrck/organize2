@@ -21,7 +21,7 @@ ActiveAdmin.register Outgo do
 
   permit_params :description, :value, :date, :category, :card_id, :fee,
     :fee_kind, :chargeable_type, :chargeable_id, :drive_id, :transaction_hash,
-    outgo_ids: []
+    :in_reports, outgo_ids: []
 
   action_item :duplicate, only: :show do
     link_to "Duplicate", new_admin_outgo_path(outgo: outgo.duplicable_attributes)
@@ -29,6 +29,7 @@ ActiveAdmin.register Outgo do
 
   sidebar :sum, only: :index do
     outgos
+      .select { |outgo| outgo.in_reports? }
       .group_by { |outgo| outgo.currency }
       .map { |currency, outgos| [currency, outgos.sum { |outgo| Draper.undecorate(outgo).total }] }
       .each do |currency, sum|
@@ -65,6 +66,7 @@ ActiveAdmin.register Outgo do
         outgo.fee_kind_humanize
       end
       row :card
+      row :in_reports
       row :drive_id
       row :transaction_hash
       row :created_at
