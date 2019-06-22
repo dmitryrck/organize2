@@ -12,13 +12,13 @@ describe "Dashboard" do
   let(:account3) { create(:account, name: "Account#3") }
   let(:user) { create(:admin_user) }
 
-  it "should show only active accounts with outgos" do
+  it "should show only active accounts with movements" do
     create(:outgo, chargeable: account, confirmed: false)
     create(:outgo, chargeable: account3, confirmed: true)
 
     click_on "Dashboard"
 
-    expect(page).to have_content "Account#1"
+    expect(page).to have_content "Account#1 (Current balance: $100.00)"
     expect(page).not_to have_content "Account#2"
     expect(page).not_to have_content "Account#3"
   end
@@ -42,19 +42,19 @@ describe "Dashboard" do
     end
 
     it "should calculate for the first week" do
-      expect(find(:xpath, "//table/tbody/tr[1]/td[2]")).to have_content "5.0"
-      expect(find(:xpath, "//table/tbody/tr[1]/td[3]")).to have_content "10.0"
-      expect(find(:xpath, "//table/tbody/tr[1]/td[4]")).to have_content "2.0"
-      expect(find(:xpath, "//table/tbody/tr[1]/td[5]")).to have_content "3.0"
-      expect(find(:xpath, "//table/tbody/tr[1]/td[6]")).to have_content "93.0"
+      expect(find(:xpath, "//table/tbody/tr[1]/td[2]")).to have_content "$5.00"
+      expect(find(:xpath, "//table/tbody/tr[1]/td[3]")).to have_content "$10.00"
+      expect(find(:xpath, "//table/tbody/tr[1]/td[4]")).to have_content "$2.00"
+      expect(find(:xpath, "//table/tbody/tr[1]/td[5]")).to have_content "$3.00"
+      expect(find(:xpath, "//table/tbody/tr[1]/td[6]")).to have_content "$93.00"
     end
 
     it "should calculate for the second week" do
-      expect(find(:xpath, "//table/tbody/tr[2]/td[2]")).to have_content "0.0"
-      expect(find(:xpath, "//table/tbody/tr[2]/td[3]")).to have_content "5.0"
-      expect(find(:xpath, "//table/tbody/tr[2]/td[4]")).to have_content "0.0"
-      expect(find(:xpath, "//table/tbody/tr[2]/td[5]")).to have_content "0.0"
-      expect(find(:xpath, "//table/tbody/tr[2]/td[6]")).to have_content "88.0"
+      expect(find(:xpath, "//table/tbody/tr[2]/td[2]")).to have_content "$0.00"
+      expect(find(:xpath, "//table/tbody/tr[2]/td[3]")).to have_content "$5.00"
+      expect(find(:xpath, "//table/tbody/tr[2]/td[4]")).to have_content "$0.00"
+      expect(find(:xpath, "//table/tbody/tr[2]/td[5]")).to have_content "$0.00"
+      expect(find(:xpath, "//table/tbody/tr[2]/td[6]")).to have_content "$88.00"
     end
   end
 end

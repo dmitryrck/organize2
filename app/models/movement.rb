@@ -67,6 +67,14 @@ class Movement < ActiveRecord::Base
     !confirmed?
   end
 
+  def income?
+    is_a?(Income)
+  end
+
+  def outgo?
+    is_a?(Outgo)
+  end
+
   def to_s
     description
   end

@@ -7,6 +7,14 @@ RSpec.describe Movement, type: :model do
 
   it_behaves_like Movement
 
+  context "#outgo?" do
+    it { is_expected.to be_outgo }
+  end
+
+  context "#income?" do
+    it { is_expected.not_to be_income }
+  end
+
   context '#summarize?' do
     context 'with Account chargeable_type' do
       context "and confirmed" do

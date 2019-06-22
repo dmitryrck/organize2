@@ -5,7 +5,10 @@
 <% @accounts.each do |account| %>
   <% if account.outgos.unpaid.any? %>
   <div class="panel">
-    <h3><%= account %> (<%= account.balance %>)</h3>
+    <h3>
+      <%= account %>
+      (Current balance: <%= number_to_currency(account.balance, unit: (account.currency.presence || "$"), precision: account.precision.to_i) %>)
+    </h3>
     <div class="panel_contents">
       <table id="account_<%= account.id %>" border="0" cellspacing="0" cellpadding="0">
         <thead>
@@ -21,29 +24,24 @@
 
         <tbody>
           <% if account.outgos.unpaid.any? %>
-            <% (account.outgos.unpaid.minimum(:date).upto(account.outgos.unpaid.maximum(:date))).to_a.group_by(&:cweek).each do |week, days| %>
+            <% (account.movements.unpaid.minimum(:date).upto(account.movements.unpaid.maximum(:date))).to_a.group_by(&:cweek).each do |week, days| %>
               <tr class="odd">
                 <%# TODO %>
-                <% range = days[0].beginning_of_week..days[0].end_of_week %>
-                <% account.balance = account.balance - account.outgos.unpaid.where(date: range).sum(:value) + account.incomes.unpaid.where(date: range).sum(:value) %>
-                <td>
-                  <%= days[0].beginning_of_week %> → <%= days[0].end_of_week %>
-                </td>
-                <td class="col">
-                  <%= account.outgos.paid.where(date: range).sum(:value) %>
-                </td>
-                <td class="col">
-                  <%= account.outgos.unpaid.where(date: range).sum(:value) %>
-                </td>
-                <td class="col">
-                  <%= account.incomes.paid.where(date: range).sum(:value) %>
-                </td>
-                <td class="col">
-                  <%= account.incomes.unpaid.where(date: range).sum(:value) %>
-                </td>
-                <td class="col">
-                  <%= account.balance %>
-                </td>
+                <% beginning_of_week = days[0].beginning_of_week; end_of_week = days[0].end_of_week %>
+                <% movements = account.movements.where("date >= ? and date <= ?", beginning_of_week, end_of_week) %>
+                <%
+                  outgos_paid      = movements.select { |movement| movement.outgo? && movement.confirmed? }.sum(&:value)
+                  outgos_unpaid    = movements.select { |movement| movement.outgo? && movement.unconfirmed? }.sum(&:value)
+                  incomes_paid     = movements.select { |movement| movement.income? && movement.confirmed? }.sum(&:value)
+                  incomes_unpaid   = movements.select { |movement| movement.income? && movement.unconfirmed? }.sum(&:value)
+                  account.balance = account.balance - outgos_unpaid + incomes_unpaid
+                %>
+                <td><%= beginning_of_week %> → <%= end_of_week %></td>
+                <td class="col"><%= number_to_currency(outgos_paid, unit: (account.currency.presence || "$"), precision: account.precision.to_i) %></td>
+                <td class="col"><%= number_to_currency(outgos_unpaid, unit: (account.currency.presence || "$"), precision: account.precision.to_i) %></td>
+                <td class="col"><%= number_to_currency(incomes_paid, unit: (account.currency.presence || "$"), precision: account.precision.to_i) %></td>
+                <td class="col"><%= number_to_currency(incomes_unpaid, unit: (account.currency.presence || "$"), precision: account.precision.to_i) %></td>
+                <td class="col"><%= number_to_currency(account.balance, unit: (account.currency.presence || "$"), precision: account.precision.to_i) %></td>
               </tr>
             <% end %>
           <% end %>
