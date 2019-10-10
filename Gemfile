@@ -37,12 +37,6 @@ group :production do
   gem 'rails_12factor'
 end
 
-source 'https://rails-assets.org' do
-  gem 'rails-assets-bootstrap'
-  gem 'rails-assets-moment'
-  gem 'rails-assets-rome'
-end
-
 # Admin
 gem "activeadmin", git: "https://github.com/activeadmin/activeadmin.git"
 gem "devise"
