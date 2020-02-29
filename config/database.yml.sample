@@ -2,6 +2,7 @@ development: &postgres
   adapter: postgresql
   encoding: unicode
   username: postgres
+  password: postgres
   database: organize2_development
   host: db
   pool: 5
