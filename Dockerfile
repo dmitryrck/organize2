@@ -1,8 +1,7 @@
 from dmitryrck/ruby:2.7.1-prod
 
 env \
-  API_URL=/ \
-  DATABASE_DEV_URL="postgres://postgres:password@host/notreal"
+  DATABASE_URL="postgres://postgres:password@host/notreal"
 
 copy . /app
 
