@@ -1,0 +1,17 @@
+from dmitryrck/ruby:2.7.1-prod
+
+env \
+  API_URL=/ \
+  DATABASE_DEV_URL="postgres://postgres:password@host/notreal"
+
+copy . /app
+
+workdir /app
+
+run \
+  bundle config set without "development test" && \
+  bundle install && \
+  mkdir -p /app/log /app/tmp/pids && \
+  bundle exec rake assets:precompile
+
+ENTRYPOINT ["/app/docker-entrypoint.sh"]
