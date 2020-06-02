@@ -9,7 +9,6 @@ gem 'jquery-rails'
 gem "listen"
 gem 'oj'
 gem 'pg'
-gem 'pg_search'
 gem 'puma'
 gem 'responders'
 gem 'sass-rails', '~> 5.0'

@@ -11,12 +11,11 @@ services:
       - "5432"
 
   web:
-    image: dmitryrck/ruby
+    image: dmitryrck/ruby:2.6.6
     volumes:
       - .:/app
-      - bundle_path:/bundle
+      - bundle_path:/usr/local/bundle
     environment:
-      - BUNDLE_PATH=/bundle/vendor
       - BUNDLE_APP_CONFIG=/app/.bundle
     working_dir: /app
     command: bundle exec puma -C config/puma.rb
