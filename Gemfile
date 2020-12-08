@@ -4,7 +4,7 @@ gem "rails", "5.2.4.3"
 
 gem 'draper'
 gem 'enumerate_it'
-gem 'jbuilder', '~> 2.5'
+gem "jbuilder"
 gem 'jquery-rails'
 gem "listen"
 gem 'oj'
@@ -19,7 +19,7 @@ gem 'uglifier', '>= 1.3.0'
 
 group :development, :test do
   gem 'ffaker'
-  gem 'rspec-rails', '~> 3.0'
+  gem "rspec-rails"
 end
 
 group :test do
