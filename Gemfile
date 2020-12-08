@@ -30,6 +30,7 @@ group :test do
   gem "rails-controller-testing"
   gem "selenium-webdriver"
   gem 'simplecov', require: false
+  gem "webdrivers"
 end
 
 group :production do

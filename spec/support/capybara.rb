@@ -1,14 +1,15 @@
 Capybara.server = :puma, { Silent: true }
 
-Capybara.register_driver :chrome do |app|
-  capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
-    chromeOptions: {
-      args: %w[no-sandbox headless disable-popup-blocking disable-gpu]
-    }
-  )
+Capybara.register_driver :chrome_headless do |app|
+  options = ::Selenium::WebDriver::Chrome::Options.new
 
-  Capybara::Selenium::Driver.new(app, browser: :chrome, desired_capabilities: capabilities)
+  options.add_argument("--headless") if ENV.fetch("CAPYBARA_HEADLESS") { "yes" } == "yes"
+  options.add_argument("--no-sandbox")
+  options.add_argument("--disable-dev-shm-usage")
+  options.add_argument("--window-size=1400,1400")
+
+  Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
 end
 
-Capybara.default_driver = :chrome
-Capybara.javascript_driver = :chrome
+Capybara.javascript_driver = :chrome_headless
+Capybara.default_driver = :chrome_headless
