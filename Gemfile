@@ -26,7 +26,7 @@ group :test do
   gem "capybara"
   gem 'codeclimate-test-reporter', require: false
   gem 'database_cleaner'
-  gem 'factory_girl'
+  gem "factory_bot"
   gem "rails-controller-testing"
   gem "selenium-webdriver"
   gem 'simplecov', require: false

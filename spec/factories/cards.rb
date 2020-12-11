@@ -1,5 +1,5 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :card do
-    name 'Card#1'
+    name { "Card#1" }
   end
 end

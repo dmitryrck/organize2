@@ -1,4 +1,4 @@
-module FactoryGirl
+module FactoryBot
   module Strategy
     class Cache
       # :nocov:
@@ -57,13 +57,13 @@ module FactoryGirl
   end
 end
 
-FactoryGirl.register_strategy(:cache, FactoryGirl::Strategy::Cache)
-FactoryGirl.find_definitions
+FactoryBot.register_strategy(:cache, FactoryBot::Strategy::Cache)
+FactoryBot.find_definitions
 
 RSpec.configure do |config|
-  config.include FactoryGirl::Syntax::Methods
+  config.include FactoryBot::Syntax::Methods
 
   config.after do
-    FactoryGirl::Strategy::Repository.instance.recycle!
+    FactoryBot::Strategy::Repository.instance.recycle!
   end
 end
