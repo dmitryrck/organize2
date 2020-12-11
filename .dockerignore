@@ -1,3 +1,13 @@
-.git
-.dockerignore
+config/database.yml
+config/initializers/zz.rb
+coverage
+db/schema.rb
+db/structure.sql
+docker-compose.yml*
 Dockerfile
+.dockerignore
+.env
+.git
+log
+*.nix
+tmp
