@@ -4,7 +4,7 @@ class OutgoDecorator < ApplicationDecorator
   delegate :precision, :currency, to: :chargeable, allow_nil: true
 
   def description
-    "#{icon} #{object.description} #{tag}".html_safe
+    [in_report_label, icon, object_description, tag].reject(&:blank?).join(" ")
   end
 
   def fee
@@ -26,6 +26,14 @@ class OutgoDecorator < ApplicationDecorator
   end
 
   private
+
+  def object_description
+    Sanitize.fragment(object.description)
+  end
+
+  def in_report_label
+    "×" if object.not_in_reports?
+  end
 
   def fee_title
     if object.fee_kind.blank?

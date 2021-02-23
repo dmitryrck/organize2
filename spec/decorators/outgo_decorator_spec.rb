@@ -14,6 +14,40 @@ describe OutgoDecorator do
     it { expect(subject.fee).to eq "$1.000" }
   end
 
+  context ".description" do
+    context "when outgo is not in reports" do
+      let(:outgo) { build(:outgo, description: "Supermarket", in_reports: false) }
+
+      it "includes the x visual aid" do
+        expect(subject.description).to eq "× Supermarket"
+      end
+    end
+
+    context "when outgo is in reports" do
+      let(:outgo) { build(:outgo, description: "Supermarket", in_reports: true) }
+
+      it "does not include the x visual aid" do
+        expect(subject.description).to eq "Supermarket"
+      end
+    end
+
+    context "when original description has a javascript injection" do
+      let(:outgo) { build(:outgo, description: "<alert>Supermarket</alert>") }
+
+      it "does not include the x visual aid" do
+        expect(subject.description).to eq "Supermarket"
+      end
+    end
+
+    context "when there is a category" do
+      let(:outgo) { build(:outgo, description: "<alert>Supermarket</alert>", category: "food") }
+
+      it "does not include the x visual aid" do
+        expect(subject.description).to eq %[Supermarket <span class="status_tag info">food</span>]
+      end
+    end
+  end
+
   context ".total" do
     context "when fee is a nil value" do
       let(:outgo) { build(:outgo, value: 10, fee: nil) }

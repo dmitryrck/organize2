@@ -17,6 +17,7 @@ ActiveAdmin.register Outgo do
   filter :value
   filter :fee
   filter :fee_kind, as: :select, collection: proc { FeeKind.to_a }
+  filter :in_reports
   filter :transaction_hash
 
   permit_params :description, :value, :date, :category, :card_id, :fee,

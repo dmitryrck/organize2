@@ -11,6 +11,7 @@ gem 'oj'
 gem 'pg'
 gem 'puma'
 gem 'responders'
+gem "sanitize"
 gem 'sass-rails', '~> 5.0'
 gem 'show_for'
 gem 'simple_form'

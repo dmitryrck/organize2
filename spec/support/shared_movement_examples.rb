@@ -45,4 +45,18 @@ shared_examples_for Movement do
       expect(subject.to_s).to eq "Description#1"
     end
   end
+
+  context "#not_in_reports?" do
+    context "when object is in_reports?" do
+      subject { build(:outgo, in_reports: true) }
+
+      it { is_expected.not_to be_not_in_report }
+    end
+
+    context "when object is not in_reports?" do
+      subject { build(:outgo, in_reports: false) }
+
+      it { is_expected.to be_not_in_report }
+    end
+  end
 end

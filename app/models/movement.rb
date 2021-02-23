@@ -19,6 +19,10 @@ class Movement < ActiveRecord::Base
   scope :unpaid, -> { where(confirmed: false) }
   scope :paid, -> { where(confirmed: true) }
 
+  def not_in_reports?
+    !in_reports?
+  end
+
   def regular_and_unpaid?
     regular? && !confirmed?
   end

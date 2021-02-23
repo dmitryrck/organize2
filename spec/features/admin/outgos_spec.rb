@@ -11,9 +11,13 @@ describe "Outgos" do
       create(:outgo, value: 100)
       create(:outgo2, value: 20)
       create(:outgo2, value: 31)
-      create(:outgo2, value: 42, in_reports: false)
+      create(:outgo2, description: "Not in report", value: 42, in_reports: false)
 
       click_on "Outgos"
+    end
+
+    it "shows the correct labels for outgos" do
+      expect(page).to have_content "× Not in report"
     end
 
     it "should show correct value for the month" do
