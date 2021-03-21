@@ -21,8 +21,12 @@ describe "Outgos" do
     end
 
     it "should show correct value for the month" do
-      within "#sum_sidebar_section" do
+      within "#in_reports_sum_sidebar_section" do
         expect(page).to have_content "151"
+      end
+
+      within "#not_in_reports_sum_sidebar_section" do
+        expect(page).to have_content "42"
       end
     end
 
@@ -30,7 +34,7 @@ describe "Outgos" do
       fill_in "q_description", with: "Outgo#1"
       click_on "Filter"
 
-      within "#sum_sidebar_section" do
+      within "#in_reports_sum_sidebar_section" do
         expect(page).to have_content "130"
       end
     end

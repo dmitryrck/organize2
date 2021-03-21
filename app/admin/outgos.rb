@@ -28,9 +28,19 @@ ActiveAdmin.register Outgo do
     link_to "Duplicate", new_admin_outgo_path(outgo: outgo.duplicable_attributes)
   end
 
-  sidebar :sum, only: :index do
+  sidebar :in_reports_sum, only: :index do
     outgos
       .select { |outgo| outgo.in_reports? }
+      .group_by { |outgo| outgo.currency }
+      .map { |currency, outgos| [currency, outgos.sum { |outgo| Draper.undecorate(outgo).total }] }
+      .each do |currency, sum|
+        para "#{currency} #{sum}"
+      end
+  end
+
+  sidebar :not_in_reports_sum, only: :index do
+    outgos
+      .reject { |outgo| outgo.in_reports? }
       .group_by { |outgo| outgo.currency }
       .map { |currency, outgos| [currency, outgos.sum { |outgo| Draper.undecorate(outgo).total }] }
       .each do |currency, sum|
