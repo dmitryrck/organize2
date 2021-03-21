@@ -4,7 +4,7 @@ class OutgoDecorator < ApplicationDecorator
   delegate :precision, :currency, to: :chargeable, allow_nil: true
 
   def description
-    [in_report_label, icon, object_description, tag].reject(&:blank?).join(" ")
+    [in_report_label, icon, object_description, tag].reject(&:blank?).join(" ").html_safe
   end
 
   def fee

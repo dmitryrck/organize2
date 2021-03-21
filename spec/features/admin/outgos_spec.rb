@@ -10,13 +10,14 @@ describe "Outgos" do
       create(:outgo, date: 1.year.ago, value: 30)
       create(:outgo, value: 100)
       create(:outgo2, value: 20)
-      create(:outgo2, value: 31)
+      create(:outgo2, description: "Groceries", value: 31, category: "supermarket")
       create(:outgo2, description: "Not in report", value: 42, in_reports: false)
 
       click_on "Outgos"
     end
 
     it "shows the correct labels for outgos" do
+      expect(page).to have_content "Groceries SUPERMARKET"
       expect(page).to have_content "× Not in report"
     end
 
