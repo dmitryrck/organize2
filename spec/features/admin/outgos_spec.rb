@@ -21,13 +21,17 @@ describe "Outgos" do
       expect(page).to have_content "× Not in report"
     end
 
-    it "should show correct value for the month" do
+    it "shows the correct summary" do
       within "#in_reports_sum_sidebar_section" do
         expect(page).to have_content "151"
       end
 
       within "#not_in_reports_sum_sidebar_section" do
         expect(page).to have_content "42"
+      end
+
+      within "#sum_sidebar_section" do
+        expect(page).to have_content "193"
       end
     end
 
