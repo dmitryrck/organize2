@@ -24,6 +24,20 @@ describe "Incomes" do
     expect(page).to have_content("ACCOUNT Account#1")
   end
 
+  it "shows error message when user does not select chargeable" do
+    click_on "Incomes"
+    click_on "New"
+
+    fill_in "Description", with: "Income#1"
+    expect(page).to have_field "Date", with: Date.current.to_s
+    fill_in "Date", with: "2017-12-31"
+    fill_in "Value", with: 100
+
+    click_on "Create"
+
+    expect(page).to have_content "Account can't be blank"
+  end
+
   context "when there is an income" do
     let!(:income) { create(:income) }
 

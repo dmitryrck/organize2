@@ -65,6 +65,20 @@ describe "Outgos" do
     expect(page).to have_content("ACCOUNT/CARD Account#1")
   end
 
+  it "shows error message when user does not select chargeable" do
+    click_on "Outgos"
+    click_on "New"
+
+    fill_in "Description", with: "Outgo#1"
+    expect(page).to have_field "Date", with: Date.current.to_s
+    fill_in "Date", with: "2017-12-31"
+    fill_in "Value", with: 100
+
+    click_on "Create"
+
+    expect(page).to have_content "Account/Card can't be blank"
+  end
+
   context "when there is an outgo" do
     let!(:outgo) { create(:outgo) }
 
