@@ -3,6 +3,8 @@ ActiveAdmin.register Outgo do
   extend ConfirmableResource
   extend OneAccountSidebar
 
+  includes :chargeable
+
   menu priority: 1
 
   decorate_with OutgoDecorator

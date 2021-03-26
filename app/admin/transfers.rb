@@ -3,6 +3,8 @@ ActiveAdmin.register Transfer do
   extend ConfirmableResource
   extend TwoAccountsSidebar
 
+  includes :source, :destination
+
   menu priority: 3
 
   decorate_with TransferDecorator

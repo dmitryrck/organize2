@@ -3,6 +3,8 @@ ActiveAdmin.register Exchange do
   extend ConfirmableResource
   extend TwoAccountsSidebar
 
+  includes :source, :destination
+
   menu priority: 4
 
   decorate_with ExchangeDecorator

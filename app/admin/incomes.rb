@@ -3,6 +3,8 @@ ActiveAdmin.register Income do
   extend ConfirmableResource
   extend OneAccountSidebar
 
+  includes :chargeable
+
   menu priority: 2
 
   decorate_with IncomeDecorator
