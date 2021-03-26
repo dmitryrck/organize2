@@ -3,6 +3,8 @@ require "rails_helper"
 RSpec.describe Exchange, type: :model do
   subject { build(:exchange) }
 
+  it_behaves_like BetweenAccounts
+
   it { is_expected.to be_valid }
 
   context "transaction hash" do

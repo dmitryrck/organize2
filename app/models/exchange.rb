@@ -1,8 +1,9 @@
 class Exchange < ActiveRecord::Base
   extend EnumerateIt
 
-  include Datable
+  include BetweenAccounts
   include Confirmable
+  include Datable
   include Transactionable
 
   belongs_to :source, class_name: "Account"

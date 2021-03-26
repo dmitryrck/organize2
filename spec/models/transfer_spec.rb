@@ -3,6 +3,8 @@ require 'rails_helper'
 describe Transfer do
   subject { build(:transfer) }
 
+  it_behaves_like BetweenAccounts
+
   it { is_expected.to be_valid }
 
   context "transaction hash" do

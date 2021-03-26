@@ -1,6 +1,12 @@
-Movement.update_all(confirmed: false)
-Movement.destroy_all
-Account.destroy_all
+unless Rails.env.production?
+  Movement.update_all(confirmed: false)
+  Movement.destroy_all
+  Exchange.update_all(confirmed: false)
+  Exchange.destroy_all
+  Transfer.update_all(confirmed: false)
+  Transfer.destroy_all
+  Account.destroy_all
+end
 
 2.times do
   Account.create(
@@ -22,8 +28,31 @@ accounts = Account.all.to_a
     date: Date.current + date_range.sample,
     confirmed: FFaker::Boolean.maybe,
     chargeable: accounts.sample,
-    expected_movement: [true, false].sample,
+    expected_movement: FFaker::Boolean.maybe,
   )
+end
+
+10.times do |num|
+  exchange = Exchange.new(
+    source: accounts.sample,
+    destination: accounts.sample,
+    value_in: (rand(num * 2) + rand).round(2),
+    value_out: (rand(num * 2) + rand).round(2),
+    date: Date.current + date_range.sample,
+    confirmed: FFaker::Boolean.maybe,
+    kind: ExchangeKind.list.sample,
+  )
+  exchange.save! if exchange.valid?
+
+  transfer = Transfer.new(
+    source: accounts.sample,
+    destination: accounts.sample,
+    value: (rand(num * 2) + rand).round(2),
+    date: Date.current + date_range.sample,
+    confirmed: FFaker::Boolean.maybe,
+  )
+
+  transfer.save! if transfer.valid?
 end
 
 AdminUser.find_or_create_by(email: "admin@example.com") do |user|
