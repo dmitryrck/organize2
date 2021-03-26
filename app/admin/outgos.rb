@@ -17,20 +17,20 @@ ActiveAdmin.register Outgo do
   filter :value
   filter :fee
   filter :fee_kind, as: :select, collection: proc { FeeKind.to_a }
-  filter :in_reports
+  filter :expected_movement
   filter :transaction_hash
 
   permit_params :description, :value, :date, :category, :card_id, :fee,
     :fee_kind, :chargeable_type, :chargeable_id, :drive_id, :transaction_hash,
-    :in_reports, outgo_ids: []
+    :expected_movement, outgo_ids: []
 
   action_item :duplicate, only: :show do
     link_to "Duplicate", new_admin_outgo_path(outgo: outgo.duplicable_attributes)
   end
 
-  sidebar :in_reports_sum, only: :index do
+  sidebar :expected_expenses_sum, only: :index do
     outgos
-      .select { |outgo| outgo.in_reports? }
+      .select { |outgo| outgo.expected_movement? }
       .group_by { |outgo| outgo.currency }
       .map { |currency, outgos| [currency, outgos.sum { |outgo| Draper.undecorate(outgo).total }] }
       .each do |currency, sum|
@@ -38,9 +38,9 @@ ActiveAdmin.register Outgo do
       end
   end
 
-  sidebar :not_in_reports_sum, only: :index do
+  sidebar :unexpected_expenses_sum, only: :index do
     outgos
-      .reject { |outgo| outgo.in_reports? }
+      .select { |outgo| outgo.unexpected_movement? }
       .group_by { |outgo| outgo.currency }
       .map { |currency, outgos| [currency, outgos.sum { |outgo| Draper.undecorate(outgo).total }] }
       .each do |currency, sum|
@@ -86,7 +86,7 @@ ActiveAdmin.register Outgo do
         outgo.fee_kind_humanize
       end
       row :card
-      row :in_reports
+      row :expected_movement
       row :drive_id
       row :transaction_hash
       row :created_at

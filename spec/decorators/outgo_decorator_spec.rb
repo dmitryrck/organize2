@@ -16,7 +16,7 @@ describe OutgoDecorator do
 
   context ".description" do
     context "when outgo is not in reports" do
-      let(:outgo) { build(:outgo, description: "Supermarket", in_reports: false) }
+      let(:outgo) { build(:outgo, description: "Supermarket", expected_movement: false) }
 
       it "includes the x visual aid" do
         expect(subject.description).to eq "× Supermarket"
@@ -24,7 +24,7 @@ describe OutgoDecorator do
     end
 
     context "when outgo is in reports" do
-      let(:outgo) { build(:outgo, description: "Supermarket", in_reports: true) }
+      let(:outgo) { build(:outgo, description: "Supermarket", expected_movement: true) }
 
       it "does not include the x visual aid" do
         expect(subject.description).to eq "Supermarket"

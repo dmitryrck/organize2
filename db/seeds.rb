@@ -22,6 +22,7 @@ accounts = Account.all.to_a
     date: Date.current + date_range.sample,
     confirmed: FFaker::Boolean.maybe,
     chargeable: accounts.sample,
+    expected_movement: [true, false].sample,
   )
 end
 

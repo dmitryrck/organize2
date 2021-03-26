@@ -46,17 +46,17 @@ shared_examples_for Movement do
     end
   end
 
-  context "#not_in_reports?" do
-    context "when object is in_reports?" do
-      subject { build(:outgo, in_reports: true) }
+  context "#unexpected_movement?" do
+    context "when object is expected_movement?" do
+      subject { build(:outgo, expected_movement: true) }
 
-      it { is_expected.not_to be_not_in_report }
+      it { is_expected.not_to be_unexpected_movement }
     end
 
-    context "when object is not in_reports?" do
-      subject { build(:outgo, in_reports: false) }
+    context "when object is not expected_movement?" do
+      subject { build(:outgo, expected_movement: false) }
 
-      it { is_expected.to be_not_in_report }
+      it { is_expected.to be_unexpected_movement }
     end
   end
 end

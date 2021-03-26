@@ -11,7 +11,7 @@ describe "Outgos" do
       create(:outgo, value: 100)
       create(:outgo2, value: 20)
       create(:outgo2, description: "Groceries", value: 31, category: "supermarket")
-      create(:outgo2, description: "Not in report", value: 42, in_reports: false)
+      create(:outgo2, description: "Not in report", value: 42, expected_movement: false)
 
       click_on "Outgos"
     end
@@ -22,11 +22,11 @@ describe "Outgos" do
     end
 
     it "shows the correct summary" do
-      within "#in_reports_sum_sidebar_section" do
+      within "#expected_expenses_sum_sidebar_section" do
         expect(page).to have_content "151"
       end
 
-      within "#not_in_reports_sum_sidebar_section" do
+      within "#unexpected_expenses_sum_sidebar_section" do
         expect(page).to have_content "42"
       end
 
@@ -39,7 +39,7 @@ describe "Outgos" do
       fill_in "q_description", with: "Outgo#1"
       click_on "Filter"
 
-      within "#in_reports_sum_sidebar_section" do
+      within "#expected_expenses_sum_sidebar_section" do
         expect(page).to have_content "130"
       end
     end

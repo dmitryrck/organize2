@@ -32,7 +32,7 @@ class OutgoDecorator < ApplicationDecorator
   end
 
   def in_report_label
-    "×" if object.not_in_reports?
+    "×" if object.unexpected_movement?
   end
 
   def fee_title
