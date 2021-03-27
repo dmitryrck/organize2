@@ -65,6 +65,47 @@ describe "Outgos" do
     expect(page).to have_content("ACCOUNT/CARD Account#1")
   end
 
+  it "creates with a valid parent" do
+    account = create(:account)
+    parent = create(:outgo, description: "Parent#1", chargeable: account)
+
+    click_on "Outgos"
+    click_on "New"
+
+    fill_in "Description", with: "Outgo#1"
+    expect(page).to have_field "Date", with: Date.current.to_s
+    fill_in "Date", with: "2017-12-31"
+    fill_in "Value", with: 100
+    select "Account#1", from: "outgo[chargeable_id]"
+    fill_in "Parent", with: parent.id
+
+    click_on "Create"
+
+    expect(page).to have_content("Parent#1")
+    expect(page).to have_content("Outgo#1")
+    expect(page).to have_content("$100.00")
+    expect(page).to have_content("$0.0")
+    expect(page).to have_content("ACCOUNT/CARD Account#1")
+  end
+
+  it "shows error message when parent is invalid" do
+    create(:account)
+
+    click_on "Outgos"
+    click_on "New"
+
+    fill_in "Description", with: "Outgo#1"
+    expect(page).to have_field "Date", with: Date.current.to_s
+    fill_in "Date", with: "2017-12-31"
+    fill_in "Value", with: 100
+    select "Account#1", from: "outgo[chargeable_id]"
+    fill_in "Parent", with: 9999
+
+    click_on "Create"
+
+    expect(page).to have_content("must exist")
+  end
+
   context "when creating with repeat_expense" do
     before do
       create(:account)
@@ -149,6 +190,7 @@ describe "Outgos" do
 
       fill_in "Description", with: "Outgo#2"
       fill_in "Value", with: "12.99"
+      expect(page).not_to have_content "Repeat expense"
 
       click_on "Update"
 
@@ -201,6 +243,7 @@ describe "Outgos" do
           click_on "Edit"
         end
 
+        expect(page).not_to have_content "Repeat expense"
         expect(page).to have_field "outgo[chargeable_id]", disabled: true
         expect(page).to have_field "Value", disabled: true
         expect(page).to have_field "Fee", disabled: true

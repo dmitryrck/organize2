@@ -14,6 +14,7 @@ ActiveAdmin.register Outgo do
 
   filter :confirmed
   filter :description
+  filter :paid_to
   filter :date
   filter :category
   filter :value
@@ -24,7 +25,7 @@ ActiveAdmin.register Outgo do
 
   permit_params :description, :value, :date, :category, :card_id, :fee,
     :fee_kind, :chargeable_type, :chargeable_id, :drive_id, :transaction_hash,
-    :expected_movement, :repeat_expense, outgo_ids: []
+    :expected_movement, :repeat_expense, :paid_to, :parent_id, outgo_ids: []
 
   action_item :duplicate, only: :show do
     link_to "Duplicate", new_admin_outgo_path(outgo: outgo.duplicable_attributes)
@@ -97,6 +98,9 @@ ActiveAdmin.register Outgo do
       row :description do |outgo|
         outgo.object.description
       end
+      row :paid_to do
+        outgo.object.paid_to
+      end
       row :category
       row :date
       row :chargeable
@@ -106,6 +110,7 @@ ActiveAdmin.register Outgo do
         outgo.fee_kind_humanize
       end
       row :card
+      row :parent
       row :expected_movement
       row :drive_id
       row :transaction_hash

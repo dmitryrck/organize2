@@ -48,6 +48,7 @@ class Movement < ActiveRecord::Base
       fee
       fee_kind
       card_id
+      parent_id
     ].each do |att|
       hash[att] = send(att)
     end
@@ -77,7 +78,19 @@ class Movement < ActiveRecord::Base
   end
 
   def to_s
-    description
+    [
+      unexpected_movement_flag,
+      formatted_paid_to,
+      description,
+    ].reject(&:blank?).join(" ")
+  end
+
+  def unexpected_movement_flag
+    "×" if unexpected_movement?
+  end
+
+  def formatted_paid_to
+    "[#{paid_to}]" if paid_to.present?
   end
 
   private

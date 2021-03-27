@@ -15,15 +15,15 @@ describe OutgoDecorator do
   end
 
   context ".description" do
-    context "when outgo is not in reports" do
+    context "when outgo is not expected" do
       let(:outgo) { build(:outgo, description: "Supermarket", expected_movement: false) }
 
       it "includes the x visual aid" do
-        expect(subject.description).to eq "× Supermarket"
+        expect(subject.description).to eq %[<abbr title="Unexpected expense">×</abbr> Supermarket]
       end
     end
 
-    context "when outgo is in reports" do
+    context "when outgo is expected" do
       let(:outgo) { build(:outgo, description: "Supermarket", expected_movement: true) }
 
       it "does not include the x visual aid" do
@@ -44,6 +44,22 @@ describe OutgoDecorator do
 
       it "does not include the x visual aid" do
         expect(subject.description).to eq %[Supermarket <span class="status_tag info">food</span>]
+      end
+    end
+
+    context "when there is paid_to" do
+      let(:outgo) { build(:outgo, description: "Supermarket", paid_to: "Market 101") }
+
+      it do
+        expect(subject.description).to eq %[[Market 101] Supermarket]
+      end
+    end
+
+    context "when there is paid_to and it is not expected" do
+      let(:outgo) { build(:outgo, description: "Supermarket", paid_to: "Market 101", expected_movement: false) }
+
+      it do
+        expect(subject.description).to eq %[<abbr title="Unexpected expense">×</abbr> [Market 101] Supermarket]
       end
     end
   end

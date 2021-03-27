@@ -38,7 +38,14 @@ en:
   activerecord:
     attributes:
       income:
-        chargeable: 'Account'
+        chargeable: "Account"
       outgo:
-        chargeable_type: 'Kind'
-        chargeable: 'Account/Card'
+        chargeable_type: "Kind"
+        chargeable: "Account/Card"
+        expected_movement: "Expected expense"
+  formtastic:
+    hints:
+      outgo:
+        repeat_expense: "One date per line. Format: YYYY-MM-DD"
+        paid_to: "Nome of the company/person you paid this expense"
+        parent_id: "ID of the other movement. Must exist in the database"

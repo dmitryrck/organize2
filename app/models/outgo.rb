@@ -1,6 +1,8 @@
 class Outgo < Movement
   extend EnumerateIt
 
+  validate :valid_parent
+
   belongs_to :card
   belongs_to :parent, class_name: 'Outgo'
 
@@ -22,5 +24,15 @@ class Outgo < Movement
 
   def repeat_expense=(content)
     @repeat_expense = content
+  end
+
+  private
+
+  def valid_parent
+    return if parent_id.blank?
+
+    if Movement.where(id: parent_id).none?
+      errors.add(:parent_id, :required)
+    end
   end
 end

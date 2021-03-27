@@ -4,7 +4,7 @@ class OutgoDecorator < ApplicationDecorator
   delegate :precision, :currency, to: :chargeable, allow_nil: true
 
   def description
-    [in_report_label, icon, object_description, tag].reject(&:blank?).join(" ").html_safe
+    [in_report_label, icon, object.formatted_paid_to, object_description, tag].reject(&:blank?).join(" ").html_safe
   end
 
   def fee
@@ -32,7 +32,11 @@ class OutgoDecorator < ApplicationDecorator
   end
 
   def in_report_label
-    "×" if object.unexpected_movement?
+    if object.unexpected_movement?
+      h.content_tag :abbr, title: "Unexpected expense" do
+        object.unexpected_movement_flag
+      end
+    end
   end
 
   def fee_title

@@ -40,9 +40,76 @@ shared_examples_for Movement do
   end
 
   context "#to_s" do
-    it "should return description" do
-      subject.description = "Description#1"
-      expect(subject.to_s).to eq "Description#1"
+    context "when there is no paid_to" do
+      before { subject.description = "Description#1" }
+
+      it do
+        expect(subject.to_s).to eq "Description#1"
+      end
+    end
+
+    context "when there is paid_to" do
+      before do
+        subject.paid_to = "Company"
+        subject.description = "Description#1"
+      end
+
+      it do
+        expect(subject.to_s).to eq "[Company] Description#1"
+      end
+    end
+
+    context "when it is an unexpected expense" do
+      context "and paid_to" do
+        before do
+          subject.expected_movement = false
+          subject.paid_to = "Company"
+          subject.description = "Description#1"
+        end
+
+        it do
+          expect(subject.to_s).to eq "× [Company] Description#1"
+        end
+      end
+
+      context "and no paid_to" do
+        before do
+          subject.expected_movement = false
+          subject.description = "Description#1"
+        end
+
+        it do
+          expect(subject.to_s).to eq "× Description#1"
+        end
+      end
+    end
+  end
+
+  context "#unexpected_movement_flag" do
+    context "when it is expected" do
+      before { subject.expected_movement = true }
+
+      it { expect(subject.unexpected_movement_flag).to be_blank }
+    end
+
+    context "when it is not expected" do
+      before { subject.expected_movement = false }
+
+      it { expect(subject.unexpected_movement_flag).to eq "×" }
+    end
+  end
+
+  context "#formatted_paid_to" do
+    context "when there is no paid_to" do
+      before { subject.paid_to = "" }
+
+      it { expect(subject.formatted_paid_to).to be_blank }
+    end
+
+    context "when there is paid_to" do
+      before { subject.paid_to = "Market" }
+
+      it { expect(subject.formatted_paid_to).to eq "[Market]" }
     end
   end
 
