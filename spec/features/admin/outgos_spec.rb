@@ -270,7 +270,7 @@ describe "Outgos" do
           click_on "View"
         end
 
-        expect(page).to have_content "EXPECTED MOVEMENT YES"
+        expect(page).to have_content "EXPECTED EXPENSE YES"
 
         click_on "Outgos", match: :first
       end
@@ -295,7 +295,7 @@ describe "Outgos" do
           click_on "View"
         end
 
-        expect(page).to have_content "EXPECTED MOVEMENT NO"
+        expect(page).to have_content "EXPECTED EXPENSE NO"
 
         click_on "Outgos", match: :first
       end
