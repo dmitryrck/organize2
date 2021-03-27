@@ -15,4 +15,12 @@ class Outgo < Movement
   def summarize?
     chargeable_type != 'Card' && !confirmed?
   end
+
+  def repeat_expense
+    @repeat_expense || ""
+  end
+
+  def repeat_expense=(content)
+    @repeat_expense = content
+  end
 end

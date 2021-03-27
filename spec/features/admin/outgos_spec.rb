@@ -65,6 +65,65 @@ describe "Outgos" do
     expect(page).to have_content("ACCOUNT/CARD Account#1")
   end
 
+  context "when creating with repeat_expense" do
+    before do
+      create(:account)
+
+      click_on "Outgos"
+      click_on "New"
+    end
+
+    it "creates with valid params" do
+      fill_in "Description", with: "Repeat#1"
+      expect(page).to have_field "Date", with: Date.current.to_s
+      fill_in "Date", with: "2017-12-31"
+      fill_in "Value", with: 100
+      select "Account#1", from: "outgo[chargeable_id]"
+      fill_in "Repeat expense", with: "#{1.week.from_now.to_date.to_s}\n#{2.weeks.from_now.to_date.to_s}"
+
+      click_on "Create"
+
+      expect(page).to have_content("Repeat#1")
+      expect(page).to have_content("$100.00")
+      expect(page).to have_content("$0.0")
+      expect(page).to have_content("ACCOUNT/CARD Account#1")
+
+      expect(Outgo.count).to eq 3
+    end
+
+    it "does not create with missing mandatory params" do
+      fill_in "Description", with: "Repeat#1"
+      expect(page).to have_field "Date", with: Date.current.to_s
+      fill_in "Date", with: "2017-12-31"
+      select "Account#1", from: "outgo[chargeable_id]"
+      fill_in "Repeat expense", with: "#{1.week.from_now.to_date.to_s}\n#{2.weeks.from_now.to_date.to_s}"
+
+      click_on "Create"
+
+      expect(page).to have_content("can't be blank")
+
+      expect(Outgo.count).to be_zero
+    end
+
+    it "creates with date in the past" do
+      fill_in "Description", with: "Repeat#1"
+      expect(page).to have_field "Date", with: Date.current.to_s
+      fill_in "Date", with: "2017-12-31"
+      fill_in "Value", with: 100
+      select "Account#1", from: "outgo[chargeable_id]"
+      fill_in "Repeat expense", with: "#{1.week.ago.to_date.to_s}\n#{2.weeks.from_now.to_date.to_s}"
+
+      click_on "Create"
+
+      expect(page).to have_content("Repeat#1")
+      expect(page).to have_content("$100.00")
+      expect(page).to have_content("$0.0")
+      expect(page).to have_content("ACCOUNT/CARD Account#1")
+
+      expect(Outgo.count).to eq 3
+    end
+  end
+
   it "shows error message when user does not select chargeable" do
     click_on "Outgos"
     click_on "New"

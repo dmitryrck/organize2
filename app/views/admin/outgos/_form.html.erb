@@ -12,6 +12,7 @@
     <%= f.input :fee, input_html: { disabled: (@outgo.confirmed? || @outgo.chargeable_inactive?) } %>
     <%= f.input :fee_kind, collection: FeeKind.to_a %>
     <%= f.input :expected_movement %>
+    <%= f.input :repeat_expense, as: :text %>
     <%= f.input :drive_id %>
     <%= f.input :transaction_hash %>
     <%= f.input :card, collection: Card.active, input_html: { disabled: @outgo.confirmed? } %>

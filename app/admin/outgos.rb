@@ -24,10 +24,28 @@ ActiveAdmin.register Outgo do
 
   permit_params :description, :value, :date, :category, :card_id, :fee,
     :fee_kind, :chargeable_type, :chargeable_id, :drive_id, :transaction_hash,
-    :expected_movement, outgo_ids: []
+    :expected_movement, :repeat_expense, outgo_ids: []
 
   action_item :duplicate, only: :show do
     link_to "Duplicate", new_admin_outgo_path(outgo: outgo.duplicable_attributes)
+  end
+
+  controller do
+    def create
+      ActiveRecord::Base.transaction do
+        build_resource
+
+        if @outgo.valid?
+          @outgo.repeat_expense.split("\n").each do |line|
+            other_outgo = Outgo.new(@outgo.attributes.except("id", "created_at", "updated_at", "transaction_hash"))
+            other_outgo.date = Date.strptime(line.strip, "%Y-%m-%d")
+            other_outgo.save!
+          end
+        end
+
+        create!
+      end
+    end
   end
 
   sidebar :expected_expenses_sum, only: :index do
