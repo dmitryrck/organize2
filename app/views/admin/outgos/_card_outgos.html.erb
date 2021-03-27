@@ -1,8 +1,8 @@
-<div class="outgo-checkboxes">
+<div class="panel_contents outgo-checkboxes">
   <div class="form-group check_boxes optional outgo_outgos">
     <label class="check_boxes optional control-label">Outgos</label>
 
-    <table class="table table-inbox table-hover">
+    <table border="0" cellspacing="0" cellpadding="0">
       <thead>
         <tr>
           <th></th>
@@ -17,23 +17,22 @@
 
       <tbody>
         <% FindOutgos.list!(@outgo).each do |outgo| %>
-          <tr data-value="<%= outgo.object.total %>">
-            <td>
+          <tr class="<%= cycle(:odd, :even) %>" data-value="<%= outgo.object.total %>">
+            <td class="col">
               <input class="check_boxes optional" type="checkbox" value="<%= outgo.id %>" name="outgo[outgo_ids][]" id="outgo_outgo_ids_<%= outgo.id %>" <%= 'checked="checked"' if f.object.outgos.include?(outgo) %>>
             </td>
-            <td><%= link_to outgo.id, admin_outgo_path(outgo) %></td>
-            <td>
+            <td class="col"><%= link_to outgo.id, admin_outgo_path(outgo) %></td>
+            <td class="col">
               <%= content_tag :label, for: "outgo_outgo_ids_#{outgo.id}" do %>
                 <%= outgo.description %>
               <% end %>
             </td>
-            <td><%= outgo.total %></td>
-            <td><%= outgo.chargeable %></td>
-            <td><%= l outgo.date, format: :long %></td>
-            <td>
-              <%= link_to(edit_admin_outgo_path(outgo.id)) do %>
-                <i class="fa fa-pencil-square-o"></i>
-              <% end %>
+            <td class="col"><%= outgo.total %></td>
+            <td class="col"><%= outgo.chargeable %></td>
+            <td class="col"><%= l outgo.date, format: :long %></td>
+            <td class="col">
+              <%= link_to "View", admin_outgo_path(outgo) %>
+              <%= link_to "Edit", edit_admin_outgo_path(outgo) %>
             </td>
           </tr>
         <% end %>

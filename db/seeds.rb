@@ -1,5 +1,5 @@
 unless Rails.env.production?
-  Movement.update_all(confirmed: false)
+  Movement.update_all(confirmed: false, parent_id: nil)
   Movement.destroy_all
   Exchange.update_all(confirmed: false)
   Exchange.destroy_all
