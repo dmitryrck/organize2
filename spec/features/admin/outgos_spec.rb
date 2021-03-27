@@ -250,5 +250,55 @@ describe "Outgos" do
         expect(page).to have_field "Card", disabled: true
       end
     end
+
+    it "set expected movement as true for selected outgos in batch" do
+      outgo1 = create(:outgo, expected_movement: false)
+      outgo2 = create(:outgo, expected_movement: false)
+
+      click_on "Outgos"
+
+      find("#batch_action_item_#{outgo1.id}").check
+      find("#batch_action_item_#{outgo2.id}").check
+
+      click_on "Batch Actions"
+      click_on "Set As Expected Selected"
+
+      expect(page).to have_content "Outgos updated successfully"
+
+      [outgo1, outgo2].each do |outgo|
+        within "#outgo_#{outgo.id}" do
+          click_on "View"
+        end
+
+        expect(page).to have_content "EXPECTED MOVEMENT YES"
+
+        click_on "Outgos", match: :first
+      end
+    end
+
+    it "set expected movement as false for selected outgos in batch" do
+      outgo1 = create(:outgo, expected_movement: true)
+      outgo2 = create(:outgo, expected_movement: true)
+
+      click_on "Outgos"
+
+      find("#batch_action_item_#{outgo1.id}").check
+      find("#batch_action_item_#{outgo2.id}").check
+
+      click_on "Batch Actions"
+      click_on "Set As Unexpected Selected"
+
+      expect(page).to have_content "Outgos updated successfully"
+
+      [outgo1, outgo2].each do |outgo|
+        within "#outgo_#{outgo.id}" do
+          click_on "View"
+        end
+
+        expect(page).to have_content "EXPECTED MOVEMENT NO"
+
+        click_on "Outgos", match: :first
+      end
+    end
   end
 end

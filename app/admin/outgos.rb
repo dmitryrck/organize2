@@ -126,4 +126,14 @@ ActiveAdmin.register Outgo do
   end
 
   form partial: "form"
+
+  batch_action :set_as_expected do |ids|
+    Outgo.where(id: ids).update_all(expected_movement: true)
+    redirect_to collection_path, notice: "Outgos updated successfully"
+  end
+
+  batch_action :set_as_unexpected do |ids|
+    Outgo.where(id: ids).update_all(expected_movement: false)
+    redirect_to collection_path, notice: "Outgos updated successfully"
+  end
 end
