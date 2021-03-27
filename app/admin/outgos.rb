@@ -119,12 +119,18 @@ ActiveAdmin.register Outgo do
     end
 
     panel Outgo.human_attribute_name(:outgos) do
-      table_for outgo.outgos do
+      table_for OutgoDecorator.decorate_collection(outgo.outgos.order("date desc")) do
         column :id
         column :confirmed
         column :description
         column :value
         column :date
+        column do
+          link_to "View", admin_outgo_path(outgo)
+        end
+        column do
+          link_to "Edit", edit_admin_outgo_path(outgo)
+        end
       end
     end
 
