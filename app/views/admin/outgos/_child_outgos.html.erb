@@ -2,6 +2,7 @@
   <thead>
     <tr>
       <th class="col">#</th>
+      <th class="col">Confirmed</th>
       <th class="col">Description</th>
       <th class="col">Value</th>
       <th class="col">Chargeable</th>
@@ -14,6 +15,13 @@
     <% outgos.each do |outgo| %>
       <tr class="<%= cycle(:odd, :even) %>" data-value="<%= outgo.object.total %>">
         <td class="col"><%= link_to outgo.id, admin_outgo_path(outgo) %></td>
+        <td class="col">
+          <% if outgo.object.confirmed? %>
+            <span class="status_tag yes">Yes</span>
+          <% else %>
+            <span class="status_tag no">No</span>
+          <% end %>
+        </td>
         <td>
           <%= content_tag :label, for: "outgo_outgo_ids_#{outgo.id}" do %>
             <%= outgo.description %>
