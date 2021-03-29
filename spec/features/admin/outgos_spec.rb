@@ -65,6 +65,28 @@ describe "Outgos" do
     expect(page).to have_content("ACCOUNT/CARD Account#1")
   end
 
+  context "when there is a mapping" do
+    before { create(:movement_remapping) }
+
+    it "creates" do
+      create(:account)
+
+      click_on "Outgos"
+      click_on "New"
+
+      fill_in "Description", with: "Purchases in the market"
+      expect(page).to have_field "Date", with: Date.current.to_s
+      fill_in "Value", with: 123
+      select "Account#1", from: "outgo[chargeable_id]"
+
+      click_on "Create"
+
+      expect(page).to have_content("Purchases in the market")
+      expect(page).to have_content("$123.00")
+      expect(page).to have_content("CATEGORY supermarket")
+    end
+  end
+
   it "creates with a valid parent" do
     account = create(:account)
     parent = create(:outgo, description: "Parent#1", chargeable: account)
