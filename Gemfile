@@ -10,6 +10,7 @@ gem "jbuilder"
 gem 'jquery-rails'
 gem "listen"
 gem 'oj'
+gem "ofx"
 gem 'pg'
 gem 'puma'
 gem 'responders'

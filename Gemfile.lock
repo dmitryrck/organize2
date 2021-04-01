@@ -198,6 +198,8 @@ GEM
     nokogiri (1.13.9)
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
+    ofx (0.3.5)
+      nokogiri (~> 1.13.1)
     oj (3.13.21)
     orm_adapter (0.5.0)
     pg (1.4.3)
@@ -358,6 +360,7 @@ DEPENDENCIES
   jbuilder
   jquery-rails
   listen
+  ofx
   oj
   pg
   puma
