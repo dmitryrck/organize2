@@ -49,6 +49,7 @@ class Movement < ActiveRecord::Base
       fee_kind
       card_id
       parent_id
+      paid_to
     ].each do |att|
       hash[att] = send(att)
     end
