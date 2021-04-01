@@ -1,0 +1,7 @@
+<%= semantic_form_for :ofx, url: admin_ofximports_upload_path do |f| %>
+  <%= f.inputs t("active_admin.details", model: "Ofx File") do %>
+    <%= f.input :file, as: :file %>
+
+    <%= f.actions %>
+  <% end %>
+<% end %>

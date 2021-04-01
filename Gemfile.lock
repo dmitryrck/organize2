@@ -22,6 +22,13 @@ GIT
       railties (>= 5.2, < 6.2)
       responders (>= 2, < 4)
 
+GIT
+  remote: https://github.com/dmitryrck/ofx.git
+  revision: 34f1bb26dfdc6656d92a4b6d279c6d329583e8cf
+  specs:
+    ofx (0.3.2)
+      nokogiri
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -331,6 +338,7 @@ DEPENDENCIES
   jbuilder
   jquery-rails
   listen
+  ofx!
   oj
   pg
   puma
