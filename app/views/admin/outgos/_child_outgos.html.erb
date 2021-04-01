@@ -29,7 +29,7 @@
         </td>
         <td class="col"><%= outgo.total %></td>
         <td class="col">
-          <%= link_to outgo.chargeable, resource_url(outgo.chargeable) %>
+          <%= link_to outgo.chargeable, [:admin, outgo.chargeable] %>
         </td>
         <td class="col"><%= l outgo.date, format: :long %></td>
         <td class="col">
