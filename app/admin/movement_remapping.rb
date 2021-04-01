@@ -44,6 +44,7 @@ ActiveAdmin.register MovementRemapping do
     f.object.kind ||= MovementKind.value_for("OUTGO")
     f.object.field_to_watch ||= MovementField.value_for("DESCRIPTION")
     f.object.kind_of_match ||= KindOfMatch.value_for("CONTAINS")
+    f.object.kind_of_change ||= KindOfChange.value_for("REPLACE")
     f.object.field_to_change ||= MovementField.value_for("CATEGORY")
 
     f.inputs t("active_admin.details", model: MovementRemapping) do

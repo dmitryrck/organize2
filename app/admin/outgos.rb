@@ -36,6 +36,8 @@ ActiveAdmin.register Outgo do
       ActiveRecord::Base.transaction do
         build_resource
 
+        Remapper.call(@outgo)
+
         if @outgo.valid?
           @outgo.repeat_expense.split("\n").each do |line|
             other_outgo = Outgo.new(@outgo.attributes.except("id", "created_at", "updated_at", "transaction_hash"))
