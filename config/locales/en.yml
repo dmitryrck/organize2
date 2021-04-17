@@ -32,6 +32,9 @@
 en:
   balances: "Balances"
   hello: "Hello world"
+  date:
+    formats:
+      month: "%Y-%m"
   confirmable:
     confirm: "%{model} was successfully confirmed"
     unconfirm: "%{model} was successfully unconfirmed"
