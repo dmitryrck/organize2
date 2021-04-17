@@ -1,16 +1,11 @@
-ActiveAdmin.register_page "OfxImports" do
-  content do
-    render partial: "new"
-  end
+class OfxFile < ApplicationRecord
+  validates :content, presence: true
 
-  page_action :upload, method: :post do
-    @ofx = OFX::Parser::Base.new(params[:ofx][:file].path).parser
-    @accounts = Account.active
+  def outgos
     @outgos = []
-    @mappings = MovementRemapping.active.ordered
 
-    @ofx.accounts.each do |ofx_account|
-      bank_account = @accounts.select { |account| account.name.match(ofx_account.id) }[0]
+    ofx.accounts.each do |ofx_account|
+      bank_account = accounts.select { |account| account.name.match(ofx_account.id) }[0]
 
       ofx_account.transactions.each do |transaction|
         next if transaction.memo.match(%r[transfer]i)
@@ -28,15 +23,32 @@ ActiveAdmin.register_page "OfxImports" do
           paid_to: transaction.memo,
           description: transaction.name,
           value: value,
-          date: date, chargeable: bank_account,
+          date: date,
+          chargeable: bank_account,
         )
 
-        Remapper.call(outgo, mappings: @mappings)
+        if outgo.new_record?
+          Remapper.call(outgo, mappings: mappings)
+        end
 
         @outgos.push(outgo.decorate)
       end
     end
 
-    render :show, layout: "active_admin"
+    @outgos
+  end
+
+  private
+
+  def ofx
+    @ofx ||= OFX::Parser::Base.new(content).parser
+  end
+
+  def accounts
+    @accounts ||= Account.active
+  end
+
+  def mappings
+    @mappings ||= MovementRemapping.active.ordered
   end
 end
