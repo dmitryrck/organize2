@@ -26,6 +26,16 @@ ActiveAdmin.register Income do
     link_to "Duplicate", new_admin_income_path(income: income.duplicable_attributes)
   end
 
+  controller do
+    def create
+      build_resource
+
+      @income.admin_user = current_admin_user
+
+      create!
+    end
+  end
+
   index do
     selectable_column
 
@@ -52,6 +62,7 @@ ActiveAdmin.register Income do
       row :value
       row :drive_id
       row :transaction_hash
+      row :admin_user
       row :created_at
       row :updated_at
     end

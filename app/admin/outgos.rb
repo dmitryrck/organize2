@@ -36,6 +36,8 @@ ActiveAdmin.register Outgo do
       ActiveRecord::Base.transaction do
         build_resource
 
+        @outgo.admin_user = current_admin_user
+
         Remapper.call(@outgo)
 
         if @outgo.valid?
@@ -116,6 +118,7 @@ ActiveAdmin.register Outgo do
       row :expected_movement
       row :drive_id
       row :transaction_hash
+      row :admin_user
       row :created_at
       row :updated_at
     end

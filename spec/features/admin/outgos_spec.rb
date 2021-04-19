@@ -63,6 +63,7 @@ describe "Outgos" do
     expect(page).to have_content("$100.00")
     expect(page).to have_content("$0.0")
     expect(page).to have_content("ACCOUNT/CARD Account#1")
+    expect(page).to have_content("admin@example.com")
   end
 
   context "when there is a mapping" do

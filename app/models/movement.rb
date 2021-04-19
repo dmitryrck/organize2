@@ -11,6 +11,7 @@ class Movement < ActiveRecord::Base
     allow_blank: true
 
   belongs_to :chargeable, polymorphic: true
+  belongs_to :admin_user
 
   delegate :inactive?, to: :chargeable, allow_nil: true, prefix: true
   delegate :currency, to: :chargeable, allow_nil: true

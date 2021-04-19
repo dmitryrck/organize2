@@ -22,6 +22,7 @@ describe "Incomes" do
     expect(page).to have_content("Income#1")
     expect(page).to have_content("$100.00")
     expect(page).to have_content("ACCOUNT Account#1")
+    expect(page).to have_content("admin@example.com")
   end
 
   it "shows error message when user does not select chargeable" do
