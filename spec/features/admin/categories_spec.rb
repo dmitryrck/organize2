@@ -109,4 +109,26 @@ describe "Categories" do
       expect(page).to have_content "$59.00"
     end
   end
+
+  context "edit category" do
+    it "updates category successfully" do
+      click_on "Categories"
+      expect(page).to have_content "supermarket 5"
+      expect(page).to_not have_content "grocery"
+
+      click_on "supermarket"
+      click_on "Edit"
+
+      fill_in "Name", with: "grocery"
+      click_on "Update Category"
+
+      expect(page).to have_content "Category Details"
+      expect(page).to have_content "NAME grocery"
+      expect(page).to have_content "MOVEMENTS COUNT 5"
+
+      click_on "Categories", match: :first
+      expect(page).to_not have_content "supermarket 5"
+      expect(page).to have_content "grocery 5"
+    end
+  end
 end

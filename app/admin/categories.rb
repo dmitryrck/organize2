@@ -1,7 +1,9 @@
 ActiveAdmin.register Category do
-  actions :index, :show
+  actions :index, :show, :edit
 
   config.sort_order = "name_asc"
+
+  permit_params :name
 
   index do
     selectable_column
@@ -25,6 +27,23 @@ ActiveAdmin.register Category do
         end
       end
     end
+  end
+
+  controller do
+    def update
+      new_category = permitted_params[:category].fetch(:name)
+
+      Movement.where(category: params[:id]).update_all(category: new_category)
+      redirect_to admin_category_path(new_category)
+    end
+  end
+
+  form do |f|
+    f.inputs t("active_admin.details", model: Category) do
+      input :name
+    end
+
+    f.actions
   end
 
   sidebar :note, only: :show do
