@@ -8,6 +8,7 @@ gem "jbuilder"
 gem 'jquery-rails'
 gem "listen"
 gem 'oj'
+gem "ofx", git: "https://github.com/dmitryrck/ofx.git"
 gem 'pg'
 gem 'puma'
 gem 'responders'
