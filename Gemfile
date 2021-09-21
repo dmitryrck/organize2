@@ -39,7 +39,8 @@ group :production do
 end
 
 # Admin
-gem "activeadmin", git: "https://github.com/activeadmin/activeadmin.git"
+gem "activeadmin", git: "https://github.com/activeadmin/activeadmin.git", ref: "b31318b8d05f2d7ab1c2a4d7078f8e1d47062517"
+gem "formtastic", "3.1.5"
 gem "devise"
 gem "inherited_resources", git: "https://github.com/activeadmin/inherited_resources.git"
 gem "pundit"
