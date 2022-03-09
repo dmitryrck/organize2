@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem "rails", "6.0.4.7"
+gem "rails", "7.0.2.3"
 
 gem 'draper'
 gem 'enumerate_it'
@@ -39,7 +39,7 @@ group :production do
 end
 
 # Admin
-gem "activeadmin", git: "https://github.com/activeadmin/activeadmin.git", ref: "b31318b8d05f2d7ab1c2a4d7078f8e1d47062517"
+gem "activeadmin", git: "https://github.com/activeadmin/activeadmin.git"
 gem "formtastic", "3.1.5"
 gem "devise"
 gem "inherited_resources", git: "https://github.com/activeadmin/inherited_resources.git"
