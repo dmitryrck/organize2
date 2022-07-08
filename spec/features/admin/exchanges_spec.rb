@@ -14,6 +14,7 @@ describe "Exchanges" do
 
     select "Account#1", from: "Source"
     select "Account#2", from: "Destination"
+    select "Destination", from: "Fee kind"
     expect(page).to have_field "Date", with: Date.current
     fill_in "Value in", with: 100
     fill_in "Value out", with: 100
@@ -24,6 +25,7 @@ describe "Exchanges" do
     expect(page).to have_content "Exchange was successfully created."
 
     expect(page).to have_content("SOURCE Account#1")
+    expect(page).to have_content("FEE KIND Destination")
     expect(page).to have_content("DESTINATION Account#2")
     expect(page).to have_content("VALUE IN $100.00")
     expect(page).to have_content("VALUE OUT $100.00")

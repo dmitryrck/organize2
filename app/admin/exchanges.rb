@@ -10,10 +10,11 @@ ActiveAdmin.register Exchange do
   decorate_with ExchangeDecorator
 
   permit_params :source_id, :destination_id, :value_in, :value_out, :fee,
-    :date, :kind, :transaction_hash
+    :date, :fee_kind, :kind, :transaction_hash
 
   filter :confirmed
   filter :kind, as: :select, collection: proc { ExchangeKind.list }
+  filter :fee_kind, as: :select, collection: proc { ExchangeFeeKind.list }
   filter :source, collection: proc { Account.ordered }
   filter :destination, collection: proc { Account.ordered }
   filter :value_in
@@ -43,6 +44,10 @@ ActiveAdmin.register Exchange do
   show do
     attributes_table do
       row :confirmed
+      row :kind
+      row :fee_kind do |exchange|
+        exchange.fee_kind_humanize
+      end
       row :source
       row :destination
       row :value_in
@@ -64,6 +69,9 @@ ActiveAdmin.register Exchange do
       input :kind,
         input_html: { autofocus: true, disabled: resource.confirmed? },
         collection: ExchangeKind.list
+      input :fee_kind,
+        input_html: { disabled: resource.confirmed? },
+        collection: ExchangeFeeKind.to_a
       input :source,
         input_html: { disabled: resource.confirmed? },
         collection: Account.ordered
