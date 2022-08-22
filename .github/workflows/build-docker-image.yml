@@ -1,0 +1,22 @@
+name: Build Docker Image
+
+on:
+  push:
+    branches:
+      - production
+
+jobs:
+  build-docker-image:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+      - name: docker login
+        env:
+          DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+        run: echo $DOCKER_TOKEN | docker login --username $DOCKER_USERNAME --password-stdin
+      - run: \rm -fr .git
+      - run: docker build -t dmitryrck/organize2 .
+      - run: docker push dmitryrck/organize2
