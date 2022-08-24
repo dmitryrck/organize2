@@ -13,6 +13,7 @@ ActiveAdmin.register Income do
   config.paginate = false
 
   filter :description
+  filter :paid_to
   filter :confirmed
   filter :date
   filter :value
@@ -20,7 +21,7 @@ ActiveAdmin.register Income do
   filter :transaction_hash
 
   permit_params :description, :value, :date, :category, :chargeable_type,
-    :chargeable_id, :drive_id, :transaction_hash
+    :chargeable_id, :drive_id, :transaction_hash, :paid_to
 
   action_item :duplicate, only: :show do
     link_to "Duplicate", new_admin_income_path(income: income.duplicable_attributes)
@@ -56,6 +57,7 @@ ActiveAdmin.register Income do
       row :description do |income|
         income.object.description
       end
+      row :paid_to
       row :category
       row :date
       row :chargeable
@@ -74,6 +76,7 @@ ActiveAdmin.register Income do
     inputs t("active_admin.details", model: Income) do
       semantic_errors :chargeable
       input :description, input_html: { autofocus: true }
+      input :paid_to
       input :date, as: :string, input_html: { value: (f.object.date || Date.current) }
       input :category
       input :chargeable_type, as: :hidden, input_html: { value: "Account", disabled: income.confirmed? }

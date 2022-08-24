@@ -12,6 +12,7 @@ describe "Incomes" do
     click_on "New"
 
     fill_in "Description", with: "Income#1"
+    fill_in "Paid to", with: "Big Tech Company"
     expect(page).to have_field "Date", with: Date.current.to_s
     fill_in "Date", with: "2017-12-31"
     fill_in "Value", with: 100
@@ -20,6 +21,7 @@ describe "Incomes" do
     click_on "Create"
 
     expect(page).to have_content("Income#1")
+    expect(page).to have_content("Big Tech Company")
     expect(page).to have_content("$100.00")
     expect(page).to have_content("ACCOUNT Account#1")
     expect(page).to have_content("admin@example.com")
