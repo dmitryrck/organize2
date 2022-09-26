@@ -1,4 +1,4 @@
-from dmitryrck/ruby:2.7.6
+from dmitryrck/ruby:3.1.2
 
 env \
   DATABASE_URL="postgres://postgres:password@host/notreal"
