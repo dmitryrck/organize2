@@ -21,7 +21,7 @@ ActiveAdmin.register Income do
   filter :transaction_hash
 
   permit_params :description, :value, :date, :category, :chargeable_type,
-    :chargeable_id, :drive_id, :transaction_hash, :paid_to
+    :chargeable_id, :transaction_hash, :paid_to
 
   action_item :duplicate, only: :show do
     link_to "Duplicate", new_admin_income_path(income: income.duplicable_attributes)
@@ -62,7 +62,6 @@ ActiveAdmin.register Income do
       row :date
       row :chargeable
       row :value
-      row :drive_id
       row :transaction_hash
       row :admin_user
       row :created_at
