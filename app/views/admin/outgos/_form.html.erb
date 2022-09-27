@@ -17,7 +17,6 @@
     <% if @outgo.new_record? %>
       <%= f.input :repeat_expense, as: :text %>
     <% end %>
-    <%= f.input :drive_id %>
     <%= f.input :transaction_hash %>
     <%= f.input :card, collection: Card.active, input_html: { disabled: @outgo.confirmed? } %>
     <%= content_tag :li, class: "input optional", id: "card-outgos", style: ("display: none;" if f.object.card.blank?) do %>

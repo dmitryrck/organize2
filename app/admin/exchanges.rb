@@ -10,7 +10,7 @@ ActiveAdmin.register Exchange do
   decorate_with ExchangeDecorator
 
   permit_params :source_id, :destination_id, :value_in, :value_out, :fee,
-    :date, :kind, :transaction_hash, :drive_id
+    :date, :kind, :transaction_hash
 
   filter :confirmed
   filter :kind, as: :select, collection: proc { ExchangeKind.list }
@@ -50,7 +50,6 @@ ActiveAdmin.register Exchange do
       row :exchange_rate
       row :fee
       row :date
-      row :drive_id
       row :transaction_hash
     end
 
@@ -74,7 +73,6 @@ ActiveAdmin.register Exchange do
       input :value_out, input_html: { disabled: resource.confirmed? }
       input :fee, input_html: { disabled: resource.confirmed? }
       input :date, as: :string
-      input :drive_id
       input :transaction_hash
     end
 

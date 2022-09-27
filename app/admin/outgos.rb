@@ -24,7 +24,7 @@ ActiveAdmin.register Outgo do
   filter :transaction_hash
 
   permit_params :description, :value, :date, :category, :card_id, :fee,
-    :fee_kind, :chargeable_type, :chargeable_id, :drive_id, :transaction_hash,
+    :fee_kind, :chargeable_type, :chargeable_id, :transaction_hash,
     :expected_movement, :repeat_expense, :paid_to, :parent_id, outgo_ids: []
 
   action_item :duplicate, only: :show do
@@ -116,7 +116,6 @@ ActiveAdmin.register Outgo do
       row :card
       row :parent
       row :expected_movement
-      row :drive_id
       row :transaction_hash
       row :admin_user
       row :created_at

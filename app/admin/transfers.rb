@@ -10,7 +10,7 @@ ActiveAdmin.register Transfer do
   decorate_with TransferDecorator
 
   permit_params :source_id, :destination_id, :value, :date, :transaction_hash,
-    :drive_id, :fee
+    :fee
 
   filter :source, collection: proc { Account.ordered }
   filter :destination, collection: proc { Account.ordered }
@@ -43,7 +43,6 @@ ActiveAdmin.register Transfer do
       row :value
       row :fee
       row :date
-      row :drive_id
       row :transaction_hash
     end
 
@@ -62,7 +61,6 @@ ActiveAdmin.register Transfer do
       input :value, input_html: { disabled: resource.confirmed? }
       input :fee, input_html: { disabled: resource.confirmed? }
       input :date, as: :string
-      input :drive_id
       input :transaction_hash
     end
 
