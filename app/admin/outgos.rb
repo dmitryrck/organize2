@@ -16,6 +16,7 @@ ActiveAdmin.register Outgo do
   filter :description
   filter :paid_to
   filter :date
+  filter :chargeable_id, as: :select, collection: proc { Account.ordered }
   filter :category
   filter :value
   filter :fee
@@ -23,7 +24,7 @@ ActiveAdmin.register Outgo do
   filter :expected_movement
   filter :transaction_hash
 
-  permit_params :description, :value, :date, :category, :card_id, :fee,
+  permit_params :description, :value, :date, :category, :fee,
     :fee_kind, :chargeable_type, :chargeable_id, :transaction_hash,
     :expected_movement, :repeat_expense, :paid_to, :parent_id, outgo_ids: []
 
@@ -36,6 +37,7 @@ ActiveAdmin.register Outgo do
       ActiveRecord::Base.transaction do
         build_resource
 
+        @outgo.chargeable_type = "Account"
         @outgo.admin_user = current_admin_user
 
         Remapper.call(@outgo)
@@ -113,7 +115,6 @@ ActiveAdmin.register Outgo do
       row :fee_kind do |outgo|
         outgo.fee_kind_humanize
       end
-      row :card
       row :parent
       row :expected_movement
       row :transaction_hash
@@ -129,7 +130,26 @@ ActiveAdmin.register Outgo do
     active_admin_comments
   end
 
-  form partial: "form"
+  form do |f|
+    f.inputs t("active_admin.details", model: Outgo) do
+      input :description, input_html: { autofocus: true }
+      input :paid_to
+      input :date, as: :string, input_html: { value: (f.object.date || Date.current) }
+      input :category
+      input :chargeable_id, as: :select, collection: Account.active.ordered, input_html: { disabled: outgo.confirmed? }
+      input :value, input_html: { disabled: outgo.confirmed? }
+      input :fee, input_html: { disabled: outgo.confirmed? }
+      input :parent_id
+      input :fee_kind, collection: FeeKind.to_a
+      input :expected_movement
+      if outgo.new_record?
+        input :repeat_expense, as: :text
+      end
+      input :transaction_hash
+    end
+
+    f.actions
+  end
 
   batch_action :set_as_expected do |ids|
     Outgo.where(id: ids).update_all(expected_movement: true)

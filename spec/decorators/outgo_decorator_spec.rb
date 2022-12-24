@@ -62,6 +62,22 @@ describe OutgoDecorator do
         expect(subject.description).to eq %[<abbr title="Unexpected expense">×</abbr> [Market 101] Supermarket]
       end
     end
+
+    context "when the related account is a card" do
+      let(:account) { Account.new(card: true) }
+      let(:outgo) do
+        build(
+          :outgo,
+          description: "Supermarket",
+          paid_to: "Market 202",
+          chargeable: account,
+        )
+      end
+
+      it do
+        expect(subject.description).to eq %[<i class="fa fa-credit-card"></i> [Market 202] Supermarket]
+      end
+    end
   end
 
   context ".total" do

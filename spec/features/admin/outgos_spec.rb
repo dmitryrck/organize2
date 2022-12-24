@@ -62,7 +62,7 @@ describe "Outgos" do
     expect(page).to have_content("Outgo#1")
     expect(page).to have_content("$100.00")
     expect(page).to have_content("$0.0")
-    expect(page).to have_content("ACCOUNT/CARD Account#1")
+    expect(page).to have_content("ACCOUNT Account#1")
     expect(page).to have_content("admin@example.com")
   end
 
@@ -99,7 +99,7 @@ describe "Outgos" do
     expect(page).to have_field "Date", with: Date.current.to_s
     fill_in "Date", with: "2017-12-31"
     fill_in "Value", with: 100
-    select "Account#1", from: "outgo[chargeable_id]"
+    select "Account#1", from: "Account"
     fill_in "Parent", with: parent.id
 
     click_on "Create"
@@ -108,7 +108,7 @@ describe "Outgos" do
     expect(page).to have_content("Outgo#1")
     expect(page).to have_content("$100.00")
     expect(page).to have_content("$0.0")
-    expect(page).to have_content("ACCOUNT/CARD Account#1")
+    expect(page).to have_content("ACCOUNT Account#1")
   end
 
   it "shows error message when parent is invalid" do
@@ -150,7 +150,7 @@ describe "Outgos" do
       expect(page).to have_content("Repeat#1")
       expect(page).to have_content("$100.00")
       expect(page).to have_content("$0.0")
-      expect(page).to have_content("ACCOUNT/CARD Account#1")
+      expect(page).to have_content("ACCOUNT Account#1")
 
       expect(Outgo.count).to eq 3
     end
@@ -182,24 +182,10 @@ describe "Outgos" do
       expect(page).to have_content("Repeat#1")
       expect(page).to have_content("$100.00")
       expect(page).to have_content("$0.0")
-      expect(page).to have_content("ACCOUNT/CARD Account#1")
+      expect(page).to have_content("ACCOUNT Account#1")
 
       expect(Outgo.count).to eq 3
     end
-  end
-
-  it "shows error message when user does not select chargeable" do
-    click_on "Outgos"
-    click_on "New"
-
-    fill_in "Description", with: "Outgo#1"
-    expect(page).to have_field "Date", with: Date.current.to_s
-    fill_in "Date", with: "2017-12-31"
-    fill_in "Value", with: 100
-
-    click_on "Create"
-
-    expect(page).to have_content "Account/Card can't be blank"
   end
 
   context "when there is an outgo" do
@@ -267,10 +253,9 @@ describe "Outgos" do
         end
 
         expect(page).not_to have_content "Repeat expense"
-        expect(page).to have_field "outgo[chargeable_id]", disabled: true
+        expect(page).to have_field "Account", disabled: true
         expect(page).to have_field "Value", disabled: true
         expect(page).to have_field "Fee", disabled: true
-        expect(page).to have_field "Card", disabled: true
       end
     end
 

@@ -16,8 +16,9 @@ ActiveAdmin.register Income do
   filter :paid_to
   filter :confirmed
   filter :date
-  filter :value
+  filter :chargeable_id, as: :select, collection: proc { Account.ordered }
   filter :category
+  filter :value
   filter :transaction_hash
 
   permit_params :description, :value, :date, :category, :chargeable_type,

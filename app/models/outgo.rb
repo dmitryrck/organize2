@@ -3,7 +3,6 @@ class Outgo < Movement
 
   validate :valid_parent
 
-  belongs_to :card
   belongs_to :parent, class_name: 'Outgo'
 
   has_many :outgos, foreign_key: :parent_id
@@ -12,10 +11,6 @@ class Outgo < Movement
 
   def total
     value + (fee.presence || 0)
-  end
-
-  def summarize?
-    chargeable_type != 'Card' && !confirmed?
   end
 
   def repeat_expense

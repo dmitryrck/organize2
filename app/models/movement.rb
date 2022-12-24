@@ -6,6 +6,7 @@ class Movement < ActiveRecord::Base
   self.inheritance_column = :kind
 
   validates :description, :chargeable, :value, :date, presence: true
+  validates :chargeable_id, presence: true, if: proc { |record| record.chargeable.blank? }
   validates :transaction_hash, uniqueness:
     { scope: [:chargeable_type, :chargeable_id] },
     allow_blank: true
@@ -15,25 +16,17 @@ class Movement < ActiveRecord::Base
 
   delegate :inactive?, to: :chargeable, allow_nil: true, prefix: true
   delegate :currency, to: :chargeable, allow_nil: true
+  delegate :card?, to: :chargeable, allow_nil: true
 
-  scope :card, -> { where(chargeable_type: "Card") }
   scope :unpaid, -> { where(confirmed: false) }
   scope :paid, -> { where(confirmed: true) }
 
+  before_validation do |record|
+    record.chargeable_type = "Account"
+  end
+
   def unexpected_movement?
     !expected_movement?
-  end
-
-  def regular_and_unpaid?
-    regular? && !confirmed?
-  end
-
-  def regular_and_paid?
-    regular? && confirmed?
-  end
-
-  def card?
-    chargeable_type == "Card"
   end
 
   def duplicable_attributes
@@ -48,7 +41,6 @@ class Movement < ActiveRecord::Base
       chargeable_type
       fee
       fee_kind
-      card_id
       parent_id
       paid_to
     ].each do |att|
@@ -93,11 +85,5 @@ class Movement < ActiveRecord::Base
 
   def formatted_paid_to
     "[#{paid_to}]" if paid_to.present?
-  end
-
-  private
-
-  def regular?
-    !card?
   end
 end
