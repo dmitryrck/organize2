@@ -9,6 +9,9 @@ ActiveAdmin.register Exchange do
 
   decorate_with ExchangeDecorator
 
+  config.sort_order = "date_desc"
+  config.paginate = false
+
   permit_params :source_id, :destination_id, :value_in, :value_out, :fee,
     :date, :kind, :transaction_hash
 
