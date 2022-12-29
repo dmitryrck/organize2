@@ -25,7 +25,12 @@ class ExchangeDecorator < ApplicationDecorator
   end
 
   def fee
-    to_currency(object.fee, currency: destination_currency, precision: destination_precision)
+    case object.fee_kind
+    when ExchangeFeeKind::SOURCE
+      to_currency(object.fee, currency: source_currency, precision: source_precision)
+    when ExchangeFeeKind::DESTINATION
+      to_currency(object.fee, currency: destination_currency, precision: destination_precision)
+    end
   end
 
   def exchange_rate

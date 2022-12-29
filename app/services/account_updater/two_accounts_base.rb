@@ -20,7 +20,7 @@ module AccountUpdater
 
     private
 
-    delegate :source, :destination, to: :@object
+    delegate :fee_kind, :source, :destination, to: :@object
 
     # :nocov:
     def final_source_balance

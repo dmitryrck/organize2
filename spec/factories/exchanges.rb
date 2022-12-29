@@ -2,6 +2,7 @@ FactoryBot.define do
   factory :exchange do
     association :source, factory: :account, strategy: :cache
     association :destination, factory: :account2, strategy: :cache
+    fee_kind { ExchangeFeeKind::SOURCE }
 
     value_in { 10 }
     value_out { 20 }

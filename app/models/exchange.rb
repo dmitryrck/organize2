@@ -10,9 +10,10 @@ class Exchange < ActiveRecord::Base
   belongs_to :destination, class_name: "Account"
 
   validates :source_id, :destination_id, :value_in, :value_out, :fee,
-    :date, :kind, presence: true
+    :date, :fee_kind, :kind, presence: true
 
   has_enumeration_for :kind, with: ExchangeKind
+  has_enumeration_for :fee_kind, with: ExchangeFeeKind
 
   def to_s
     "#{self.class.model_name.human}##{id}"

@@ -1,0 +1,5 @@
+en:
+  enumerations:
+    exchange_fee_kind:
+      source: "Source"
+      destination: "Destination"
