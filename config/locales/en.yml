@@ -42,9 +42,11 @@ en:
     attributes:
       income:
         chargeable: "Account"
+        chargeable_id: "Account"
       outgo:
-        chargeable_type: "Kind"
-        chargeable: "Account/Card"
+        chargeable_type: "Kind (Deprecated)"
+        chargeable: "Account"
+        chargeable_id: "Account"
         expected_movement: "Expected expense"
   formtastic:
     hints:

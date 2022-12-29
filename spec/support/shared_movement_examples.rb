@@ -1,11 +1,15 @@
 shared_examples_for Movement do
   it { is_expected.to be_valid }
-  it { is_expected.to respond_to(:regular_and_paid?) }
-  it { is_expected.to respond_to(:regular_and_unpaid?) }
   it { is_expected.to respond_to(:outgo?) }
   it { is_expected.to respond_to(:income?) }
 
   it 'should not be invalid with no chargeable' do
+    subject.chargeable = nil
+    expect(subject).to_not be_valid
+  end
+
+  it "is not be valid with no chargeable_id and chargeable" do
+    subject.chargeable_id = nil
     subject.chargeable = nil
     expect(subject).to_not be_valid
   end

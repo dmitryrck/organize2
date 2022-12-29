@@ -48,7 +48,7 @@ class OutgoDecorator < ApplicationDecorator
   end
 
   def icon
-    h.content_tag(:i, nil, class: "fa fa-credit-card") if object.chargeable_type == "Card"
+    h.content_tag(:i, nil, class: "fa fa-credit-card") if object.card?
   end
 
   def tag

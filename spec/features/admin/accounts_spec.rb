@@ -59,6 +59,31 @@ describe "Accounts" do
     expect(page).not_to have_content("BALANCE USD0.0")
   end
 
+  it "is able to create a card account" do
+    click_on "Accounts"
+
+    click_on "New"
+
+    check "Card"
+    fill_in "Name", with: "Account#1"
+    fill_in "Start balance", with: 123.45
+    fill_in "Currency", with: "USD"
+    fill_in "Precision", with: 4
+    fill_in "Limit", with: 300
+
+    click_on "Create"
+
+    expect(page).to have_content("Account#1")
+    expect(page).to have_content("START BALANCE USD123.45")
+    expect(page).to have_content("BALANCE USD123.45")
+    expect(page).to have_content("LIMIT 300")
+    expect(page).to have_content("ACTIVE YES")
+    expect(page).to have_content("CARD YES")
+    expect(page).to have_content("PRECISION 4")
+
+    expect(page).not_to have_content("BALANCE USD0.0")
+  end
+
   context "when there is an account" do
     let!(:account) { create(:account) }
 

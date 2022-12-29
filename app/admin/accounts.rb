@@ -5,9 +5,11 @@ ActiveAdmin.register Account do
 
   config.sort_order = "active_desc"
 
-  permit_params :name, :start_balance, :active, :currency, :precision
+  permit_params :name, :card, :limit, :start_balance, :active, :currency,
+    :precision
 
   filter :active
+  filter :card
   filter :name
   filter :currency
   filter :balance
@@ -39,9 +41,11 @@ ActiveAdmin.register Account do
   show do
     attributes_table do
       row :active
+      row :card
       row :name
       row :start_balance
       row :balance
+      row :limit
       row :currency
       row :precision
       row :created_at
@@ -54,10 +58,12 @@ ActiveAdmin.register Account do
   form do |f|
     f.inputs t("active_admin.details", model: Account) do
       input :active
+      input :card
       input :name, input_html: { autofocus: true }
       if account.new_record?
         input :start_balance
       end
+      input :limit
       input :currency
       input :precision
     end
