@@ -9,6 +9,9 @@ ActiveAdmin.register Transfer do
 
   decorate_with TransferDecorator
 
+  config.sort_order = "date_desc"
+  config.paginate = false
+
   permit_params :source_id, :destination_id, :value, :date, :transaction_hash,
     :fee
 
