@@ -54,3 +54,8 @@ en:
         repeat_expense: "One date per line. Format: YYYY-MM-DD"
         paid_to: "Nome of the company/person you paid this expense"
         parent_id: "ID of the other movement. Must exist in the database"
+  active_admin:
+    powered_by: |+
+      Source code available at
+      <a href="https://github.com/dmitryrck/organize2/">github.com/dmitryrck/organize2</a> -
+      Happily powered by <a href="https://activeadmin.info/">ActiveAdmin</a> ❤️
