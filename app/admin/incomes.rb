@@ -74,7 +74,6 @@ ActiveAdmin.register Income do
 
   form do |f|
     inputs t("active_admin.details", model: Income) do
-      semantic_errors :chargeable
       input :description, input_html: { autofocus: true }
       input :paid_to
       input :date, as: :string, input_html: { value: (f.object.date || Date.current) }
