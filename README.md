@@ -8,8 +8,7 @@
 $ cp docker-compose.yml.sample docker-compose.yml
 ```
 
-Edit `docker-compose.yml` according to your needs, for example: remove heroku
-configuration if you will not use heroku.
+Edit `docker-compose.yml` according to your needs.
 
 ```terminal
 $ cp config/database.yml.sample config/database.yml
@@ -20,32 +19,10 @@ $ docker-compose run --rm web bundle exec rake db:create
 $ docker-compose run --rm web bundle exec rake db:migrate
 ```
 
-# Backup from Heroku
+# Deprecated notices
 
-## Auth
-
-```terminal
-$ docker run --rm -it -v heroku_home:/root dmitryrck/heroku login
-```
-
-## Backup
-
-Create a backup:
-
-```terminal
-$ docker run --rm -v heroku_home:/root dmitryrck/heroku heroku pg:backups capture -a app-name-1234
-```
-
-Download backup:
-
-```terminal
-$ wget $(docker run --rm -v heroku_home:/root dmitryrck/heroku heroku pg:backups public-url -a app-name-1234) -O latest.dump
-```
-
-# Restore backup
-
-```terminal
-$ docker-compose run --rm web bundle exec rake db:drop
-$ docker-compose run --rm web bundle exec rake db:create
-$ docker-compose run --rm db pg_restore -U postgres -h db -O -d organize2_development < /app/latest.dump
-```
+* The table `cards` is deprecated
+  * See https://github.com/dmitryrck/organize2/pull/70 for more details
+* The column `movements.chargeable_type` is deprecated
+  * Though it is deprecated this relation is still a fully functional polymorphic association
+  * See https://github.com/dmitryrck/organize2/pull/70 and https://github.com/dmitryrck/organize2/issues/41 for more details
