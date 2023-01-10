@@ -32,7 +32,6 @@ group :test do
   gem "factory_bot"
   gem "rails-controller-testing"
   gem "selenium-webdriver"
-  gem 'simplecov', require: false
   gem "webdrivers"
 end
 
