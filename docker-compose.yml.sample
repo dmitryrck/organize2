@@ -11,7 +11,7 @@ services:
       - "5432"
 
   web:
-    image: dmitryrck/ruby:3.1.3
+    image: dmitryrck/ruby:3.2.0
     volumes:
       - .:/app
       - bundle_path:/usr/local/bundle
