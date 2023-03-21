@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby "3.2.0"
 
-gem "rails", "7.0.4.1"
+gem "rails", "7.0.4.3"
 
 gem 'draper'
 gem 'enumerate_it'
