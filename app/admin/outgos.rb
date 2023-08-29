@@ -19,8 +19,6 @@ ActiveAdmin.register Outgo do
   filter :chargeable_id, as: :select, collection: proc { Account.ordered }
   filter :category
   filter :value
-  filter :fee
-  filter :fee_kind, as: :select, collection: proc { FeeKind.to_a }
   filter :expected_movement
   filter :transaction_hash
 

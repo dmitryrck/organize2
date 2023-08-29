@@ -6,6 +6,23 @@ class Exchange < ActiveRecord::Base
   include Datable
   include Transactionable
 
+  def self.ransackable_attributes(auth_object = nil)
+    %w[
+      confirmed
+      date
+      destination_id
+      kind
+      source_id
+      transaction_hash
+      value_in
+      value_out
+    ]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    []
+  end
+
   belongs_to :source, class_name: "Account"
   belongs_to :destination, class_name: "Account"
 

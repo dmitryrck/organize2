@@ -13,6 +13,20 @@ class Account < ActiveRecord::Base
     account.balance = account.start_balance
   end
 
+  def self.ransackable_attributes(auth_object = nil)
+    %w[
+      active
+      balance
+      card
+      currency
+      name
+    ]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    []
+  end
+
   def to_s
     name
   end

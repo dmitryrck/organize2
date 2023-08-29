@@ -17,12 +17,10 @@ ActiveAdmin.register Exchange do
 
   filter :confirmed
   filter :kind, as: :select, collection: proc { ExchangeKind.list }
-  filter :fee_kind, as: :select, collection: proc { ExchangeFeeKind.list }
-  filter :source, collection: proc { Account.ordered }
-  filter :destination, collection: proc { Account.ordered }
+  filter :source_id, as: :select, collection: proc { Account.ordered }
+  filter :destination_id, as: :select, collection: proc { Account.ordered }
   filter :value_in
   filter :value_out
-  filter :fee
   filter :date
   filter :transaction_hash
 

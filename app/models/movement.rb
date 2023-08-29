@@ -5,6 +5,25 @@ class Movement < ActiveRecord::Base
 
   self.inheritance_column = :kind
 
+  def self.ransackable_attributes(auth_object = nil)
+    %w[
+      category
+      chargeable
+      chargeable_id
+      confirmed
+      date
+      description
+      expected_movement
+      paid_to
+      transaction_hash
+      value
+    ]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    []
+  end
+
   validates :description, :chargeable, :value, :date, presence: true
   validates :chargeable_id, presence: true, if: proc { |record| record.chargeable.blank? }
   validates :transaction_hash, uniqueness:

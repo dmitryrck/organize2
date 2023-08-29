@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem "rails", "7.0.6"
+gem "rails"
 
 gem 'draper'
 gem 'enumerate_it'
