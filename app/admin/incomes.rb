@@ -12,9 +12,9 @@ ActiveAdmin.register Income do
   config.sort_order = "date_desc"
   config.paginate = false
 
+  filter :confirmed
   filter :description
   filter :paid_to
-  filter :confirmed
   filter :date
   filter :chargeable_id, as: :select, collection: proc { Account.ordered }
   filter :category

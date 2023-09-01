@@ -15,10 +15,9 @@ ActiveAdmin.register Transfer do
   permit_params :source_id, :destination_id, :value, :date, :transaction_hash,
     :fee
 
-  filter :source, collection: proc { Account.ordered }
-  filter :destination, collection: proc { Account.ordered }
+  filter :source_id, as: :select, collection: proc { Account.ordered }
+  filter :destination_id, as: :select, collection: proc { Account.ordered }
   filter :value
-  filter :fee
   filter :confirmed
   filter :date
   filter :transaction_hash
