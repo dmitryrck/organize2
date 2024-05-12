@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :outgo do
-    association :chargeable, factory: :account, strategy: :cache
+    association :chargeable, factory: :account
 
     description { "Outgo#1" }
     value { 100 }

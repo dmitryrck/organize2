@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "Accounts" do
+describe "Accounts", type: :system do
   before { sign_in(user) }
 
   let(:user) { create(:admin_user) }
@@ -35,7 +35,7 @@ describe "Accounts" do
     click_on "Accounts"
 
     page.driver.browser.manage.window.resize_to(1024, 768)
-    page.driver.save_screenshot Rails.root.join("app/assets/images/screenshots/create_account_01.png"), full: true
+    page.driver.save_screenshot Rails.root.join("app/assets/images/screenshots/create_account_01.png")
 
     click_on "New"
 
@@ -44,11 +44,11 @@ describe "Accounts" do
     fill_in "Currency", with: "USD"
     fill_in "Precision", with: 4
 
-    page.driver.save_screenshot Rails.root.join("app/assets/images/screenshots/create_account_02.png"), full: true
+    page.driver.save_screenshot Rails.root.join("app/assets/images/screenshots/create_account_02.png")
 
     click_on "Create"
 
-    page.driver.save_screenshot Rails.root.join("app/assets/images/screenshots/create_account_03.png"), full: true
+    page.driver.save_screenshot Rails.root.join("app/assets/images/screenshots/create_account_03.png")
 
     expect(page).to have_content("Account#1")
     expect(page).to have_content("START BALANCE USD123.45")

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "Outgos" do
+describe "Outgos", type: :system do
   before { sign_in(user) }
 
   let(:user) { create(:admin_user) }

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "Exchanges" do
+describe "Exchanges", type: :system do
   before { sign_in(user) }
 
   let(:user) { create(:admin_user) }
@@ -30,6 +30,33 @@ describe "Exchanges" do
     expect(page).to have_content("VALUE IN $100.00")
     expect(page).to have_content("VALUE OUT $100.00")
     expect(page).to have_content("FEE $10.00")
+  end
+
+  context "when there are exchanges" do
+    let(:last_month) { Date.current.last_month }
+    let(:next_month) { Date.current.next_month }
+
+    it "paginates by month" do
+      prev_exchange = create(:exchange, date: Date.new(last_month.year, last_month.month, 15))
+      curr_exchange = create(:exchange, date: Date.current)
+      next_exchange = create(:exchange, date: Date.new(next_month.year, next_month.month, 15))
+
+      click_on "Exchanges"
+      click_on "Previous month"
+      expect(page).to have_link "View"
+      within("table") { expect(page).to have_content prev_exchange.id }
+
+      click_on "Next month"
+      expect(page).to have_link "View"
+      within("table") { expect(page).to have_content curr_exchange.id }
+
+      click_on "Next month"
+      expect(page).to have_link "View"
+      within("table") { expect(page).to have_content next_exchange.id }
+
+      click_on "Next month"
+      expect(page).not_to have_link "View"
+    end
   end
 
   context "when there is a exchange" do
