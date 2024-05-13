@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "Dashboard" do
+describe "Dashboard", type: :system do
   before do
     account.save
     create(:account, name: "Account#2", active: false)

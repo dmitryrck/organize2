@@ -11,5 +11,12 @@ Capybara.register_driver :chrome_headless do |app|
   Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
 end
 
-Capybara.javascript_driver = :chrome_headless
-Capybara.default_driver = :chrome_headless
+RSpec.configure do |config|
+  config.before(:each, type: :system) do
+    if ActiveRecord::Type::Boolean.new.cast(ENV["CI"] || "false")
+      driven_by :chrome_headless
+    else
+      driven_by :selenium, using: :firefox
+    end
+  end
+end

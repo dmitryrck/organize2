@@ -7,23 +7,6 @@ RSpec.describe Admin::ExchangesController do
   let(:source) { create(:account, balance: 111) }
   let(:destination) { create(:account2, balance: 100) }
 
-  describe "GET index" do
-    let(:other_month) { create(:exchange, date: Date.new(2017, 1, 1)) }
-    let(:current_month) { create(:exchange, date: Date.current) }
-
-    it "should list current month" do
-      get :index
-
-      expect(assigns[:exchanges]).to contain_exactly(current_month)
-    end
-
-    it "should list selected month" do
-      get :index, params: { month: 1, year: 2017 }
-
-      expect(assigns[:exchanges]).to contain_exactly(other_month)
-    end
-  end
-
   describe "GET confirm" do
     let!(:exchange) { create(:exchange, source: source, destination: destination, confirmed: false) }
 

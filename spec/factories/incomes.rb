@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :income do
-    association :chargeable, factory: :account, strategy: :cache
+    association :chargeable, factory: :account
 
     description { "Income#1" }
     value { 100 }

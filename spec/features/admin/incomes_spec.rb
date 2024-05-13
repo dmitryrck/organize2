@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "Incomes" do
+describe "Incomes", type: :system do
   before { sign_in(user) }
 
   let(:user) { create(:admin_user) }

@@ -1,7 +1,9 @@
 require "rails_helper"
 
 RSpec.describe Exchange, type: :model do
-  subject { build(:exchange) }
+  subject { build(:exchange, source: source, destination: destination) }
+  let(:source) { create(:account) }
+  let(:destination) { create(:account2) }
 
   it_behaves_like BetweenAccounts
 

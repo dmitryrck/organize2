@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :transfer do
-    association :source, factory: :account, strategy: :cache
-    association :destination, factory: :account2, strategy: :cache
+    association :source, factory: :account
+    association :destination, factory: :account2
 
     value { 10 }
     fee { 1 }

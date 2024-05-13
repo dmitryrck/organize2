@@ -1,9 +1,36 @@
 require "rails_helper"
 
-describe "Transfers" do
+describe "Transfers", type: :system do
   before { sign_in(user) }
 
   let(:user) { create(:admin_user) }
+
+  context "when there are transfers" do
+    let(:last_month) { Date.current.last_month }
+    let(:next_month) { Date.current.next_month }
+
+    it "paginates by month" do
+      prev_transfer = create(:transfer, date: Date.new(last_month.year, last_month.month, 15))
+      curr_transfer = create(:transfer, date: Date.current)
+      next_transfer = create(:transfer, date: Date.new(next_month.year, next_month.month, 15))
+
+      click_on "Transfers"
+      click_on "Previous month"
+      expect(page).to have_link "View"
+      within("table") { expect(page).to have_content prev_transfer.id }
+
+      click_on "Next month"
+      expect(page).to have_link "View"
+      within("table") { expect(page).to have_content curr_transfer.id }
+
+      click_on "Next month"
+      expect(page).to have_link "View"
+      within("table") { expect(page).to have_content next_transfer.id }
+
+      click_on "Next month"
+      expect(page).not_to have_link "View"
+    end
+  end
 
   it "should be able to create" do
     Account.create name: 'Account#1'
