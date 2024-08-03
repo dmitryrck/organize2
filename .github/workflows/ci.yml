@@ -9,9 +9,9 @@ jobs:
         uses: actions/checkout@master
       - run: cp config/database.yml.sample config/database.yml
       - run: cp docker-compose.yml.sample docker-compose.yml
-      - run: docker-compose build && docker-compose pull
-      - run: docker-compose run --rm web gem install bundler
-      - run: docker-compose run --rm web bundle install --jobs=4 --retry=3
-      - run: docker-compose run --rm web bundle exec rake db:create
-      - run: docker-compose run -e RAILS_ENV=test --rm web bundle exec rake db:migrate
-      - run: docker-compose run -e CI=true --rm web bundle exec rspec -f d
+      - run: docker compose build && docker compose pull
+      - run: docker compose run --rm web gem install bundler
+      - run: docker compose run --rm web bundle install --jobs=4 --retry=3
+      - run: docker compose run --rm web bundle exec rake db:create
+      - run: docker compose run -e RAILS_ENV=test --rm web bundle exec rake db:migrate
+      - run: docker compose run -e CI=true --rm web bundle exec rspec -f d
