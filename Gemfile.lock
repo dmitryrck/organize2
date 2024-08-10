@@ -96,6 +96,12 @@ GEM
     base64 (0.2.0)
     bcrypt (3.1.20)
     bigdecimal (3.1.8)
+    blazer (3.0.3)
+      activerecord (>= 6.1)
+      chartkick (>= 5)
+      csv
+      railties (>= 6.1)
+      safely_block (>= 0.4)
     builder (3.2.4)
     capybara (3.40.0)
       addressable
@@ -106,9 +112,11 @@ GEM
       rack-test (>= 0.6.3)
       regexp_parser (>= 1.5, < 3.0)
       xpath (~> 3.2)
+    chartkick (5.0.6)
     concurrent-ruby (1.2.3)
     connection_pool (2.4.1)
     crass (1.0.6)
+    csv (3.3.0)
     date (3.3.4)
     devise (4.9.3)
       bcrypt (~> 3.0)
@@ -295,6 +303,7 @@ GEM
     rspec-support (3.13.1)
     ruby2_keywords (0.0.5)
     rubyzip (2.3.2)
+    safely_block (0.4.0)
     sanitize (6.1.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
@@ -351,6 +360,7 @@ PLATFORMS
 
 DEPENDENCIES
   activeadmin
+  blazer
   capybara
   devise
   draper

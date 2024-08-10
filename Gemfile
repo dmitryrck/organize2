@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gem "rails"
 
+gem "blazer"
 gem 'draper'
 gem 'enumerate_it'
 gem "jbuilder"
