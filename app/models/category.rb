@@ -3,6 +3,16 @@ class Category < ApplicationRecord
 
   after_initialize :readonly!
 
+  def self.ransackable_attributes(auth_object = nil)
+    %w[
+      name
+    ]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    []
+  end
+
   def summary
     @summary ||= summary_query
       .group_by { |summary| "#{summary.month} (#{summary.currency})" }
