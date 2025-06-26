@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem "rails"
+gem "rails", "7.2.2.1"
 
 gem "blazer"
 gem 'draper'
