@@ -6,7 +6,7 @@ services:
     environment:
       - POSTGRES_PASSWORD=postgres
     volumes:
-      - db:/var/lib/postgresql/data
+      - db:/var/lib/postgresql
     expose:
       - "5432"
 
